@@ -44,8 +44,9 @@ of the development/deployment/release process. Knowing that any regression
 
 And finally people! I think that is the most amazing part of the work; you'll
 get to know persons that will teach you something (or maybe the opposite), you
-will have to communicate effectively to make your point or just understand
-what problem you are going to fix increasing your communication skills.
+will have to communicate effectively to make your point or just to understand
+what problem you are going to fix, increasing your communication skills; oh and
+don't we forget the joy of talking to nice people :)
 
 Conclusions
 ___________
