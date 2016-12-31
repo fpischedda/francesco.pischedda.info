@@ -6,8 +6,8 @@
 <meta name="viewport" content="width=device-width">
 <title>@FPSD | @FPSD</title>
 <link href="assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
-<link rel="alternate" type="application/rss+xml" title="RSS (it)" href="it/rss.xml">
 <link rel="alternate" type="application/rss+xml" title="RSS (en)" href="rss.xml">
+<link rel="alternate" type="application/rss+xml" title="RSS (it)" href="it/rss.xml">
 <link rel="canonical" href="https://francesco.pischedda.info/">
 <!--[if lt IE 9]><script src="/assets/js/html5.js"></script><![endif]-->
 </head>
@@ -24,6 +24,75 @@
 
         </ul></section><section class="page-content"><div class="content" rel="main">
             
+        <div class="post">
+            <h1 class="title"><a href="posts/the-joy-of-contributing-to-open-sourcefree-software/">The joy of contributing to open source/free software</a></h1>
+            <div class="meta">
+                <div class="authordate">
+                    <time class="timeago" datetime="2016-12-29T15:26:08+01:00">2016-12-29 15:26</time>
+</div>
+                <div class="stats">
+                    
+        
+    <a href="posts/the-joy-of-contributing-to-open-sourcefree-software/#disqus_thread" data-disqus-identifier="cache/posts/the-joy-of-contributing-to-open-sourcefree-software.html">Comments</a>
+
+
+                </div>
+            
+        <div itemprop="keywords" class="tags">
+        <ul>
+        Tags : 
+           <li><a class="tag p-category" href="categories/free-software-open-source-mozilla/" rel="tag">free software open source mozilla</a></li>
+        </ul>
+</div>
+
+            </div>
+            <div class="body">
+                <div>
+<p>From time to time I like to give back to the community with small patches or
+trying to solve issues, sometimes my contribution comes from bugs found while
+implementing some kind of software and sometimes I just notice something that
+can be fixed or improved.</p>
+<p>Usually to process is a kind of cold syntetic handshake between my code and
+whatever (D)VCS system used to accept my work but it happens that you will
+find some real person at the other side and this is especially true at
+Mozilla.</p>
+<p>In my opinion Mozilla infrastructure and people are key factors in welcoming new
+developers; there are clear documents about the processes which
+you will be pointed to by the team and there are real persons that will help you
+until you master the procedure.</p>
+<div class="section" id="which-are-the-take-aways-of-contributing">
+<h2>Which are the take aways of contributing?</h2>
+<p>First of all you are forced to read someone else's code; if you work alone or
+your employer does not force code reviews this is really helpful because you
+are probably going to learn a lot from other sources.</p>
+<p>Similarly when contributing to other people's code you are forced to add unit
+tests to your patches otherwise your code will not be accepted; this is ideal
+in the situations where in your day to day work tests are seens as useless
+nerd goodies.</p>
+<p>When contributing to bigger projects there is usually a strong procedure that
+must be followed; this is not just bureaucracy but it must be seen as a backbone
+of the development/deployment/release process. Knowing that any regression
+"shall not pass" is a huge boost to your confidence while creating your patch.</p>
+<p>And finally people! I think that is the most amazing part of the work; you'll
+get to know persons that will teach you something (or maybe the opposite), you
+will have to communicate effectively to make your point or just understand
+what problem you are going to fix increasing your communication skills.</p>
+</div>
+<div class="section" id="conclusions">
+<h2>Conclusions</h2>
+<p>Contributing can be a beautiful and useful ecperience for beginners,
+intermediate and senior developers, everyone can learn something while doing
+useful work for the community (which in turn will provide a better tools for
+yourself too); even if the amount of free time you have at hand is a couple
+of hours a week I suggest trying at least to document some software you use or
+fix that annoying bug that is driving you crazy, you will thank yourself!</p>
+<p>P.S.</p>
+<p>I'd like to thank Andrew Halberstadt for his help and his patience while
+working on some issues on Mozilla Central repo/bugzilla, thank you Andrew!</p>
+</div>
+</div>
+            </div>
+        </div>
         <div class="post">
             <h1 class="title"><a href="posts/cx_freeze_again/">cx_Freeze, again</a></h1>
             <div class="meta">
@@ -228,16 +297,16 @@ after its definition by overriding the method __declare_last__.
 Using these facts, and assuming that you have defined a model named MyModel,
 if we wanted to intercept the event "after_insert" we could write the following
 code:</p>
-<pre class="code python"><a name="rest_code_64c80e7abcb14861b53a5160be7d1ea9-1"></a><span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<a name="rest_code_64c80e7abcb14861b53a5160be7d1ea9-2"></a><span class="c1">#lets pretend to have defined our model</span>
-<a name="rest_code_64c80e7abcb14861b53a5160be7d1ea9-3"></a>
-<a name="rest_code_64c80e7abcb14861b53a5160be7d1ea9-4"></a>  <span class="k">def</span> <span class="nf">after_insert</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
-<a name="rest_code_64c80e7abcb14861b53a5160be7d1ea9-5"></a>    <span class="c1">#do some stuff</span>
-<a name="rest_code_64c80e7abcb14861b53a5160be7d1ea9-6"></a>    <span class="k">pass</span>
-<a name="rest_code_64c80e7abcb14861b53a5160be7d1ea9-7"></a>
-<a name="rest_code_64c80e7abcb14861b53a5160be7d1ea9-8"></a>  <span class="nd">@classmethod</span>
-<a name="rest_code_64c80e7abcb14861b53a5160be7d1ea9-9"></a>  <span class="k">def</span> <span class="nf">__declare_last__</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
-<a name="rest_code_64c80e7abcb14861b53a5160be7d1ea9-10"></a>    <span class="n">event</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="s2">"after_insert"</span><span class="p">,</span> <span class="n">cls</span><span class="o">.</span><span class="n">after_insert</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_8576fee0aab741759d5e0405d2d1b107-1"></a><span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<a name="rest_code_8576fee0aab741759d5e0405d2d1b107-2"></a><span class="c1">#lets pretend to have defined our model</span>
+<a name="rest_code_8576fee0aab741759d5e0405d2d1b107-3"></a>
+<a name="rest_code_8576fee0aab741759d5e0405d2d1b107-4"></a>  <span class="k">def</span> <span class="nf">after_insert</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+<a name="rest_code_8576fee0aab741759d5e0405d2d1b107-5"></a>    <span class="c1">#do some stuff</span>
+<a name="rest_code_8576fee0aab741759d5e0405d2d1b107-6"></a>    <span class="k">pass</span>
+<a name="rest_code_8576fee0aab741759d5e0405d2d1b107-7"></a>
+<a name="rest_code_8576fee0aab741759d5e0405d2d1b107-8"></a>  <span class="nd">@classmethod</span>
+<a name="rest_code_8576fee0aab741759d5e0405d2d1b107-9"></a>  <span class="k">def</span> <span class="nf">__declare_last__</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+<a name="rest_code_8576fee0aab741759d5e0405d2d1b107-10"></a>    <span class="n">event</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="s2">"after_insert"</span><span class="p">,</span> <span class="n">cls</span><span class="o">.</span><span class="n">after_insert</span><span class="p">)</span>
 </pre>
 <p>Whenever an object of class MyModel will be entered into the database
 after_insert method will be called , passing as parameters the mapping of the
@@ -252,10 +321,10 @@ of an object using the function sqlalchemy.orm.attributes.get_history (<a class=
 This function is called for each field, it returns an object of type History (<a class="reference external" href="http://docs.sqlalchemy.org/en/latest/orm/session.html#sqlalchemy.orm.attributes.History">http://docs.sqlalchemy.org/en/latest/orm/session.html#sqlalchemy.orm.attributes.History</a>)
 which we will use the method has_changes() to check for changes, and if there were,
 getting the new and old values of the field that we are analyzing, for example:</p>
-<pre class="code python"><a name="rest_code_622208f4f7ca4b0dbdeeb326640e3cbd-1"></a><span class="n">h</span> <span class="o">=</span> <span class="n">get_history</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="s2">"a_field"</span><span class="p">)</span>
-<a name="rest_code_622208f4f7ca4b0dbdeeb326640e3cbd-2"></a><span class="k">if</span> <span class="n">h</span><span class="o">.</span><span class="n">has_changes</span><span class="p">():</span>
-<a name="rest_code_622208f4f7ca4b0dbdeeb326640e3cbd-3"></a>  <span class="c1">#do something using h.deleted list to get the old values</span>
-<a name="rest_code_622208f4f7ca4b0dbdeeb326640e3cbd-4"></a>  <span class="c1">#do something using h.added list to get the new values</span>
+<pre class="code python"><a name="rest_code_616175f93cd742008e65df79adc84703-1"></a><span class="n">h</span> <span class="o">=</span> <span class="n">get_history</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="s2">"a_field"</span><span class="p">)</span>
+<a name="rest_code_616175f93cd742008e65df79adc84703-2"></a><span class="k">if</span> <span class="n">h</span><span class="o">.</span><span class="n">has_changes</span><span class="p">():</span>
+<a name="rest_code_616175f93cd742008e65df79adc84703-3"></a>  <span class="c1">#do something using h.deleted list to get the old values</span>
+<a name="rest_code_616175f93cd742008e65df79adc84703-4"></a>  <span class="c1">#do something using h.added list to get the new values</span>
 </pre>
 </div>
 <div class="section" id="loggablemixin">
@@ -265,29 +334,29 @@ time and code maintenance (and extremely annoying) so you might think about
 creating a generic Mixin with which to extend the models of our application.
 Below is the skeleton for the implementation of the above mixin, omitting the
 details of where and how the logs are stored:</p>
-<pre class="code python"><a name="rest_code_04c838edb43f48158c1223aa4be5cf05-1"></a><span class="k">class</span> <span class="nc">LoggableMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<a name="rest_code_04c838edb43f48158c1223aa4be5cf05-2"></a>
-<a name="rest_code_04c838edb43f48158c1223aa4be5cf05-3"></a>  <span class="k">def</span> <span class="nf">after_insert</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
-<a name="rest_code_04c838edb43f48158c1223aa4be5cf05-4"></a>    <span class="c1">#do some stuff for the insert</span>
-<a name="rest_code_04c838edb43f48158c1223aa4be5cf05-5"></a>    <span class="k">pass</span>
-<a name="rest_code_04c838edb43f48158c1223aa4be5cf05-6"></a>
-<a name="rest_code_04c838edb43f48158c1223aa4be5cf05-7"></a>  <span class="k">def</span> <span class="nf">after_update</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
-<a name="rest_code_04c838edb43f48158c1223aa4be5cf05-8"></a>    <span class="c1">#do some stuff for the update, maybe saving the changed fields values using get_history</span>
-<a name="rest_code_04c838edb43f48158c1223aa4be5cf05-9"></a>    <span class="k">pass</span>
-<a name="rest_code_04c838edb43f48158c1223aa4be5cf05-10"></a>
-<a name="rest_code_04c838edb43f48158c1223aa4be5cf05-11"></a>  <span class="k">def</span> <span class="nf">after_delete</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
-<a name="rest_code_04c838edb43f48158c1223aa4be5cf05-12"></a>    <span class="c1">#do some stuff</span>
-<a name="rest_code_04c838edb43f48158c1223aa4be5cf05-13"></a>    <span class="k">pass</span>
-<a name="rest_code_04c838edb43f48158c1223aa4be5cf05-14"></a>
-<a name="rest_code_04c838edb43f48158c1223aa4be5cf05-15"></a>  <span class="nd">@classmethod</span>
-<a name="rest_code_04c838edb43f48158c1223aa4be5cf05-16"></a>  <span class="k">def</span> <span class="nf">__declare_last__</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
-<a name="rest_code_04c838edb43f48158c1223aa4be5cf05-17"></a>    <span class="n">event</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="s2">"after_insert"</span><span class="p">,</span> <span class="n">cls</span><span class="o">.</span><span class="n">after_insert</span><span class="p">)</span>
-<a name="rest_code_04c838edb43f48158c1223aa4be5cf05-18"></a>    <span class="n">event</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="s2">"after_update"</span><span class="p">,</span> <span class="n">cls</span><span class="o">.</span><span class="n">after_update</span><span class="p">)</span>
-<a name="rest_code_04c838edb43f48158c1223aa4be5cf05-19"></a>    <span class="n">event</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="s2">"after_delete"</span><span class="p">,</span> <span class="n">cls</span><span class="o">.</span><span class="n">after_delete</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_3432aa56519c4c8681a28895fa4c2899-1"></a><span class="k">class</span> <span class="nc">LoggableMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-2"></a>
+<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-3"></a>  <span class="k">def</span> <span class="nf">after_insert</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-4"></a>    <span class="c1">#do some stuff for the insert</span>
+<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-5"></a>    <span class="k">pass</span>
+<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-6"></a>
+<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-7"></a>  <span class="k">def</span> <span class="nf">after_update</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-8"></a>    <span class="c1">#do some stuff for the update, maybe saving the changed fields values using get_history</span>
+<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-9"></a>    <span class="k">pass</span>
+<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-10"></a>
+<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-11"></a>  <span class="k">def</span> <span class="nf">after_delete</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-12"></a>    <span class="c1">#do some stuff</span>
+<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-13"></a>    <span class="k">pass</span>
+<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-14"></a>
+<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-15"></a>  <span class="nd">@classmethod</span>
+<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-16"></a>  <span class="k">def</span> <span class="nf">__declare_last__</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-17"></a>    <span class="n">event</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="s2">"after_insert"</span><span class="p">,</span> <span class="n">cls</span><span class="o">.</span><span class="n">after_insert</span><span class="p">)</span>
+<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-18"></a>    <span class="n">event</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="s2">"after_update"</span><span class="p">,</span> <span class="n">cls</span><span class="o">.</span><span class="n">after_update</span><span class="p">)</span>
+<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-19"></a>    <span class="n">event</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="s2">"after_delete"</span><span class="p">,</span> <span class="n">cls</span><span class="o">.</span><span class="n">after_delete</span><span class="p">)</span>
 </pre>
 <p>so, for each model we want to log changes it will be sufficient to inherit from LoggableMixin:</p>
-<pre class="code python"><a name="rest_code_d5fe0d438d024a8b96534826eb9ddbfe-1"></a><span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">SomeSuperClass</span><span class="p">,</span> <span class="n">LoggableMixin</span><span class="p">):</span>
-<a name="rest_code_d5fe0d438d024a8b96534826eb9ddbfe-2"></a>  <span class="k">pass</span>
+<pre class="code python"><a name="rest_code_0a0b5ea1e5a0434c81c51959aa0dc254-1"></a><span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">SomeSuperClass</span><span class="p">,</span> <span class="n">LoggableMixin</span><span class="p">):</span>
+<a name="rest_code_0a0b5ea1e5a0434c81c51959aa0dc254-2"></a>  <span class="k">pass</span>
 </pre>
 </div>
 <div class="section" id="improvements">
