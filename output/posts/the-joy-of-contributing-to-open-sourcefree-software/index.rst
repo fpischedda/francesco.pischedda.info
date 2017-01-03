@@ -51,7 +51,7 @@ don't we forget the joy of talking to nice people :)
 Conclusions
 ___________
 
-Contributing can be a beautiful and useful ecperience for beginners,
+Contributing can be a beautiful and useful experience for beginners,
 intermediate and senior developers, everyone can learn something while doing
 useful work for the community (which in turn will provide a better tools for
 yourself too); even if the amount of free time you have at hand is a couple

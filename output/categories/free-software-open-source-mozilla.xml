@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>@FPSD (free software open source mozilla)</title><link>https://francesco.pischedda.info/</link><description></description><atom:link href="https://francesco.pischedda.info/categories/free-software-open-source-mozilla.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sat, 31 Dec 2016 09:28:34 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>The joy of contributing to open source/free software</title><link>https://francesco.pischedda.info/posts/the-joy-of-contributing-to-open-sourcefree-software/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div&gt;&lt;p&gt;From time to time I like to give back to the community with small patches or
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>@FPSD (free software open source mozilla)</title><link>https://francesco.pischedda.info/</link><description></description><atom:link href="https://francesco.pischedda.info/categories/free-software-open-source-mozilla.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Tue, 03 Jan 2017 09:04:06 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>The joy of contributing to open source/free software</title><link>https://francesco.pischedda.info/posts/the-joy-of-contributing-to-open-sourcefree-software/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div&gt;&lt;p&gt;From time to time I like to give back to the community with small patches or
 trying to solve issues, sometimes my contribution comes from bugs found while
 implementing some kind of software and sometimes I just notice something that
 can be fixed or improved.&lt;/p&gt;
@@ -32,7 +32,7 @@ don't we forget the joy of talking to nice people :)&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="conclusions"&gt;
 &lt;h2&gt;Conclusions&lt;/h2&gt;
-&lt;p&gt;Contributing can be a beautiful and useful ecperience for beginners,
+&lt;p&gt;Contributing can be a beautiful and useful experience for beginners,
 intermediate and senior developers, everyone can learn something while doing
 useful work for the community (which in turn will provide a better tools for
 yourself too); even if the amount of free time you have at hand is a couple

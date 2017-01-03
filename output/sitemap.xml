@@ -7,7 +7,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://francesco.pischedda.info/</loc>
-  <lastmod>2016-11-24T10:02:00Z</lastmod>
+  <lastmod>2016-12-31T09:46:00Z</lastmod>
  </url>
  <url>
   <loc>https://francesco.pischedda.info/2013/</loc>
@@ -23,11 +23,11 @@
  </url>
  <url>
   <loc>https://francesco.pischedda.info/archive.html</loc>
-  <lastmod>2016-12-31T09:19:00Z</lastmod>
+  <lastmod>2017-01-03T09:04:00Z</lastmod>
  </url>
  <url>
   <loc>https://francesco.pischedda.info/categories/</loc>
-  <lastmod>2016-12-31T09:19:00Z</lastmod>
+  <lastmod>2016-12-31T09:46:00Z</lastmod>
  </url>
  <url>
   <loc>https://francesco.pischedda.info/categories/buildbot-ci-python/</loc>
@@ -71,7 +71,7 @@
  </url>
  <url>
   <loc>https://francesco.pischedda.info/it/</loc>
-  <lastmod>2016-11-24T10:02:00Z</lastmod>
+  <lastmod>2016-12-31T09:46:00Z</lastmod>
  </url>
  <url>
   <loc>https://francesco.pischedda.info/it/2013/</loc>
@@ -87,11 +87,11 @@
  </url>
  <url>
   <loc>https://francesco.pischedda.info/it/archive.html</loc>
-  <lastmod>2016-12-31T09:19:00Z</lastmod>
+  <lastmod>2017-01-03T09:04:00Z</lastmod>
  </url>
  <url>
   <loc>https://francesco.pischedda.info/it/categories/</loc>
-  <lastmod>2016-12-31T09:19:00Z</lastmod>
+  <lastmod>2016-12-31T09:46:00Z</lastmod>
  </url>
  <url>
   <loc>https://francesco.pischedda.info/it/categories/buildbot-ci-python/</loc>
@@ -165,7 +165,7 @@
  </url>
  <url>
   <loc>https://francesco.pischedda.info/it/posts/the-joy-of-contributing-to-open-sourcefree-software/</loc>
-  <lastmod>2016-12-31T09:19:00Z</lastmod>
+  <lastmod>2016-12-31T09:46:00Z</lastmod>
   <xhtml:link rel="alternate" hreflang="en" href="https://francesco.pischedda.info/posts/the-joy-of-contributing-to-open-sourcefree-software/" />
  </url>
  <url>
@@ -207,7 +207,7 @@
  </url>
  <url>
   <loc>https://francesco.pischedda.info/posts/the-joy-of-contributing-to-open-sourcefree-software/</loc>
-  <lastmod>2016-12-31T09:19:00Z</lastmod>
+  <lastmod>2016-12-31T09:46:00Z</lastmod>
  </url>
  <url>
   <loc>https://francesco.pischedda.info/posts/using-buildbot-at-sysgrove/</loc>
