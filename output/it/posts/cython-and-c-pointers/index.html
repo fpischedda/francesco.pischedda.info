@@ -65,10 +65,12 @@ during the development of a wrapper to Wakaama LWM2M library; if you
 want to learn more about <a class="reference external" href="http://www.cython.org/">Cython</a> please refer to its <a class="reference external" href="https://cython.readthedocs.io/en/latest/">documentation</a>.</p>
 <p>During the development of said wrapper I have had a nasty strange bug affecting
 my code, at some point some object referenced by a pointer kept at the C library
-side seemed to change its value! For example think about this situation:
-- you pass an object to a certain c function
-- the object's pointer is stored internally by the c library
-- you retrieve the object from the c library but its content its not the same...it's not even an instance of the same class!</p>
+side seemed to change its value! For example think about this situation:</p>
+<ul class="simple">
+<li>you pass an object to a certain c function</li>
+<li>the object's pointer is stored internally by the c library</li>
+<li>you retrieve the object from the c library but its content its not the same...it's not even an instance of the same class!</li>
+</ul>
 <p>To reproduce this behaviour please have a look at overwrite.py in my test <a class="reference external" href="https://github.com/fpischedda/cython-post">project</a>.</p>
 <p>At first I've been thinking about memory corruption caused by the C library code;
 this wrong assumption costed me at least two days of messing with gdb (that
@@ -76,18 +78,16 @@ saved my life in another memory related bug) that have not given any useful
 insight.</p>
 <p>I don't remember how I've spotted this problem but probably I should have tryed
 everything until somwthing pointed me to the right direction.</p>
-<p>What seems to happen here is something like this:
-- create an object and assign it to a variable A
-- store its pointer in the C library
-- get back the pointer of the object; it will be the same object as referenced by A
-- assign a new object to A
-- create an object assign it to a variable B
-- get back the pointer of the object; it will NOT be the same object as</p>
-<div class="system-message">
-<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">&lt;string&gt;</tt>, line 32)</p>
-Unexpected indentation.</div>
-<blockquote>
-referenced by A but it will be the one referenced by B</blockquote>
+<p>What seems to happen here is something like this:</p>
+<ol class="arabic simple">
+<li>create an object and assign it to a variable A</li>
+<li>store its pointer in the C library</li>
+<li>get back the pointer of the object; it will be the same object as referenced by A</li>
+<li>assign a new object to A</li>
+<li>create an object assign it to a variable B</li>
+<li>get back the pointer of the object; it will NOT be the same object as
+referenced by A but it will be the one referenced by B</li>
+</ol>
 <p>When the variable A is referencing the new object the old one is not referenced
 by anyone in the python world and its memory will became available to store the
 new object assigned to B and the pointer in the C world is now pointing to what

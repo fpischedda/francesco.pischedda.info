@@ -17,6 +17,7 @@ want to learn more about Cython_ please refer to its documentation_.
 During the development of said wrapper I have had a nasty strange bug affecting
 my code, at some point some object referenced by a pointer kept at the C library
 side seemed to change its value! For example think about this situation:
+
 - you pass an object to a certain c function
 - the object's pointer is stored internally by the c library
 - you retrieve the object from the c library but its content its not the same...it's not even an instance of the same class!
@@ -32,13 +33,14 @@ I don't remember how I've spotted this problem but probably I should have tryed
 everything until somwthing pointed me to the right direction.
 
 What seems to happen here is something like this:
-- create an object and assign it to a variable A
-- store its pointer in the C library
-- get back the pointer of the object; it will be the same object as referenced by A
-- assign a new object to A
-- create an object assign it to a variable B
-- get back the pointer of the object; it will NOT be the same object as
-  referenced by A but it will be the one referenced by B 
+
+1. create an object and assign it to a variable A
+2. store its pointer in the C library
+#. get back the pointer of the object; it will be the same object as referenced by A
+#. assign a new object to A
+#. create an object assign it to a variable B
+#. get back the pointer of the object; it will NOT be the same object as
+   referenced by A but it will be the one referenced by B 
 
 When the variable A is referencing the new object the old one is not referenced
 by anyone in the python world and its memory will became available to store the
