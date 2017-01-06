@@ -7,7 +7,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://francesco.pischedda.info/</loc>
-  <lastmod>2016-12-31T09:46:00Z</lastmod>
+  <lastmod>2017-01-06T15:54:00Z</lastmod>
  </url>
  <url>
   <loc>https://francesco.pischedda.info/2013/</loc>
@@ -22,12 +22,16 @@
   <lastmod>2016-11-24T10:02:00Z</lastmod>
  </url>
  <url>
+  <loc>https://francesco.pischedda.info/2017/</loc>
+  <lastmod>2017-01-06T15:54:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://francesco.pischedda.info/archive.html</loc>
-  <lastmod>2017-01-03T09:04:00Z</lastmod>
+  <lastmod>2017-01-06T15:54:00Z</lastmod>
  </url>
  <url>
   <loc>https://francesco.pischedda.info/categories/</loc>
-  <lastmod>2016-12-31T09:46:00Z</lastmod>
+  <lastmod>2017-01-06T15:54:00Z</lastmod>
  </url>
  <url>
   <loc>https://francesco.pischedda.info/categories/buildbot-ci-python/</loc>
@@ -48,6 +52,10 @@
  <url>
   <loc>https://francesco.pischedda.info/categories/pyqt-python-datepicker/</loc>
   <lastmod>2016-11-24T10:02:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://francesco.pischedda.info/categories/python-cython-c/</loc>
+  <lastmod>2017-01-06T15:54:00Z</lastmod>
  </url>
  <url>
   <loc>https://francesco.pischedda.info/categories/python-pyqt5-cx_freeze-packaging-windows/</loc>
@@ -71,7 +79,7 @@
  </url>
  <url>
   <loc>https://francesco.pischedda.info/it/</loc>
-  <lastmod>2016-12-31T09:46:00Z</lastmod>
+  <lastmod>2017-01-06T15:54:00Z</lastmod>
  </url>
  <url>
   <loc>https://francesco.pischedda.info/it/2013/</loc>
@@ -86,12 +94,16 @@
   <lastmod>2016-11-24T10:02:00Z</lastmod>
  </url>
  <url>
+  <loc>https://francesco.pischedda.info/it/2017/</loc>
+  <lastmod>2017-01-06T15:54:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://francesco.pischedda.info/it/archive.html</loc>
-  <lastmod>2017-01-03T09:04:00Z</lastmod>
+  <lastmod>2017-01-06T15:54:00Z</lastmod>
  </url>
  <url>
   <loc>https://francesco.pischedda.info/it/categories/</loc>
-  <lastmod>2016-12-31T09:46:00Z</lastmod>
+  <lastmod>2017-01-06T15:54:00Z</lastmod>
  </url>
  <url>
   <loc>https://francesco.pischedda.info/it/categories/buildbot-ci-python/</loc>
@@ -112,6 +124,10 @@
  <url>
   <loc>https://francesco.pischedda.info/it/categories/pyqt-python-datepicker/</loc>
   <lastmod>2016-11-24T10:02:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://francesco.pischedda.info/it/categories/python-cython-c/</loc>
+  <lastmod>2017-01-06T15:54:00Z</lastmod>
  </url>
  <url>
   <loc>https://francesco.pischedda.info/it/categories/python-pyqt5-cx_freeze-packaging-windows/</loc>
@@ -142,6 +158,11 @@
   <loc>https://francesco.pischedda.info/it/posts/cx_freeze_again/</loc>
   <lastmod>2016-11-24T10:02:00Z</lastmod>
   <xhtml:link rel="alternate" hreflang="en" href="https://francesco.pischedda.info/posts/cx_freeze_again/" />
+ </url>
+ <url>
+  <loc>https://francesco.pischedda.info/it/posts/cython-and-c-pointers/</loc>
+  <lastmod>2017-01-06T15:54:00Z</lastmod>
+  <xhtml:link rel="alternate" hreflang="en" href="https://francesco.pischedda.info/posts/cython-and-c-pointers/" />
  </url>
  <url>
   <loc>https://francesco.pischedda.info/it/posts/having-fun-with-rabbitmq/</loc>
@@ -188,6 +209,10 @@
  <url>
   <loc>https://francesco.pischedda.info/posts/cx_freeze_again/</loc>
   <lastmod>2016-11-24T10:02:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://francesco.pischedda.info/posts/cython-and-c-pointers/</loc>
+  <lastmod>2017-01-06T15:54:00Z</lastmod>
  </url>
  <url>
   <loc>https://francesco.pischedda.info/posts/having-fun-with-rabbitmq/</loc>

@@ -25,6 +25,73 @@
         </ul></section><section class="page-content"><div class="content" rel="main">
             
         <div class="post">
+            <h1 class="title"><a href="posts/cython-and-c-pointers/">Cython and C pointers</a></h1>
+            <div class="meta">
+                <div class="authordate">
+                    <time class="timeago" datetime="2017-01-06T16:43:40+01:00">2017-01-06 16:43</time>
+</div>
+                <div class="stats">
+                    
+        
+    <a href="posts/cython-and-c-pointers/#disqus_thread" data-disqus-identifier="cache/posts/cython-and-c-pointers.html">Comments</a>
+
+
+                </div>
+            
+        <div itemprop="keywords" class="tags">
+        <ul>
+        Tag : 
+           <li><a class="tag p-category" href="categories/python-cython-c/" rel="tag">python cython c</a></li>
+        </ul>
+</div>
+
+            </div>
+            <div class="body">
+                <div>
+<p><a class="reference external" href="http://www.cython.org/">Cython</a> is a powerful tool that can speed up your <a class="reference external" href="https://www.python.org/">Python</a> code or can help you
+to quickly create an extension module for a library that has c bindings.</p>
+<p>This post is not a cython tutorial but its about a problem I have encountered
+during the development of a wrapper to Wakaama LWM2M library; if you
+want to learn more about <a class="reference external" href="http://www.cython.org/">Cython</a> please refer to its <a class="reference external" href="https://cython.readthedocs.io/en/latest/">documentation</a>.</p>
+<p>During the development of said wrapper I have had a nasty strange bug affecting
+my code, at some point some object referenced by a pointer kept at the C library
+side seemed to change its value! For example think about this situation:
+- you pass an object to a certain c function
+- the object's pointer is stored internally by the c library
+- you retrieve the object from the c library but its content its not the same...it's not even an instance of the same class!</p>
+<p>To reproduce this behaviour please have a look at overwrite.py in my test <a class="reference external" href="https://github.com/fpischedda/cython-post">project</a>.</p>
+<p>At first I've been thinking about memory corruption caused by the C library code;
+this wrong assumption costed me at least two days of messing with gdb (that
+saved my life in another memory related bug) that have not given any useful
+insight.</p>
+<p>I don't remember how I've spotted this problem but probably I should have tryed
+everything until somwthing pointed me to the right direction.</p>
+<p>What seems to happen here is something like this:
+- create an object and assign it to a variable A
+- store its pointer in the C library
+- get back the pointer of the object; it will be the same object as referenced by A
+- assign a new object to A
+- create an object assign it to a variable B
+- get back the pointer of the object; it will NOT be the same object as</p>
+<div class="system-message">
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">&lt;string&gt;</tt>, line 32)</p>
+Unexpected indentation.</div>
+<blockquote>
+referenced by A but it will be the one referenced by B</blockquote>
+<p>When the variable A is referencing the new object the old one is not referenced
+by anyone in the python world and its memory will became available to store the
+new object assigned to B and the pointer in the C world is now pointing to what
+is referenced by B.</p>
+<p>It may seems obvious but when it happened to me it was inside a callback
+originating in the C code and being handled by a function defined by in the
+cython context.</p>
+<p>The lesson learned here is: when working with two different languages together
+nothing is naive especially when you are wrapping some code that you don't
+really know and that can bite your ass as soon as you think "what can go wrong?"</p>
+</div>
+            </div>
+        </div>
+        <div class="post">
             <h1 class="title"><a href="posts/the-joy-of-contributing-to-open-sourcefree-software/">The joy of contributing to open source/free software</a></h1>
             <div class="meta">
                 <div class="authordate">
