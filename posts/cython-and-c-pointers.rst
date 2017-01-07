@@ -30,7 +30,7 @@ saved my life in another memory related bug) that have not given any useful
 insight.
 
 I don't remember how I've spotted this problem but probably I should have tryed
-everything until somwthing pointed me to the right direction.
+everything until something pointed me to the right direction.
 
 What seems to happen here is something like this:
 
@@ -48,10 +48,13 @@ new object assigned to B and the pointer in the C world is now pointing to what
 is referenced by B.
 
 It may seems obvious but when it happened to me it was inside a callback
-originating in the C code and being handled by a function defined by in the
+originating in the C code and being handled by a function defined in the
 cython context.
 
-The lesson learned here is: when working with two different languages together
+Lesson learned
+______________
+
+When working with two different languages together
 nothing is naive especially when you are wrapping some code that you don't
 really know and that can bite your ass as soon as you think "what can go wrong?"
 
