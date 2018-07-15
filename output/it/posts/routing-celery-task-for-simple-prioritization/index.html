@@ -17,7 +17,9 @@
 <meta property="og:url" content="https://francesco.pischedda.info/it/posts/routing-celery-task-for-simple-prioritization/">
 <meta property="og:description" content="Like most businesses, where I work we need to send lots of notifications to our
 users, mainly emails and push notifications; the setup is quite simple:
-- a service accepts requests to send notificatio">
+
+
+a service accepts requests to send notificatio">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2018-07-15T09:10:22+02:00">
 <meta property="article:tag" content="Python Celery Vimcar">
@@ -62,11 +64,14 @@ users, mainly emails and push notifications; the setup is quite simple:
         <div class="body">
             <div>
 <p>Like most businesses, where I <a class="reference external" href="https://www.vimcar.com">work</a> we need to send lots of notifications to our
-users, mainly emails and push notifications; the setup is quite simple:
-- a service accepts requests to send notifications to users
-- the notification service prepare the message and put it in a queue
-- a pool of workers fetches messages from the queue and perform the actual
-delivery</p>
+users, mainly emails and push notifications; the setup is quite simple:</p>
+<blockquote>
+<ul class="simple">
+<li>a service accepts requests to send notifications to users</li>
+<li>the notification service prepare the message and put it in a queue</li>
+<li>a pool of workers fetches messages from the queue and perform the actual delivery</li>
+</ul>
+</blockquote>
 <p>This works reasonably well and we can scale the service increasing the
 instances of the notification service and the delivery workers.</p>
 <p>This setup is used also when a user requests an export of her/his historical

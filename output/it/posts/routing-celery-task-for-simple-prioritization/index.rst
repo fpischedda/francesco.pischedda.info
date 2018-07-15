@@ -12,10 +12,10 @@ Problem
 
 Like most businesses, where I work_ we need to send lots of notifications to our
 users, mainly emails and push notifications; the setup is quite simple:
-- a service accepts requests to send notifications to users
-- the notification service prepare the message and put it in a queue
-- a pool of workers fetches messages from the queue and perform the actual
-delivery
+
+    - a service accepts requests to send notifications to users
+    - the notification service prepare the message and put it in a queue
+    - a pool of workers fetches messages from the queue and perform the actual delivery
 
 This works reasonably well and we can scale the service increasing the
 instances of the notification service and the delivery workers.

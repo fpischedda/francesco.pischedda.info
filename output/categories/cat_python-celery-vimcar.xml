@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>@FPSD (Posts about Python Celery Vimcar)</title><link>https://francesco.pischedda.info/</link><description></description><atom:link href="https://francesco.pischedda.info/categories/cat_python-celery-vimcar.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sun, 15 Jul 2018 10:30:08 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Routing Celery task for simple prioritization</title><link>https://francesco.pischedda.info/posts/routing-celery-task-for-simple-prioritization/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div&gt;&lt;p&gt;Like most businesses, where I &lt;a class="reference external" href="https://www.vimcar.com"&gt;work&lt;/a&gt; we need to send lots of notifications to our
-users, mainly emails and push notifications; the setup is quite simple:
-- a service accepts requests to send notifications to users
-- the notification service prepare the message and put it in a queue
-- a pool of workers fetches messages from the queue and perform the actual
-delivery&lt;/p&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>@FPSD (Posts about Python Celery Vimcar)</title><link>https://francesco.pischedda.info/</link><description></description><atom:link href="https://francesco.pischedda.info/categories/cat_python-celery-vimcar.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sun, 15 Jul 2018 10:53:26 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Routing Celery task for simple prioritization</title><link>https://francesco.pischedda.info/posts/routing-celery-task-for-simple-prioritization/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div&gt;&lt;p&gt;Like most businesses, where I &lt;a class="reference external" href="https://www.vimcar.com"&gt;work&lt;/a&gt; we need to send lots of notifications to our
+users, mainly emails and push notifications; the setup is quite simple:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;a service accepts requests to send notifications to users&lt;/li&gt;
+&lt;li&gt;the notification service prepare the message and put it in a queue&lt;/li&gt;
+&lt;li&gt;a pool of workers fetches messages from the queue and perform the actual delivery&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;This works reasonably well and we can scale the service increasing the
 instances of the notification service and the delivery workers.&lt;/p&gt;
 &lt;p&gt;This setup is used also when a user requests an export of her/his historical
