@@ -4,7 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
 <title>Logging model changes with SQLAlchemy listeners | @FPSD</title>
-<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/bitter.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/main.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
 <link rel="alternate" type="application/rss+xml" title="RSS (en)" href="../../rss.xml">
 <link rel="alternate" type="application/rss+xml" title="RSS (it)" href="../../it/rss.xml">
 <link rel="canonical" href="https://francesco.pischedda.info/posts/logging-model-changes-with-sqlalchemy-listeners/">
@@ -77,16 +80,16 @@ after its definition by overriding the method __declare_last__.
 Using these facts, and assuming that you have defined a model named MyModel,
 if we wanted to intercept the event "after_insert" we could write the following
 code:</p>
-<pre class="code python"><a name="rest_code_8576fee0aab741759d5e0405d2d1b107-1"></a><span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<a name="rest_code_8576fee0aab741759d5e0405d2d1b107-2"></a><span class="c1">#lets pretend to have defined our model</span>
-<a name="rest_code_8576fee0aab741759d5e0405d2d1b107-3"></a>
-<a name="rest_code_8576fee0aab741759d5e0405d2d1b107-4"></a>  <span class="k">def</span> <span class="nf">after_insert</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
-<a name="rest_code_8576fee0aab741759d5e0405d2d1b107-5"></a>    <span class="c1">#do some stuff</span>
-<a name="rest_code_8576fee0aab741759d5e0405d2d1b107-6"></a>    <span class="k">pass</span>
-<a name="rest_code_8576fee0aab741759d5e0405d2d1b107-7"></a>
-<a name="rest_code_8576fee0aab741759d5e0405d2d1b107-8"></a>  <span class="nd">@classmethod</span>
-<a name="rest_code_8576fee0aab741759d5e0405d2d1b107-9"></a>  <span class="k">def</span> <span class="nf">__declare_last__</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
-<a name="rest_code_8576fee0aab741759d5e0405d2d1b107-10"></a>    <span class="n">event</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="s2">"after_insert"</span><span class="p">,</span> <span class="n">cls</span><span class="o">.</span><span class="n">after_insert</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_62fb13b58f514080a136f507d09356fa-1"></a><span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<a name="rest_code_62fb13b58f514080a136f507d09356fa-2"></a><span class="c1">#lets pretend to have defined our model</span>
+<a name="rest_code_62fb13b58f514080a136f507d09356fa-3"></a>
+<a name="rest_code_62fb13b58f514080a136f507d09356fa-4"></a>  <span class="k">def</span> <span class="nf">after_insert</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+<a name="rest_code_62fb13b58f514080a136f507d09356fa-5"></a>    <span class="c1">#do some stuff</span>
+<a name="rest_code_62fb13b58f514080a136f507d09356fa-6"></a>    <span class="k">pass</span>
+<a name="rest_code_62fb13b58f514080a136f507d09356fa-7"></a>
+<a name="rest_code_62fb13b58f514080a136f507d09356fa-8"></a>  <span class="nd">@classmethod</span>
+<a name="rest_code_62fb13b58f514080a136f507d09356fa-9"></a>  <span class="k">def</span> <span class="nf">__declare_last__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+<a name="rest_code_62fb13b58f514080a136f507d09356fa-10"></a>    <span class="n">event</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="s2">"after_insert"</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">after_insert</span><span class="p">)</span>
 </pre>
 <p>Whenever an object of class MyModel will be entered into the database
 after_insert method will be called , passing as parameters the mapping of the
@@ -101,10 +104,10 @@ of an object using the function sqlalchemy.orm.attributes.get_history (<a class=
 This function is called for each field, it returns an object of type History (<a class="reference external" href="http://docs.sqlalchemy.org/en/latest/orm/session.html#sqlalchemy.orm.attributes.History">http://docs.sqlalchemy.org/en/latest/orm/session.html#sqlalchemy.orm.attributes.History</a>)
 which we will use the method has_changes() to check for changes, and if there were,
 getting the new and old values of the field that we are analyzing, for example:</p>
-<pre class="code python"><a name="rest_code_616175f93cd742008e65df79adc84703-1"></a><span class="n">h</span> <span class="o">=</span> <span class="n">get_history</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="s2">"a_field"</span><span class="p">)</span>
-<a name="rest_code_616175f93cd742008e65df79adc84703-2"></a><span class="k">if</span> <span class="n">h</span><span class="o">.</span><span class="n">has_changes</span><span class="p">():</span>
-<a name="rest_code_616175f93cd742008e65df79adc84703-3"></a>  <span class="c1">#do something using h.deleted list to get the old values</span>
-<a name="rest_code_616175f93cd742008e65df79adc84703-4"></a>  <span class="c1">#do something using h.added list to get the new values</span>
+<pre class="code python"><a name="rest_code_be135b7072b14169ac3742efa9b79bc0-1"></a><span class="n">h</span> <span class="o">=</span> <span class="n">get_history</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="s2">"a_field"</span><span class="p">)</span>
+<a name="rest_code_be135b7072b14169ac3742efa9b79bc0-2"></a><span class="k">if</span> <span class="n">h</span><span class="o">.</span><span class="n">has_changes</span><span class="p">():</span>
+<a name="rest_code_be135b7072b14169ac3742efa9b79bc0-3"></a>  <span class="c1">#do something using h.deleted list to get the old values</span>
+<a name="rest_code_be135b7072b14169ac3742efa9b79bc0-4"></a>  <span class="c1">#do something using h.added list to get the new values</span>
 </pre>
 </div>
 <div class="section" id="loggablemixin">
@@ -114,29 +117,29 @@ time and code maintenance (and extremely annoying) so you might think about
 creating a generic Mixin with which to extend the models of our application.
 Below is the skeleton for the implementation of the above mixin, omitting the
 details of where and how the logs are stored:</p>
-<pre class="code python"><a name="rest_code_3432aa56519c4c8681a28895fa4c2899-1"></a><span class="k">class</span> <span class="nc">LoggableMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-2"></a>
-<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-3"></a>  <span class="k">def</span> <span class="nf">after_insert</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
-<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-4"></a>    <span class="c1">#do some stuff for the insert</span>
-<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-5"></a>    <span class="k">pass</span>
-<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-6"></a>
-<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-7"></a>  <span class="k">def</span> <span class="nf">after_update</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
-<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-8"></a>    <span class="c1">#do some stuff for the update, maybe saving the changed fields values using get_history</span>
-<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-9"></a>    <span class="k">pass</span>
-<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-10"></a>
-<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-11"></a>  <span class="k">def</span> <span class="nf">after_delete</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
-<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-12"></a>    <span class="c1">#do some stuff</span>
-<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-13"></a>    <span class="k">pass</span>
-<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-14"></a>
-<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-15"></a>  <span class="nd">@classmethod</span>
-<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-16"></a>  <span class="k">def</span> <span class="nf">__declare_last__</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
-<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-17"></a>    <span class="n">event</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="s2">"after_insert"</span><span class="p">,</span> <span class="n">cls</span><span class="o">.</span><span class="n">after_insert</span><span class="p">)</span>
-<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-18"></a>    <span class="n">event</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="s2">"after_update"</span><span class="p">,</span> <span class="n">cls</span><span class="o">.</span><span class="n">after_update</span><span class="p">)</span>
-<a name="rest_code_3432aa56519c4c8681a28895fa4c2899-19"></a>    <span class="n">event</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="s2">"after_delete"</span><span class="p">,</span> <span class="n">cls</span><span class="o">.</span><span class="n">after_delete</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-1"></a><span class="k">class</span> <span class="nc">LoggableMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-2"></a>
+<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-3"></a>  <span class="k">def</span> <span class="nf">after_insert</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-4"></a>    <span class="c1">#do some stuff for the insert</span>
+<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-5"></a>    <span class="k">pass</span>
+<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-6"></a>
+<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-7"></a>  <span class="k">def</span> <span class="nf">after_update</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-8"></a>    <span class="c1">#do some stuff for the update, maybe saving the changed fields values using get_history</span>
+<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-9"></a>    <span class="k">pass</span>
+<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-10"></a>
+<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-11"></a>  <span class="k">def</span> <span class="nf">after_delete</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-12"></a>    <span class="c1">#do some stuff</span>
+<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-13"></a>    <span class="k">pass</span>
+<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-14"></a>
+<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-15"></a>  <span class="nd">@classmethod</span>
+<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-16"></a>  <span class="k">def</span> <span class="nf">__declare_last__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-17"></a>    <span class="n">event</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="s2">"after_insert"</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">after_insert</span><span class="p">)</span>
+<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-18"></a>    <span class="n">event</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="s2">"after_update"</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">after_update</span><span class="p">)</span>
+<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-19"></a>    <span class="n">event</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="s2">"after_delete"</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">after_delete</span><span class="p">)</span>
 </pre>
 <p>so, for each model we want to log changes it will be sufficient to inherit from LoggableMixin:</p>
-<pre class="code python"><a name="rest_code_0a0b5ea1e5a0434c81c51959aa0dc254-1"></a><span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">SomeSuperClass</span><span class="p">,</span> <span class="n">LoggableMixin</span><span class="p">):</span>
-<a name="rest_code_0a0b5ea1e5a0434c81c51959aa0dc254-2"></a>  <span class="k">pass</span>
+<pre class="code python"><a name="rest_code_317c70dfa3144751b0f9f166da9b8a01-1"></a><span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">SomeSuperClass</span><span class="p">,</span> <span class="n">LoggableMixin</span><span class="p">):</span>
+<a name="rest_code_317c70dfa3144751b0f9f166da9b8a01-2"></a>  <span class="k">pass</span>
 </pre>
 </div>
 <div class="section" id="improvements">
@@ -191,15 +194,17 @@ at <a class="reference external" href="https://bitbucket.org/sysgrove/sysgrove">
 
 
         
+    
+
 
     </div>
 
         
-       <script>var disqus_shortname="fpsd";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script><footer id="footer"><p>Contents © 2017         <a href="mailto:francesco@pischedda.info">Francesco "fpsd" Pischedda</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+       <script>var disqus_shortname="fpsd";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script><footer id="footer"><p>Contents © 2018         <a href="mailto:francesco@pischedda.info">Francesco "fpsd" Pischedda</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
             
         </footer>
 </div>
-    </section><script src="../../assets/js/all-nocdn.js" type="text/javascript"></script><script type="text/javascript">
+    </section><script src="../../assets/js/jquery-1.10.2.min.js" type="text/javascript"></script><script src="../../assets/js/jquery.timeago.js" type="text/javascript"></script><script type="text/javascript">
             $(function(){
                 $('.timeago').timeago();
             });
