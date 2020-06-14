@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>@FPSD (Posts about rabbitmq scaling)</title><link>https://francesco.pischedda.info/</link><description></description><atom:link href="https://francesco.pischedda.info/categories/rabbitmq-scaling.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sun, 15 Jul 2018 09:53:41 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Having fun with RabbitMQ</title><link>https://francesco.pischedda.info/posts/having-fun-with-rabbitmq/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div&gt;&lt;div class="section" id="preface"&gt;
-&lt;h2&gt;Preface&lt;/h2&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>@FPSD (Posts about rabbitmq scaling)</title><link>https://francesco.pischedda.info/</link><description></description><atom:link href="https://francesco.pischedda.info/categories/rabbitmq-scaling.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sun, 14 Jun 2020 15:58:44 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Having fun with RabbitMQ</title><link>https://francesco.pischedda.info/posts/having-fun-with-rabbitmq/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div class="section" id="exploring-distributed-calculation-with-rabbitmq"&gt;
+&lt;h2&gt;Exploring Distributed Calculation With RabbitMQ&lt;/h2&gt;
+&lt;div class="section" id="preface"&gt;
+&lt;h3&gt;Preface&lt;/h3&gt;
 &lt;p&gt;Lately I’ve had to work on a complex web application which have started to have
 an increased (and increasing) number of users.
 Unfortunately this web application was not built to scale and so problems
@@ -17,11 +19,11 @@ and bigger servers until we reached the limits of the single machine again.&lt;/
 the application core from the web site and started to build the new architecture
 with these loosely defined requirements:&lt;/p&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;better use of resources&lt;/li&gt;
-&lt;li&gt;better code organization and quality&lt;/li&gt;
-&lt;li&gt;horizontal scaling&lt;/li&gt;
-&lt;li&gt;manageabilty&lt;/li&gt;
-&lt;li&gt;ready for future development&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;better use of resources&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;better code organization and quality&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;horizontal scaling&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;manageabilty&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;ready for future development&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;I admit that those where my requirements, but the management undestood that they
 have lost the ability to understand the architecture beyhond a simple web site
@@ -29,13 +31,13 @@ with a bounch of scheduled routines that, honestly, worked with the help of an
 infinite dose of luck…and also my prototype run in a fraction of time.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="building-blocks"&gt;
-&lt;h2&gt;Building blocks&lt;/h2&gt;
+&lt;h3&gt;Building blocks&lt;/h3&gt;
 &lt;p&gt;Our old backend has been broken in to those pieces:&lt;/p&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;libcore : the base code extracted from the old and stinky web site&lt;/li&gt;
-&lt;li&gt;RabbitMQ message broker&lt;/li&gt;
-&lt;li&gt;job scheduler : send messages to appropriate exchanges at appropriate time&lt;/li&gt;
-&lt;li&gt;workers : consume messages sent by the scheduler&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;libcore : the base code extracted from the old and stinky web site&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;RabbitMQ message broker&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;job scheduler : send messages to appropriate exchanges at appropriate time&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;workers : consume messages sent by the scheduler&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Leaving libcore apart doing its stuff lets focus on the scheduler and the
 workers; for details about RabbitMQ please refer to its web site
@@ -53,15 +55,16 @@ BaseConsumer class and override the "consume" method to do its tasks when a
 message is received. Done. Cool :)&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="conclusion"&gt;
-&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;h3&gt;Conclusion&lt;/h3&gt;
 &lt;p&gt;Given this simple architecture what are the benefits? Lets see:&lt;/p&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;scaling: I simply have to add more workers in the same or different machines and the calculating power will increase accordingly&lt;/li&gt;
-&lt;li&gt;flexibility: if a new task is required I have to create a new scheduled job and its consumer (even in a different language or platform) and maybe a new message type (messages are simple JSON described objects); after all is tested I have to update the scheduler and add a new worker either by updating a running worker or adding a new one without affecting the whole system; yes it can be done while the system is crunching its task and yes, obviously without affecting the web site(s)&lt;/li&gt;
-&lt;li&gt;cost effective: if we have a lot of task to complete at a certain hour in the day I could simply turn on a couple of more machines when I need it and turn those off when the whole work is completed; if you have ever used the Amazon AWS infrastructure you understand of much one can save using this approach&lt;/li&gt;
-&lt;li&gt;testing: having everything well separated I can test each block individually instead of having a code blob that is barely manageable&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;scaling: I simply have to add more workers in the same or different machines and the calculating power will increase accordingly&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;flexibility: if a new task is required I have to create a new scheduled job and its consumer (even in a different language or platform) and maybe a new message type (messages are simple JSON described objects); after all is tested I have to update the scheduler and add a new worker either by updating a running worker or adding a new one without affecting the whole system; yes it can be done while the system is crunching its task and yes, obviously without affecting the web site(s)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;cost effective: if we have a lot of task to complete at a certain hour in the day I could simply turn on a couple of more machines when I need it and turn those off when the whole work is completed; if you have ever used the Amazon AWS infrastructure you understand of much one can save using this approach&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;testing: having everything well separated I can test each block individually instead of having a code blob that is barely manageable&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;With this short post I hope to increase interest in this simple way of doing
 distribuited computing using a message broker and a simple but well architected
 system.&lt;/p&gt;
-&lt;/div&gt;&lt;/div&gt;</description><category>rabbitmq scaling</category><guid>https://francesco.pischedda.info/posts/having-fun-with-rabbitmq/</guid><pubDate>Thu, 28 Feb 2013 20:13:45 GMT</pubDate></item></channel></rss>
+&lt;/div&gt;
+&lt;/div&gt;</description><category>rabbitmq scaling</category><guid>https://francesco.pischedda.info/posts/having-fun-with-rabbitmq/</guid><pubDate>Thu, 28 Feb 2013 20:13:45 GMT</pubDate></item></channel></rss>

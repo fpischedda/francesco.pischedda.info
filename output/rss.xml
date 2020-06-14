@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>@FPSD</title><link>https://francesco.pischedda.info/</link><description>random.choice(['programming', 'gaming', 'stuff'])</description><atom:link href="https://francesco.pischedda.info/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sun, 15 Jul 2018 10:53:26 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Routing Celery task for simple prioritization</title><link>https://francesco.pischedda.info/posts/routing-celery-task-for-simple-prioritization/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div&gt;&lt;p&gt;Like most businesses, where I &lt;a class="reference external" href="https://www.vimcar.com"&gt;work&lt;/a&gt; we need to send lots of notifications to our
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>@FPSD</title><link>https://francesco.pischedda.info/</link><description>random.choice(['programming', 'gaming', 'stuff'])</description><atom:link href="https://francesco.pischedda.info/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sun, 14 Jun 2020 15:58:44 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Routing Celery task for simple prioritization</title><link>https://francesco.pischedda.info/posts/routing-celery-task-for-simple-prioritization/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div class="section" id="problem"&gt;
+&lt;h2&gt;Problem&lt;/h2&gt;
+&lt;p&gt;Like most businesses, where I &lt;a class="reference external" href="https://www.vimcar.com"&gt;work&lt;/a&gt; we need to send lots of notifications to our
 users, mainly emails and push notifications; the setup is quite simple:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;a service accepts requests to send notifications to users&lt;/li&gt;
-&lt;li&gt;the notification service prepare the message and put it in a queue&lt;/li&gt;
-&lt;li&gt;a pool of workers fetches messages from the queue and perform the actual delivery&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;a service accepts requests to send notifications to users&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;the notification service prepare the message and put it in a queue&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;a pool of workers fetches messages from the queue and perform the actual delivery&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;This works reasonably well and we can scale the service increasing the
@@ -18,13 +20,13 @@ the morning, and this fill up the notifiation queue so if a user requests an
 export during this time frame its email will have to wait a lot before it can
 be processed.&lt;/p&gt;
 &lt;div class="section" id="solution"&gt;
-&lt;h2&gt;Solution&lt;/h2&gt;
-&lt;dl class="docutils"&gt;
+&lt;h3&gt;Solution&lt;/h3&gt;
+&lt;dl class="simple"&gt;
 &lt;dt&gt;We have evaluated a couple of solutions:&lt;/dt&gt;
-&lt;dd&gt;&lt;ul class="first last simple"&gt;
-&lt;li&gt;per message priority&lt;/li&gt;
-&lt;li&gt;dedicated low priority queue for high volume automaticly generated
-notifications using task routing&lt;/li&gt;
+&lt;dd&gt;&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;p&gt;per message priority&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;dedicated low priority queue for high volume automaticly generated
+notifications using task routing&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/dd&gt;
 &lt;/dl&gt;
@@ -36,13 +38,13 @@ continue to deliver user generated notifications when we are sending our
 automated high volume notifications during the morning.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="implementation"&gt;
-&lt;h2&gt;Implementation&lt;/h2&gt;
-&lt;dl class="docutils"&gt;
+&lt;h3&gt;Implementation&lt;/h3&gt;
+&lt;dl class="simple"&gt;
 &lt;dt&gt;Our stack is based on &lt;a class="reference external" href="http://www.celeryproject.org/"&gt;Celery&lt;/a&gt; and it is composed mainly by two parts:&lt;/dt&gt;
-&lt;dd&gt;&lt;ul class="first last simple"&gt;
-&lt;li&gt;the notifications service thats send messages to a queue&lt;/li&gt;
-&lt;li&gt;a pool of workers that fetch messages from the queue and deliver the
-notifications&lt;/li&gt;
+&lt;dd&gt;&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;p&gt;the notifications service thats send messages to a queue&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;a pool of workers that fetch messages from the queue and deliver the
+notifications&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/dd&gt;
 &lt;/dl&gt;
@@ -51,8 +53,7 @@ sends messages to the queue by specifing the low or default priority queue based
 on the message type and by running a specific pool of workers bound to each
 priority queue.&lt;/p&gt;
 &lt;p&gt;Example code with routing:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-from celery import Celery
+&lt;pre class="literal-block"&gt;from celery import Celery
 
 celery = Celery()
 celery.main = 'Test app'
@@ -69,11 +70,11 @@ def task(prio, message):
 
 # calling the task specifying the queue
 task.apply_async(args=('default', next(generator)),
-                 queue='default')
-&lt;/pre&gt;
-&lt;dl class="docutils"&gt;
+                 queue='default')&lt;/pre&gt;
+&lt;dl class="simple"&gt;
 &lt;dt&gt;How to run a worker specifing the queue::&lt;/dt&gt;
-&lt;dd&gt;$ celery -A tasks worker --loglevel=INFO -Q default&lt;/dd&gt;
+&lt;dd&gt;&lt;p&gt;$ celery -A tasks worker --loglevel=INFO -Q default&lt;/p&gt;
+&lt;/dd&gt;
 &lt;/dl&gt;
 &lt;p&gt;This solution works but there is an efficency problem since when the low
 priority queue will be empty the low priority workers will be idle wasting
@@ -87,7 +88,51 @@ with default priority messages.&lt;/p&gt;
 different use cases.&lt;/p&gt;
 &lt;p&gt;P.S.
 &lt;a class="reference external" href="https://www.vimcar.com"&gt;We&lt;/a&gt; are &lt;a class="reference external" href="https://vimcar.de/career/jobs"&gt;hiring&lt;/a&gt;!&lt;/p&gt;
-&lt;/div&gt;&lt;/div&gt;</description><category>Python Celery Vimcar</category><guid>https://francesco.pischedda.info/posts/routing-celery-task-for-simple-prioritization/</guid><pubDate>Sun, 15 Jul 2018 07:10:22 GMT</pubDate></item><item><title>Cython and C pointers</title><link>https://francesco.pischedda.info/posts/cython-and-c-pointers/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div&gt;&lt;p&gt;&lt;a class="reference external" href="http://www.cython.org/"&gt;Cython&lt;/a&gt; is a powerful tool that can speed up your &lt;a class="reference external" href="https://www.python.org/"&gt;Python&lt;/a&gt; code or can help you
+&lt;/div&gt;
+&lt;/div&gt;</description><category>Python Celery Vimcar</category><guid>https://francesco.pischedda.info/posts/routing-celery-task-for-simple-prioritization/</guid><pubDate>Sun, 15 Jul 2018 07:10:22 GMT</pubDate></item><item><title>Evaluating Rust for game development</title><link>https://francesco.pischedda.info/posts/evaluating-rust-for-game-development/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div class="section" id="evaluating-rust-for-game-development"&gt;
+&lt;h2&gt;Evaluating Rust for game development&lt;/h2&gt;
+&lt;p&gt;There is no doubt that Rust is gaining popularity as a system development
+language and most of the time games and game engines are built using languages
+such as c or c++ which were born with the same target in mind, being able to
+access all the capabilities that a machine has to offer with the minimum
+runtime overhead.&lt;/p&gt;
+&lt;p&gt;In the last years, powerful engines and tools have offered a pletora of bindings
+for different languages like C#, Lua, Python, Javascript and so on with great
+results; for example Unity have had and continue to have a great success
+providing a powerful platform to build game on so why taking the risk and effort
+to use such a low level language to build a game?&lt;/p&gt;
+&lt;p&gt;As an "old school" developer I prefer to be in control of my software development
+stack and often, instead of creating the game that I have in mind, I start
+creating an engine to build my game on...but why?
+That's because it is fun! Or because for some simple game it seems to be easier
+to create a small library (or extend some old code) instead of using a powerfull
+solution like Unreal Engine, or and or and or...&lt;/p&gt;
+&lt;p&gt;I have started creating games again and again using high level languages like
+Python, Javascript, Lua and even the good old c++; in general I really like to
+create prototypes with python but it is not easy to distribute your games and
+almost impossible (or reaay hard) to target mobile platforms.
+Another option is to target the browser with the growing set of available engines
+but again, targeting mobile platforms can be a problem and targeting consoles is
+almost impossible.&lt;/p&gt;
+&lt;p&gt;Rust on the other end is a very young player in the field but with its
+ability to target many architectures I think that starting to think about
+using it can be a safe bet; there is at least one success story for using rust
+for game development and the final result is &lt;cite&gt;encouraging&amp;lt;https://www.rust-lang.org/pdfs/Rust-Chucklefish-Whitepaper.pdf&amp;gt;&lt;/cite&gt;.&lt;/p&gt;
+&lt;div class="section" id="list-of-available-resources"&gt;
+&lt;h3&gt;List of available resources&lt;/h3&gt;
+&lt;p&gt;Right now the best collection of rust game development related project can be
+found in the "Are we game yet" &lt;cite&gt;page&amp;lt;http://arewegameyet.com/&amp;gt;&lt;/cite&gt;.
+this web site maintain a list of frameworks and engines fro the lowest level
+flavour to the most complete game engine.&lt;/p&gt;
+&lt;p&gt;Of all the available solutions &lt;cite&gt;ggez&amp;lt;https://github.com/ggez/ggez/&amp;gt;&lt;/cite&gt; (Good Game Easy)
+is the one which attracts me the most because I like to create small prototypes
+and not having the knowledge overhead required by other full featured engines or
+frameworks like &lt;cite&gt;piston&amp;lt;https://github.com/PistonDevelopers/piston&amp;gt;&lt;/cite&gt; or
+&lt;cite&gt;amethyst&amp;lt;https://github.com/amethyst/amethyst&amp;gt;&lt;/cite&gt; it is helpful when experimenting;
+it also feels like a microframework to which you can add the components you need
+without having to comply with other people choices and taste.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description><category>rust gamedev programming</category><guid>https://francesco.pischedda.info/posts/evaluating-rust-for-game-development/</guid><pubDate>Sun, 06 May 2018 16:19:55 GMT</pubDate></item><item><title>Cython and C pointers</title><link>https://francesco.pischedda.info/posts/cython-and-c-pointers/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div&gt;&lt;p&gt;&lt;a class="reference external" href="http://www.cython.org/"&gt;Cython&lt;/a&gt; is a powerful tool that can speed up your &lt;a class="reference external" href="https://www.python.org/"&gt;Python&lt;/a&gt; code or can help you
 to quickly create an extension module for a library that has c bindings.&lt;/p&gt;
 &lt;p&gt;This post is not a cython tutorial but its about a problem I have encountered
 during the development of a wrapper to Wakaama LWM2M library; if you
@@ -96,9 +141,9 @@ want to learn more about &lt;a class="reference external" href="http://www.cytho
 my code, at some point some object referenced by a pointer kept at the C library
 side seemed to change its value! For example think about this situation:&lt;/p&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;you pass an object to a certain c function&lt;/li&gt;
-&lt;li&gt;the object's pointer is stored internally by the c library&lt;/li&gt;
-&lt;li&gt;you retrieve the object from the c library but its content its not the same...it's not even an instance of the same class!&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;you pass an object to a certain c function&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;the object's pointer is stored internally by the c library&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;you retrieve the object from the c library but its content its not the same...it's not even an instance of the same class!&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;To reproduce this behaviour please have a look at overwrite.py in my test &lt;a class="reference external" href="https://github.com/fpischedda/cython-post"&gt;project&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;At first I've been thinking about memory corruption caused by the C library code;
@@ -109,13 +154,13 @@ insight.&lt;/p&gt;
 everything until something pointed me to the right direction.&lt;/p&gt;
 &lt;p&gt;What seems to happen here is something like this:&lt;/p&gt;
 &lt;ol class="arabic simple"&gt;
-&lt;li&gt;create an object and assign it to a variable A&lt;/li&gt;
-&lt;li&gt;store its pointer in the C library&lt;/li&gt;
-&lt;li&gt;get back the pointer of the object; it will be the same object as referenced by A&lt;/li&gt;
-&lt;li&gt;assign a new object to A&lt;/li&gt;
-&lt;li&gt;create an object assign it to a variable B&lt;/li&gt;
-&lt;li&gt;get back the pointer of the object; it will NOT be the same object as
-referenced by A but it will be the one referenced by B&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;create an object and assign it to a variable A&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;store its pointer in the C library&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;get back the pointer of the object; it will be the same object as referenced by A&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;assign a new object to A&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;create an object assign it to a variable B&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;get back the pointer of the object; it will NOT be the same object as
+referenced by A but it will be the one referenced by B&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;When the variable A is referencing the new object the old one is not referenced
 by anyone in the python world and its memory will became available to store the
@@ -171,13 +216,15 @@ fix that annoying bug that is driving you crazy, you will thank yourself!&lt;/p&
 &lt;p&gt;P.S.&lt;/p&gt;
 &lt;p&gt;I'd like to thank Andrew Halberstadt for his help and his patience while
 working on some issues on Mozilla Central repo/bugzilla, thank you Andrew!&lt;/p&gt;
-&lt;/div&gt;&lt;/div&gt;</description><category>free software open source mozilla</category><guid>https://francesco.pischedda.info/posts/the-joy-of-contributing-to-open-sourcefree-software/</guid><pubDate>Thu, 29 Dec 2016 14:26:08 GMT</pubDate></item><item><title>cx_Freeze, again</title><link>https://francesco.pischedda.info/posts/cx_freeze_again/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div&gt;&lt;p&gt;It's been a long time since the last post and for sure I was not thiking about
+&lt;/div&gt;&lt;/div&gt;</description><category>free software open source mozilla</category><guid>https://francesco.pischedda.info/posts/the-joy-of-contributing-to-open-sourcefree-software/</guid><pubDate>Thu, 29 Dec 2016 14:26:08 GMT</pubDate></item><item><title>cx_Freeze, again</title><link>https://francesco.pischedda.info/posts/cx_freeze_again/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div class="section" id="we-meet-again-xz-freeze"&gt;
+&lt;h2&gt;We meet again, xz_Freeze&lt;/h2&gt;
+&lt;p&gt;It's been a long time since the last post and for sure I was not thiking about
 another post about cx_Freeze.
 I have spent this week end trying (and at the end  succeding) to build an
 update to an old software. For future memory I'll write briefly the steps needed
 to get a functional build without losing my mind.&lt;/p&gt;
 &lt;div class="section" id="brief-description-of-the-problem"&gt;
-&lt;h2&gt;Brief description of the problem&lt;/h2&gt;
+&lt;h3&gt;Brief description of the problem&lt;/h3&gt;
 &lt;p&gt;The software is a desktop application used to upload email attachments to a
 web based data store; the application talk to the web app using a "RESTy" api,
 and fetches the file from a email address; the GUI is written with the beatiful
@@ -185,7 +232,7 @@ PyQT5 (someone may prefere PySide) and usually this dependency is a pain to
 work with but I have to admit that the newer version installs gracefuly.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="os-version-and-things-to-download"&gt;
-&lt;h2&gt;OS version and things to download&lt;/h2&gt;
+&lt;h3&gt;OS version and things to download&lt;/h3&gt;
 &lt;p&gt;The person using this software needs to run it from a Windows OS and at this time
 Windows 7 is the oldes worsion of the OS I want to support (no Vista, please)
 since addressing Windows 10 will produce an executable with no retro compatibily
@@ -199,11 +246,11 @@ automatically installed, maybe I have forgotten to chek the corresponding
 option in the installer; anyway everything installed correctly using it, this is
 a brief list of dependencies:&lt;/p&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;requests: OK&lt;/li&gt;
-&lt;li&gt;paramiko: OK&lt;/li&gt;
-&lt;li&gt;imapclient: OK&lt;/li&gt;
-&lt;li&gt;PyQT: (surprisingly!) OK&lt;/li&gt;
-&lt;li&gt;cx_Freeze: Not ok at all..&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;requests: OK&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;paramiko: OK&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;imapclient: OK&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;PyQT: (surprisingly!) OK&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;cx_Freeze: Not ok at all..&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;cx_Freeze requires Widonws build tools that can freely (as in beer) downloaded
 and installed but even after that I was not able to install it from pip;
@@ -212,7 +259,7 @@ to download the 5.0 version because the 4.x was not able to produce a proper
 executable.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="additional-dependencies-and-some-setup-py-notes"&gt;
-&lt;h2&gt;Additional dependencies and some setup.py notes&lt;/h2&gt;
+&lt;h3&gt;Additional dependencies and some setup.py notes&lt;/h3&gt;
 &lt;p&gt;Having not touched I tought that the setup script was soemwhat correct since
 the last build was succesful, nothing more far from the truth; the first thing
 has been a nice surprise, cx_Freeze recognized correctly all the dlls to use in
@@ -222,26 +269,27 @@ work cx_Freeze guys!&lt;/p&gt;
 application could as expected, here is a list of additional dependencis that I
 had to install and reference in the setup.py file:&lt;/p&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;appdir&lt;/li&gt;
-&lt;li&gt;packaging&lt;/li&gt;
-&lt;li&gt;atexit&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;appdir&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;packaging&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;atexit&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;appdir and atexit only need to be referenced as packages instead packaging
 requires some more fine tuining so I had to add this additional sub_packages
 to the includes settings of the build_exe_options dictionary:&lt;/p&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;packaging.version&lt;/li&gt;
-&lt;li&gt;packaging.specifiers&lt;/li&gt;
-&lt;li&gt;packaging.requirements&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;packaging.version&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;packaging.specifiers&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;packaging.requirements&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div class="section" id="final-words"&gt;
-&lt;h2&gt;Final words&lt;/h2&gt;
+&lt;h3&gt;Final words&lt;/h3&gt;
 &lt;p&gt;It took me a couple of hours of trial/error to be able to ship the build and I
 hope to not have to repeat this madness again soon; if I'll need to create a new
 build in the future I hope that this little post will halp me not to waste my
 time again.&lt;/p&gt;
-&lt;/div&gt;&lt;/div&gt;</description><category>cx_Freeze Python PyQT Windows</category><guid>https://francesco.pischedda.info/posts/cx_freeze_again/</guid><pubDate>Sun, 13 Nov 2016 20:45:17 GMT</pubDate></item><item><title>PyQT5 and cx_Freeze Windows™ target tips</title><link>https://francesco.pischedda.info/posts/pyqt5-and-cx_freeze-windowstm-target-tips/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div&gt;&lt;p&gt;One of my preferred benefits of &lt;a class="reference external" href="http://www.python.org"&gt;Python&lt;/a&gt; is its portability and if coupled
+&lt;/div&gt;
+&lt;/div&gt;</description><category>cx_Freeze Python PyQT Windows</category><guid>https://francesco.pischedda.info/posts/cx_freeze_again/</guid><pubDate>Sun, 13 Nov 2016 20:45:17 GMT</pubDate></item><item><title>PyQT5 and cx_Freeze Windows™ target tips</title><link>https://francesco.pischedda.info/posts/pyqt5-and-cx_freeze-windowstm-target-tips/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div&gt;&lt;p&gt;One of my preferred benefits of &lt;a class="reference external" href="http://www.python.org"&gt;Python&lt;/a&gt; is its portability and if coupled
 with good libraries such as &lt;a class="reference external" href="http://pyqt.sourceforge.net/Docs/PyQt5/index.html"&gt;PyQT5&lt;/a&gt; the possibilities are endless.&lt;/p&gt;
 &lt;p&gt;Now imagine you created a new shiny desktop application and you want to
 distribute it, how can you package the app for easy installation?&lt;/p&gt;
@@ -250,9 +298,9 @@ distribute it, how can you package the app for easy installation?&lt;/p&gt;
 &lt;p&gt;&lt;a class="reference external" href="http://cx-freeze.sourceforge.net"&gt;cx_Freeze&lt;/a&gt; is a tool that can create a standalone version of your application
 so you can easily distribute it and the end user don't have to:&lt;/p&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;download your source code&lt;/li&gt;
-&lt;li&gt;a python interpreter&lt;/li&gt;
-&lt;li&gt;setup pip or easy_install, libraries and so on&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;download your source code&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;a python interpreter&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;setup pip or easy_install, libraries and so on&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Another nice feature of &lt;a class="reference external" href="http://cx-freeze.sourceforge.net"&gt;cx_Freeze&lt;/a&gt; is that it can create an installer for many
 different operating systems giving your application a more "professional" look.&lt;/p&gt;
@@ -277,15 +325,17 @@ quick solution (at least in my case): add the file libegl.dll to the
 your application is not "cheating" on you using system DLLs I suggest to create
 a clean windows installation inside a virtual machine; this way you can test
 your installer in a real case scenario and fix your build scripts accordingly.&lt;/p&gt;
-&lt;/div&gt;&lt;/div&gt;</description><category>python pyqt5 cx_freeze packaging windows</category><guid>https://francesco.pischedda.info/posts/pyqt5-and-cx_freeze-windowstm-target-tips/</guid><pubDate>Fri, 02 May 2014 11:04:54 GMT</pubDate></item><item><title>Logging model changes with SQLAlchemy listeners</title><link>https://francesco.pischedda.info/posts/logging-model-changes-with-sqlalchemy-listeners/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div&gt;&lt;div class="section" id="scenario"&gt;
-&lt;h2&gt;Scenario&lt;/h2&gt;
+&lt;/div&gt;&lt;/div&gt;</description><category>python pyqt5 cx_freeze packaging windows</category><guid>https://francesco.pischedda.info/posts/pyqt5-and-cx_freeze-windowstm-target-tips/</guid><pubDate>Fri, 02 May 2014 11:04:54 GMT</pubDate></item><item><title>Logging model changes with SQLAlchemy listeners</title><link>https://francesco.pischedda.info/posts/logging-model-changes-with-sqlalchemy-listeners/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div class="section" id="logging-modela-changes-with-sqlalchemy-listeners"&gt;
+&lt;h2&gt;Logging modela changes with SQLAlchemy listeners&lt;/h2&gt;
+&lt;div class="section" id="scenario"&gt;
+&lt;h3&gt;Scenario&lt;/h3&gt;
 &lt;p&gt;Imagine you have a slew of models in your application, at some point you feel
 the need to log somewhere creation, modification or deletion of data belonging
 to these models.
 How to proceed without having to modify the classes one by one?&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="what-s-on-sqlalchemy"&gt;
-&lt;h2&gt;What's on sqlalchemy&lt;/h2&gt;
+&lt;h3&gt;What's on sqlalchemy&lt;/h3&gt;
 &lt;p&gt;SQLAlchemy (&lt;a class="reference external" href="http://sqlalchemy.org"&gt;http://sqlalchemy.org&lt;/a&gt;) offers a couple of interesting mechanisms:
 the first concerns the possibility to hook to some event listeners such as
 before_insert, before_update, before_delete and the corresponding after_*.
@@ -294,16 +344,16 @@ after its definition by overriding the method __declare_last__.
 Using these facts, and assuming that you have defined a model named MyModel,
 if we wanted to intercept the event "after_insert" we could write the following
 code:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_62fb13b58f514080a136f507d09356fa-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MyModel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;a name="rest_code_62fb13b58f514080a136f507d09356fa-2"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#lets pretend to have defined our model&lt;/span&gt;
-&lt;a name="rest_code_62fb13b58f514080a136f507d09356fa-3"&gt;&lt;/a&gt;
-&lt;a name="rest_code_62fb13b58f514080a136f507d09356fa-4"&gt;&lt;/a&gt;  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;after_insert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mapper&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;connection&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;a name="rest_code_62fb13b58f514080a136f507d09356fa-5"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;#do some stuff&lt;/span&gt;
-&lt;a name="rest_code_62fb13b58f514080a136f507d09356fa-6"&gt;&lt;/a&gt;    &lt;span class="k"&gt;pass&lt;/span&gt;
-&lt;a name="rest_code_62fb13b58f514080a136f507d09356fa-7"&gt;&lt;/a&gt;
-&lt;a name="rest_code_62fb13b58f514080a136f507d09356fa-8"&gt;&lt;/a&gt;  &lt;span class="nd"&gt;@classmethod&lt;/span&gt;
-&lt;a name="rest_code_62fb13b58f514080a136f507d09356fa-9"&gt;&lt;/a&gt;  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__declare_last__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;a name="rest_code_62fb13b58f514080a136f507d09356fa-10"&gt;&lt;/a&gt;    &lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;listen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cos&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"after_insert"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;after_insert&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_62874f6cefc8442c9920518bada0095e-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MyModel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_62874f6cefc8442c9920518bada0095e-2"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#lets pretend to have defined our model&lt;/span&gt;
+&lt;a name="rest_code_62874f6cefc8442c9920518bada0095e-3"&gt;&lt;/a&gt;
+&lt;a name="rest_code_62874f6cefc8442c9920518bada0095e-4"&gt;&lt;/a&gt;  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;after_insert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mapper&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;connection&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_62874f6cefc8442c9920518bada0095e-5"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;#do some stuff&lt;/span&gt;
+&lt;a name="rest_code_62874f6cefc8442c9920518bada0095e-6"&gt;&lt;/a&gt;    &lt;span class="k"&gt;pass&lt;/span&gt;
+&lt;a name="rest_code_62874f6cefc8442c9920518bada0095e-7"&gt;&lt;/a&gt;
+&lt;a name="rest_code_62874f6cefc8442c9920518bada0095e-8"&gt;&lt;/a&gt;  &lt;span class="nd"&gt;@classmethod&lt;/span&gt;
+&lt;a name="rest_code_62874f6cefc8442c9920518bada0095e-9"&gt;&lt;/a&gt;  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__declare_last__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_62874f6cefc8442c9920518bada0095e-10"&gt;&lt;/a&gt;    &lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;listen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cos&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"after_insert"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;after_insert&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;Whenever an object of class MyModel will be entered into the database
 after_insert method will be called , passing as parameters the mapping of the
 model, the connection and the target is none other than the object that has
@@ -317,43 +367,43 @@ of an object using the function sqlalchemy.orm.attributes.get_history (&lt;a cla
 This function is called for each field, it returns an object of type History (&lt;a class="reference external" href="http://docs.sqlalchemy.org/en/latest/orm/session.html#sqlalchemy.orm.attributes.History"&gt;http://docs.sqlalchemy.org/en/latest/orm/session.html#sqlalchemy.orm.attributes.History&lt;/a&gt;)
 which we will use the method has_changes() to check for changes, and if there were,
 getting the new and old values of the field that we are analyzing, for example:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_be135b7072b14169ac3742efa9b79bc0-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;h&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;get_history&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"a_field"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_be135b7072b14169ac3742efa9b79bc0-2"&gt;&lt;/a&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;has_changes&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
-&lt;a name="rest_code_be135b7072b14169ac3742efa9b79bc0-3"&gt;&lt;/a&gt;  &lt;span class="c1"&gt;#do something using h.deleted list to get the old values&lt;/span&gt;
-&lt;a name="rest_code_be135b7072b14169ac3742efa9b79bc0-4"&gt;&lt;/a&gt;  &lt;span class="c1"&gt;#do something using h.added list to get the new values&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_18efc29c5f714ac3adc1a9fad1086f30-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;h&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;get_history&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"a_field"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_18efc29c5f714ac3adc1a9fad1086f30-2"&gt;&lt;/a&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;has_changes&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+&lt;a name="rest_code_18efc29c5f714ac3adc1a9fad1086f30-3"&gt;&lt;/a&gt;  &lt;span class="c1"&gt;#do something using h.deleted list to get the old values&lt;/span&gt;
+&lt;a name="rest_code_18efc29c5f714ac3adc1a9fad1086f30-4"&gt;&lt;/a&gt;  &lt;span class="c1"&gt;#do something using h.added list to get the new values&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;div class="section" id="loggablemixin"&gt;
-&lt;h2&gt;LoggableMixin&lt;/h2&gt;
+&lt;h3&gt;LoggableMixin&lt;/h3&gt;
 &lt;p&gt;Clearly to do this for all models of an application may be costly in terms of
 time and code maintenance (and extremely annoying) so you might think about
 creating a generic Mixin with which to extend the models of our application.
 Below is the skeleton for the implementation of the above mixin, omitting the
 details of where and how the logs are stored:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;LoggableMixin&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-2"&gt;&lt;/a&gt;
-&lt;a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-3"&gt;&lt;/a&gt;  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;after_insert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mapper&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;connection&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-4"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;#do some stuff for the insert&lt;/span&gt;
-&lt;a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-5"&gt;&lt;/a&gt;    &lt;span class="k"&gt;pass&lt;/span&gt;
-&lt;a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-6"&gt;&lt;/a&gt;
-&lt;a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-7"&gt;&lt;/a&gt;  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;after_update&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mapper&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;connection&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-8"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;#do some stuff for the update, maybe saving the changed fields values using get_history&lt;/span&gt;
-&lt;a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-9"&gt;&lt;/a&gt;    &lt;span class="k"&gt;pass&lt;/span&gt;
-&lt;a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-10"&gt;&lt;/a&gt;
-&lt;a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-11"&gt;&lt;/a&gt;  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;after_delete&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mapper&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;connection&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-12"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;#do some stuff&lt;/span&gt;
-&lt;a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-13"&gt;&lt;/a&gt;    &lt;span class="k"&gt;pass&lt;/span&gt;
-&lt;a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-14"&gt;&lt;/a&gt;
-&lt;a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-15"&gt;&lt;/a&gt;  &lt;span class="nd"&gt;@classmethod&lt;/span&gt;
-&lt;a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-16"&gt;&lt;/a&gt;  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__declare_last__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-17"&gt;&lt;/a&gt;    &lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;listen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cos&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"after_insert"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;after_insert&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-18"&gt;&lt;/a&gt;    &lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;listen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cos&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"after_update"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;after_update&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-19"&gt;&lt;/a&gt;    &lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;listen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cos&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"after_delete"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;after_delete&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;LoggableMixin&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-2"&gt;&lt;/a&gt;
+&lt;a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-3"&gt;&lt;/a&gt;  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;after_insert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mapper&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;connection&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-4"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;#do some stuff for the insert&lt;/span&gt;
+&lt;a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-5"&gt;&lt;/a&gt;    &lt;span class="k"&gt;pass&lt;/span&gt;
+&lt;a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-6"&gt;&lt;/a&gt;
+&lt;a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-7"&gt;&lt;/a&gt;  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;after_update&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mapper&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;connection&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-8"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;#do some stuff for the update, maybe saving the changed fields values using get_history&lt;/span&gt;
+&lt;a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-9"&gt;&lt;/a&gt;    &lt;span class="k"&gt;pass&lt;/span&gt;
+&lt;a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-10"&gt;&lt;/a&gt;
+&lt;a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-11"&gt;&lt;/a&gt;  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;after_delete&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mapper&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;connection&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-12"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;#do some stuff&lt;/span&gt;
+&lt;a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-13"&gt;&lt;/a&gt;    &lt;span class="k"&gt;pass&lt;/span&gt;
+&lt;a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-14"&gt;&lt;/a&gt;
+&lt;a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-15"&gt;&lt;/a&gt;  &lt;span class="nd"&gt;@classmethod&lt;/span&gt;
+&lt;a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-16"&gt;&lt;/a&gt;  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__declare_last__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-17"&gt;&lt;/a&gt;    &lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;listen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cos&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"after_insert"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;after_insert&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-18"&gt;&lt;/a&gt;    &lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;listen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cos&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"after_update"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;after_update&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-19"&gt;&lt;/a&gt;    &lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;listen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cos&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"after_delete"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;after_delete&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;p&gt;so, for each model we want to log changes it will be sufficient to inherit from LoggableMixin:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_317c70dfa3144751b0f9f166da9b8a01-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MyModel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;SomeSuperClass&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;LoggableMixin&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;a name="rest_code_317c70dfa3144751b0f9f166da9b8a01-2"&gt;&lt;/a&gt;  &lt;span class="k"&gt;pass&lt;/span&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_2490dce6ab7646bfb0d392c4cfd38ce5-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MyModel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;SomeSuperClass&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;LoggableMixin&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_2490dce6ab7646bfb0d392c4cfd38ce5-2"&gt;&lt;/a&gt;  &lt;span class="k"&gt;pass&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;div class="section" id="improvements"&gt;
-&lt;h2&gt;Improvements&lt;/h2&gt;
+&lt;h3&gt;Improvements&lt;/h3&gt;
 &lt;p&gt;One of the first improvements you can make to the class LoggableMixin could be
 the separation of the class in three different classes eg . LogInsertMixin, LogUpdateMixin LogDeleteMixin,
 in my case I preferred to have it all together given the small size of the class.
@@ -363,7 +413,7 @@ and once more the specific needs of the application I'm working on does not
 require this level of abstraction and can live well with this approach.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="conclusions"&gt;
-&lt;h2&gt;Conclusions&lt;/h2&gt;
+&lt;h3&gt;Conclusions&lt;/h3&gt;
 &lt;p&gt;SQLAlchemy provides a number of services to work with the model, the system
 just described would not have been so easy to implement if it were not for the
 quality of the API of sqlalchemy.
@@ -372,21 +422,24 @@ because within it are preserved gems of great value.
 For those wishing to see a concrete implementation of the topics discussed in
 this post they can take a look at the file sysgrove/models.py in the repository
 at &lt;a class="reference external" href="https://bitbucket.org/sysgrove/sysgrove"&gt;https://bitbucket.org/sysgrove/sysgrove&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;&lt;/div&gt;</description><category>python sqlalchemy</category><guid>https://francesco.pischedda.info/posts/logging-model-changes-with-sqlalchemy-listeners/</guid><pubDate>Wed, 11 Dec 2013 14:33:03 GMT</pubDate></item><item><title>Our QT date picker</title><link>https://francesco.pischedda.info/posts/our-qt-date-picker/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div&gt;&lt;p&gt;One of the first works carried out just entering at SysGrove (&lt;a class="reference external" href="http://sysgrove.com"&gt;http://sysgrove.com&lt;/a&gt; )
+&lt;/div&gt;
+&lt;/div&gt;</description><category>python sqlalchemy</category><guid>https://francesco.pischedda.info/posts/logging-model-changes-with-sqlalchemy-listeners/</guid><pubDate>Wed, 11 Dec 2013 14:33:03 GMT</pubDate></item><item><title>Our QT date picker</title><link>https://francesco.pischedda.info/posts/our-qt-date-picker/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div class="section" id="our-qt-date-picker"&gt;
+&lt;h2&gt;Our QT date picker&lt;/h2&gt;
+&lt;p&gt;One of the first works carried out just entering at SysGrove (&lt;a class="reference external" href="http://sysgrove.com"&gt;http://sysgrove.com&lt;/a&gt; )
 consisted in rewriting the date picker component in our application and
 requests regarding this component was that it was similar, at least as a
 feature, to the date picker available in windows 7 ™. The most interesting
 aspect of this component is the ability to be able to do some sort of zoom
 dates, I try to explain with an example:&lt;/p&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;It would be a classic date picker where are the days of the current month and
-the ability to change the month with the classic arrows&lt;/li&gt;
-&lt;li&gt;Clicking on the button in the middle of the arrows the days are replaced by
-months and the arrows will change the current year&lt;/li&gt;
-&lt;li&gt;Again by clicking on the button in the middle of the arrows months will be
-replaced by the years and the arrows will change the decade&lt;/li&gt;
-&lt;li&gt;Selecting a year will return a month view and by selecting a month will
-return a day view&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;It would be a classic date picker where are the days of the current month and
+the ability to change the month with the classic arrows&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Clicking on the button in the middle of the arrows the days are replaced by
+months and the arrows will change the current year&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Again by clicking on the button in the middle of the arrows months will be
+replaced by the years and the arrows will change the decade&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Selecting a year will return a month view and by selecting a month will
+return a day view&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Some images could help to understand the behaviour:&lt;/p&gt;
 &lt;div class="figure"&gt;
@@ -412,7 +465,12 @@ able to allow the customization of the graphical component directly in the
 process of creating an instance rather than in its base code.&lt;/p&gt;
 &lt;p&gt;The source of this component for the moment can be found in the main repository
 of our application ( &lt;a class="reference external" href="https://bitbucket.org/sysgrove/sysgrove"&gt;https://bitbucket.org/sysgrove/sysgrove&lt;/a&gt; ) path sysgrove /
-ui / classes / widgets / calendar.py&lt;/p&gt;&lt;/div&gt;</description><category>pyqt python datepicker</category><guid>https://francesco.pischedda.info/posts/our-qt-date-picker/</guid><pubDate>Tue, 10 Dec 2013 20:52:42 GMT</pubDate></item><item><title>Using buildbot at SysGrove</title><link>https://francesco.pischedda.info/posts/using-buildbot-at-sysgrove/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div&gt;&lt;p&gt;BuildBot (&lt;a class="reference external" href="http://buildbot.net/"&gt;http://buildbot.net/&lt;/a&gt;) is a framework created to simplify the
+ui / classes / widgets / calendar.py&lt;/p&gt;
+&lt;/div&gt;</description><category>pyqt python datepicker</category><guid>https://francesco.pischedda.info/posts/our-qt-date-picker/</guid><pubDate>Tue, 10 Dec 2013 20:52:42 GMT</pubDate></item><item><title>Using buildbot at SysGrove</title><link>https://francesco.pischedda.info/posts/using-buildbot-at-sysgrove/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div class="section" id="buildbot-at-sysgrove"&gt;
+&lt;h2&gt;Buildbot at SysGrove&lt;/h2&gt;
+&lt;div class="section" id="what-is-buildbot"&gt;
+&lt;h3&gt;What is buildbot&lt;/h3&gt;
+&lt;p&gt;BuildBot (&lt;a class="reference external" href="http://buildbot.net/"&gt;http://buildbot.net/&lt;/a&gt;) is a framework created to simplify the
 development of automation solutions in the field of software development.
 Unlike other systems such as Jenkins (&lt;a class="reference external" href="http://jenkins-ci.org/"&gt;http://jenkins-ci.org/&lt;/a&gt;) or TravisCI
 (&lt;a class="reference external" href="https://travis-ci.org/"&gt;https://travis-ci.org/&lt;/a&gt;) buildbot only provides a framework on which to build
@@ -426,7 +484,7 @@ Buildbot is available for virtually any platform, even if the current version
 0.8.x platform support win32-64 is not exactly the best though still usable
 with some changes (see &lt;a class="reference external" href="http://trac.buildbot.net/wiki/RunningBuildbotOnWindows"&gt;http://trac.buildbot.net/wiki/RunningBuildbotOnWindows&lt;/a&gt; )&lt;/p&gt;
 &lt;div class="section" id="id1"&gt;
-&lt;h2&gt;Buildbot at sysgrove&lt;/h2&gt;
+&lt;h4&gt;Buildbot at sysgrove&lt;/h4&gt;
 &lt;p&gt;For our development needs in SysGrove( &lt;a class="reference external" href="http://sysgrove.com"&gt;http://sysgrove.com&lt;/a&gt;) buildbot is used to
 generate the release of our application for the win32 platform. Every 12 hours
 we verify that there are some changes in our repository
@@ -442,7 +500,7 @@ operations are performed:
 or oversights that would decrease the quality of our product.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="our-setup"&gt;
-&lt;h2&gt;Our setup&lt;/h2&gt;
+&lt;h4&gt;Our setup&lt;/h4&gt;
 &lt;p&gt;As mentioned at the beginning we (&lt;a class="reference external" href="http://sysgrove.com/"&gt;http://sysgrove.com/&lt;/a&gt;) need to create an
 executable for the platform win32 (and possibly in the future for linux and
 osx) for which we need to run our script inside a win32 OS; given the relative
@@ -451,7 +509,7 @@ in a linux host (debian jessie) and a slave in a virtual machine
 with windows 7 ™ since that the slaves give far fewer problems .&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="configuration"&gt;
-&lt;h2&gt;Configuration&lt;/h2&gt;
+&lt;h4&gt;Configuration&lt;/h4&gt;
 &lt;p&gt;The configuration file, as with cfg extension, is a simple python script, you
 can use this file to configure these main areas:
 - Slaves: you can define how many slaves you want each with its own identity
@@ -461,7 +519,7 @@ can use this file to configure these main areas:
 - Various configurations such as the database to use to store the state of the system, the identity of the project (name, url) etc.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="pitfalls"&gt;
-&lt;h2&gt;Pitfalls&lt;/h2&gt;
+&lt;h4&gt;Pitfalls&lt;/h4&gt;
 &lt;p&gt;As I said earlier I had some problems with windows, probably due to my
 inexperience with the version of python for this operating system.
 One of the first difficulty concerns sqlalchemy, an ORM for python; buildbot
@@ -475,7 +533,7 @@ separate the environments (which is why the master is on a debian host and
 the slave is a on windows VM).&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="conclusions"&gt;
-&lt;h2&gt;Conclusions&lt;/h2&gt;
+&lt;h4&gt;Conclusions&lt;/h4&gt;
 &lt;p&gt;Once you understand the general concepts of buildbot, extend and customize the
 functionality becomes simply a work of configuring and creating scripts that do
 the real work, besides the web interface by default enables us to keep track of
@@ -485,8 +543,12 @@ thing, in my humble opinion and responsibility for the maintenance of such
 a system requires knowledge of a typical IT department and not a manager who,
 if desired, can always send us an email to request a build rather than messing
 around with his hands no expert ;)&lt;/p&gt;
-&lt;/div&gt;&lt;/div&gt;</description><category>buildbot CI python</category><guid>https://francesco.pischedda.info/posts/using-buildbot-at-sysgrove/</guid><pubDate>Tue, 10 Dec 2013 20:25:11 GMT</pubDate></item><item><title>Having fun with RabbitMQ</title><link>https://francesco.pischedda.info/posts/having-fun-with-rabbitmq/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div&gt;&lt;div class="section" id="preface"&gt;
-&lt;h2&gt;Preface&lt;/h2&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description><category>buildbot CI python</category><guid>https://francesco.pischedda.info/posts/using-buildbot-at-sysgrove/</guid><pubDate>Tue, 10 Dec 2013 20:25:11 GMT</pubDate></item><item><title>Having fun with RabbitMQ</title><link>https://francesco.pischedda.info/posts/having-fun-with-rabbitmq/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div class="section" id="exploring-distributed-calculation-with-rabbitmq"&gt;
+&lt;h2&gt;Exploring Distributed Calculation With RabbitMQ&lt;/h2&gt;
+&lt;div class="section" id="preface"&gt;
+&lt;h3&gt;Preface&lt;/h3&gt;
 &lt;p&gt;Lately I’ve had to work on a complex web application which have started to have
 an increased (and increasing) number of users.
 Unfortunately this web application was not built to scale and so problems
@@ -503,11 +565,11 @@ and bigger servers until we reached the limits of the single machine again.&lt;/
 the application core from the web site and started to build the new architecture
 with these loosely defined requirements:&lt;/p&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;better use of resources&lt;/li&gt;
-&lt;li&gt;better code organization and quality&lt;/li&gt;
-&lt;li&gt;horizontal scaling&lt;/li&gt;
-&lt;li&gt;manageabilty&lt;/li&gt;
-&lt;li&gt;ready for future development&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;better use of resources&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;better code organization and quality&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;horizontal scaling&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;manageabilty&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;ready for future development&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;I admit that those where my requirements, but the management undestood that they
 have lost the ability to understand the architecture beyhond a simple web site
@@ -515,13 +577,13 @@ with a bounch of scheduled routines that, honestly, worked with the help of an
 infinite dose of luck…and also my prototype run in a fraction of time.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="building-blocks"&gt;
-&lt;h2&gt;Building blocks&lt;/h2&gt;
+&lt;h3&gt;Building blocks&lt;/h3&gt;
 &lt;p&gt;Our old backend has been broken in to those pieces:&lt;/p&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;libcore : the base code extracted from the old and stinky web site&lt;/li&gt;
-&lt;li&gt;RabbitMQ message broker&lt;/li&gt;
-&lt;li&gt;job scheduler : send messages to appropriate exchanges at appropriate time&lt;/li&gt;
-&lt;li&gt;workers : consume messages sent by the scheduler&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;libcore : the base code extracted from the old and stinky web site&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;RabbitMQ message broker&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;job scheduler : send messages to appropriate exchanges at appropriate time&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;workers : consume messages sent by the scheduler&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Leaving libcore apart doing its stuff lets focus on the scheduler and the
 workers; for details about RabbitMQ please refer to its web site
@@ -539,15 +601,16 @@ BaseConsumer class and override the "consume" method to do its tasks when a
 message is received. Done. Cool :)&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="conclusion"&gt;
-&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;h3&gt;Conclusion&lt;/h3&gt;
 &lt;p&gt;Given this simple architecture what are the benefits? Lets see:&lt;/p&gt;
 &lt;ul class="simple"&gt;
-&lt;li&gt;scaling: I simply have to add more workers in the same or different machines and the calculating power will increase accordingly&lt;/li&gt;
-&lt;li&gt;flexibility: if a new task is required I have to create a new scheduled job and its consumer (even in a different language or platform) and maybe a new message type (messages are simple JSON described objects); after all is tested I have to update the scheduler and add a new worker either by updating a running worker or adding a new one without affecting the whole system; yes it can be done while the system is crunching its task and yes, obviously without affecting the web site(s)&lt;/li&gt;
-&lt;li&gt;cost effective: if we have a lot of task to complete at a certain hour in the day I could simply turn on a couple of more machines when I need it and turn those off when the whole work is completed; if you have ever used the Amazon AWS infrastructure you understand of much one can save using this approach&lt;/li&gt;
-&lt;li&gt;testing: having everything well separated I can test each block individually instead of having a code blob that is barely manageable&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;scaling: I simply have to add more workers in the same or different machines and the calculating power will increase accordingly&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;flexibility: if a new task is required I have to create a new scheduled job and its consumer (even in a different language or platform) and maybe a new message type (messages are simple JSON described objects); after all is tested I have to update the scheduler and add a new worker either by updating a running worker or adding a new one without affecting the whole system; yes it can be done while the system is crunching its task and yes, obviously without affecting the web site(s)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;cost effective: if we have a lot of task to complete at a certain hour in the day I could simply turn on a couple of more machines when I need it and turn those off when the whole work is completed; if you have ever used the Amazon AWS infrastructure you understand of much one can save using this approach&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;testing: having everything well separated I can test each block individually instead of having a code blob that is barely manageable&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;With this short post I hope to increase interest in this simple way of doing
 distribuited computing using a message broker and a simple but well architected
 system.&lt;/p&gt;
-&lt;/div&gt;&lt;/div&gt;</description><category>rabbitmq scaling</category><guid>https://francesco.pischedda.info/posts/having-fun-with-rabbitmq/</guid><pubDate>Thu, 28 Feb 2013 20:13:45 GMT</pubDate></item></channel></rss>
+&lt;/div&gt;
+&lt;/div&gt;</description><category>rabbitmq scaling</category><guid>https://francesco.pischedda.info/posts/having-fun-with-rabbitmq/</guid><pubDate>Thu, 28 Feb 2013 20:13:45 GMT</pubDate></item></channel></rss>

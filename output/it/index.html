@@ -1,14 +1,11 @@
 <!DOCTYPE html>
-<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="it">
+<html lang="it">
 <head>
 <meta charset="utf-8">
 <meta name="description" content="random.choice(['programming', 'gaming', 'stuff'])">
 <meta name="viewport" content="width=device-width">
 <title>@FPSD | @FPSD</title>
-<link href="../assets/css/bitter.css" rel="stylesheet" type="text/css">
-<link href="../assets/css/main.css" rel="stylesheet" type="text/css">
-<link href="../assets/css/rst.css" rel="stylesheet" type="text/css">
-<link href="../assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <link rel="alternate" type="application/rss+xml" title="RSS (en)" href="../rss.xml">
 <link rel="alternate" type="application/rss+xml" title="RSS (it)" href="rss.xml">
 <link rel="canonical" href="https://francesco.pischedda.info/it/">
@@ -20,7 +17,7 @@
             <li><a href="archive.html" title="Archives"><i class="icon-folder-open-alt"></i></a></li>
             <li><a href="categories/index.html" title="Tags"><i class="icon-tags"></i></a></li>
             <li><a href="rss.xml" title="RSS"><i class="icon-rss"></i></a></li>
-            <li><a href="../cv/index.html" title="CV"><i class="icon-user"></i></a></li>
+            <li><a href="../pages/services/" title="Hire me!"><i class="icon-user"></i></a></li>
             <li><a href="https://github.com/fpischedda" title="My Github"><i class="icon-github"></i></a></li>
             <li><a href="https://twitter.com/focaskater" title="Twitter"><i class="icon-twitter"></i></a></li>
             <li><a href="https://getnikola.com" title="Powered By Nikola"><i class=""></i></a></li>
@@ -36,7 +33,7 @@
                 <div class="stats">
                     
         
-    <a href="posts/routing-celery-task-for-simple-prioritization/#disqus_thread" data-disqus-identifier="cache/posts/routing-celery-task-for-simple-prioritization.html">Comments</a>
+    <a href="posts/routing-celery-task-for-simple-prioritization/#disqus_thread" data-disqus-identifier="cache/posts/routing-celery-task-for-simple-prioritization.html">Commenti</a>
 
 
                 </div>
@@ -50,14 +47,15 @@
 
             </div>
             <div class="body">
-                <div>
+                <div class="section" id="problem">
+<h2>Problem</h2>
 <p>Like most businesses, where I <a class="reference external" href="https://www.vimcar.com">work</a> we need to send lots of notifications to our
 users, mainly emails and push notifications; the setup is quite simple:</p>
 <blockquote>
 <ul class="simple">
-<li>a service accepts requests to send notifications to users</li>
-<li>the notification service prepare the message and put it in a queue</li>
-<li>a pool of workers fetches messages from the queue and perform the actual delivery</li>
+<li><p>a service accepts requests to send notifications to users</p></li>
+<li><p>the notification service prepare the message and put it in a queue</p></li>
+<li><p>a pool of workers fetches messages from the queue and perform the actual delivery</p></li>
 </ul>
 </blockquote>
 <p>This works reasonably well and we can scale the service increasing the
@@ -70,13 +68,13 @@ the morning, and this fill up the notifiation queue so if a user requests an
 export during this time frame its email will have to wait a lot before it can
 be processed.</p>
 <div class="section" id="solution">
-<h2>Solution</h2>
-<dl class="docutils">
+<h3>Solution</h3>
+<dl class="simple">
 <dt>We have evaluated a couple of solutions:</dt>
-<dd><ul class="first last simple">
-<li>per message priority</li>
-<li>dedicated low priority queue for high volume automaticly generated
-notifications using task routing</li>
+<dd><ul class="simple">
+<li><p>per message priority</p></li>
+<li><p>dedicated low priority queue for high volume automaticly generated
+notifications using task routing</p></li>
 </ul></dd>
 </dl>
 <p>The first solution is a generic one but as far as we have seen it is not easy
@@ -87,13 +85,13 @@ continue to deliver user generated notifications when we are sending our
 automated high volume notifications during the morning.</p>
 </div>
 <div class="section" id="implementation">
-<h2>Implementation</h2>
-<dl class="docutils">
+<h3>Implementation</h3>
+<dl class="simple">
 <dt>Our stack is based on <a class="reference external" href="http://www.celeryproject.org/">Celery</a> and it is composed mainly by two parts:</dt>
-<dd><ul class="first last simple">
-<li>the notifications service thats send messages to a queue</li>
-<li>a pool of workers that fetch messages from the queue and deliver the
-notifications</li>
+<dd><ul class="simple">
+<li><p>the notifications service thats send messages to a queue</p></li>
+<li><p>a pool of workers that fetch messages from the queue and deliver the
+notifications</p></li>
 </ul></dd>
 </dl>
 <p>To achieve our goal we only had to change the way that notifications service
@@ -101,8 +99,7 @@ sends messages to the queue by specifing the low or default priority queue based
 on the message type and by running a specific pool of workers bound to each
 priority queue.</p>
 <p>Example code with routing:</p>
-<pre class="literal-block">
-from celery import Celery
+<pre class="literal-block">from celery import Celery
 
 celery = Celery()
 celery.main = 'Test app'
@@ -119,11 +116,12 @@ def task(prio, message):
 
 # calling the task specifying the queue
 task.apply_async(args=('default', next(generator)),
-                 queue='default')
-</pre>
-<dl class="docutils">
+                 queue='default')</pre>
+<dl class="simple">
 <dt>How to run a worker specifing the queue::</dt>
-<dd>$ celery -A tasks worker --loglevel=INFO -Q default</dd>
+<dd>
+<p>$ celery -A tasks worker --loglevel=INFO -Q default</p>
+</dd>
 </dl>
 <p>This solution works but there is an efficency problem since when the low
 priority queue will be empty the low priority workers will be idle wasting
@@ -142,6 +140,75 @@ different use cases.</p>
             </div>
         </div>
         <div class="post">
+            <h1 class="title"><a href="posts/evaluating-rust-for-game-development/">Evaluating Rust for game development</a></h1>
+            <div class="meta">
+                <div class="authordate">
+                    <time class="timeago" datetime="2018-05-06T18:19:55+02:00">2018-05-06 18:19</time>
+</div>
+                <div class="stats">
+                    
+        
+    <a href="posts/evaluating-rust-for-game-development/#disqus_thread" data-disqus-identifier="cache/posts/evaluating-rust-for-game-development.html">Commenti</a>
+
+
+                </div>
+            
+        <div itemprop="keywords" class="tags">
+        <ul>
+        Tag : 
+           <li><a class="tag p-category" href="categories/rust-gamedev-programming/" rel="tag">rust gamedev programming</a></li>
+        </ul>
+</div>
+
+            </div>
+            <div class="body">
+                <div class="section" id="evaluating-rust-for-game-development">
+<h2>Evaluating Rust for game development</h2>
+<p>There is no doubt that Rust is gaining popularity as a system development
+language and most of the time games and game engines are built using languages
+such as c or c++ which were born with the same target in mind, being able to
+access all the capabilities that a machine has to offer with the minimum
+runtime overhead.</p>
+<p>In the last years, powerful engines and tools have offered a pletora of bindings
+for different languages like C#, Lua, Python, Javascript and so on with great
+results; for example Unity have had and continue to have a great success
+providing a powerful platform to build game on so why taking the risk and effort
+to use such a low level language to build a game?</p>
+<p>As an "old school" developer I prefer to be in control of my software development
+stack and often, instead of creating the game that I have in mind, I start
+creating an engine to build my game on...but why?
+That's because it is fun! Or because for some simple game it seems to be easier
+to create a small library (or extend some old code) instead of using a powerfull
+solution like Unreal Engine, or and or and or...</p>
+<p>I have started creating games again and again using high level languages like
+Python, Javascript, Lua and even the good old c++; in general I really like to
+create prototypes with python but it is not easy to distribute your games and
+almost impossible (or reaay hard) to target mobile platforms.
+Another option is to target the browser with the growing set of available engines
+but again, targeting mobile platforms can be a problem and targeting consoles is
+almost impossible.</p>
+<p>Rust on the other end is a very young player in the field but with its
+ability to target many architectures I think that starting to think about
+using it can be a safe bet; there is at least one success story for using rust
+for game development and the final result is <cite>encouraging&lt;https://www.rust-lang.org/pdfs/Rust-Chucklefish-Whitepaper.pdf&gt;</cite>.</p>
+<div class="section" id="list-of-available-resources">
+<h3>List of available resources</h3>
+<p>Right now the best collection of rust game development related project can be
+found in the "Are we game yet" <cite>page&lt;http://arewegameyet.com/&gt;</cite>.
+this web site maintain a list of frameworks and engines fro the lowest level
+flavour to the most complete game engine.</p>
+<p>Of all the available solutions <cite>ggez&lt;https://github.com/ggez/ggez/&gt;</cite> (Good Game Easy)
+is the one which attracts me the most because I like to create small prototypes
+and not having the knowledge overhead required by other full featured engines or
+frameworks like <cite>piston&lt;https://github.com/PistonDevelopers/piston&gt;</cite> or
+<cite>amethyst&lt;https://github.com/amethyst/amethyst&gt;</cite> it is helpful when experimenting;
+it also feels like a microframework to which you can add the components you need
+without having to comply with other people choices and taste.</p>
+</div>
+</div>
+            </div>
+        </div>
+        <div class="post">
             <h1 class="title"><a href="posts/cython-and-c-pointers/">Cython and C pointers</a></h1>
             <div class="meta">
                 <div class="authordate">
@@ -150,7 +217,7 @@ different use cases.</p>
                 <div class="stats">
                     
         
-    <a href="posts/cython-and-c-pointers/#disqus_thread" data-disqus-identifier="cache/posts/cython-and-c-pointers.html">Comments</a>
+    <a href="posts/cython-and-c-pointers/#disqus_thread" data-disqus-identifier="cache/posts/cython-and-c-pointers.html">Commenti</a>
 
 
                 </div>
@@ -174,9 +241,9 @@ want to learn more about <a class="reference external" href="http://www.cython.o
 my code, at some point some object referenced by a pointer kept at the C library
 side seemed to change its value! For example think about this situation:</p>
 <ul class="simple">
-<li>you pass an object to a certain c function</li>
-<li>the object's pointer is stored internally by the c library</li>
-<li>you retrieve the object from the c library but its content its not the same...it's not even an instance of the same class!</li>
+<li><p>you pass an object to a certain c function</p></li>
+<li><p>the object's pointer is stored internally by the c library</p></li>
+<li><p>you retrieve the object from the c library but its content its not the same...it's not even an instance of the same class!</p></li>
 </ul>
 <p>To reproduce this behaviour please have a look at overwrite.py in my test <a class="reference external" href="https://github.com/fpischedda/cython-post">project</a>.</p>
 <p>At first I've been thinking about memory corruption caused by the C library code;
@@ -187,13 +254,13 @@ insight.</p>
 everything until something pointed me to the right direction.</p>
 <p>What seems to happen here is something like this:</p>
 <ol class="arabic simple">
-<li>create an object and assign it to a variable A</li>
-<li>store its pointer in the C library</li>
-<li>get back the pointer of the object; it will be the same object as referenced by A</li>
-<li>assign a new object to A</li>
-<li>create an object assign it to a variable B</li>
-<li>get back the pointer of the object; it will NOT be the same object as
-referenced by A but it will be the one referenced by B</li>
+<li><p>create an object and assign it to a variable A</p></li>
+<li><p>store its pointer in the C library</p></li>
+<li><p>get back the pointer of the object; it will be the same object as referenced by A</p></li>
+<li><p>assign a new object to A</p></li>
+<li><p>create an object assign it to a variable B</p></li>
+<li><p>get back the pointer of the object; it will NOT be the same object as
+referenced by A but it will be the one referenced by B</p></li>
 </ol>
 <p>When the variable A is referencing the new object the old one is not referenced
 by anyone in the python world and its memory will became available to store the
@@ -220,7 +287,7 @@ really know and that can bite your ass as soon as you think "what can go wrong?"
                 <div class="stats">
                     
         
-    <a href="posts/the-joy-of-contributing-to-open-sourcefree-software/#disqus_thread" data-disqus-identifier="cache/posts/the-joy-of-contributing-to-open-sourcefree-software.html">Comments</a>
+    <a href="posts/the-joy-of-contributing-to-open-sourcefree-software/#disqus_thread" data-disqus-identifier="cache/posts/the-joy-of-contributing-to-open-sourcefree-software.html">Commenti</a>
 
 
                 </div>
@@ -290,7 +357,7 @@ working on some issues on Mozilla Central repo/bugzilla, thank you Andrew!</p>
                 <div class="stats">
                     
         
-    <a href="posts/cx_freeze_again/#disqus_thread" data-disqus-identifier="cache/posts/cx_freeze-again.html">Comments</a>
+    <a href="posts/cx_freeze_again/#disqus_thread" data-disqus-identifier="cache/posts/cx_freeze-again.html">Commenti</a>
 
 
                 </div>
@@ -304,14 +371,15 @@ working on some issues on Mozilla Central repo/bugzilla, thank you Andrew!</p>
 
             </div>
             <div class="body">
-                <div>
+                <div class="section" id="we-meet-again-xz-freeze">
+<h2>We meet again, xz_Freeze</h2>
 <p>It's been a long time since the last post and for sure I was not thiking about
 another post about cx_Freeze.
 I have spent this week end trying (and at the end  succeding) to build an
 update to an old software. For future memory I'll write briefly the steps needed
 to get a functional build without losing my mind.</p>
 <div class="section" id="brief-description-of-the-problem">
-<h2>Brief description of the problem</h2>
+<h3>Brief description of the problem</h3>
 <p>The software is a desktop application used to upload email attachments to a
 web based data store; the application talk to the web app using a "RESTy" api,
 and fetches the file from a email address; the GUI is written with the beatiful
@@ -319,7 +387,7 @@ PyQT5 (someone may prefere PySide) and usually this dependency is a pain to
 work with but I have to admit that the newer version installs gracefuly.</p>
 </div>
 <div class="section" id="os-version-and-things-to-download">
-<h2>OS version and things to download</h2>
+<h3>OS version and things to download</h3>
 <p>The person using this software needs to run it from a Windows OS and at this time
 Windows 7 is the oldes worsion of the OS I want to support (no Vista, please)
 since addressing Windows 10 will produce an executable with no retro compatibily
@@ -333,11 +401,11 @@ automatically installed, maybe I have forgotten to chek the corresponding
 option in the installer; anyway everything installed correctly using it, this is
 a brief list of dependencies:</p>
 <ul class="simple">
-<li>requests: OK</li>
-<li>paramiko: OK</li>
-<li>imapclient: OK</li>
-<li>PyQT: (surprisingly!) OK</li>
-<li>cx_Freeze: Not ok at all..</li>
+<li><p>requests: OK</p></li>
+<li><p>paramiko: OK</p></li>
+<li><p>imapclient: OK</p></li>
+<li><p>PyQT: (surprisingly!) OK</p></li>
+<li><p>cx_Freeze: Not ok at all..</p></li>
 </ul>
 <p>cx_Freeze requires Widonws build tools that can freely (as in beer) downloaded
 and installed but even after that I was not able to install it from pip;
@@ -346,7 +414,7 @@ to download the 5.0 version because the 4.x was not able to produce a proper
 executable.</p>
 </div>
 <div class="section" id="additional-dependencies-and-some-setup-py-notes">
-<h2>Additional dependencies and some setup.py notes</h2>
+<h3>Additional dependencies and some setup.py notes</h3>
 <p>Having not touched I tought that the setup script was soemwhat correct since
 the last build was succesful, nothing more far from the truth; the first thing
 has been a nice surprise, cx_Freeze recognized correctly all the dlls to use in
@@ -356,21 +424,21 @@ work cx_Freeze guys!</p>
 application could as expected, here is a list of additional dependencis that I
 had to install and reference in the setup.py file:</p>
 <ul class="simple">
-<li>appdir</li>
-<li>packaging</li>
-<li>atexit</li>
+<li><p>appdir</p></li>
+<li><p>packaging</p></li>
+<li><p>atexit</p></li>
 </ul>
 <p>appdir and atexit only need to be referenced as packages instead packaging
 requires some more fine tuining so I had to add this additional sub_packages
 to the includes settings of the build_exe_options dictionary:</p>
 <ul class="simple">
-<li>packaging.version</li>
-<li>packaging.specifiers</li>
-<li>packaging.requirements</li>
+<li><p>packaging.version</p></li>
+<li><p>packaging.specifiers</p></li>
+<li><p>packaging.requirements</p></li>
 </ul>
 </div>
 <div class="section" id="final-words">
-<h2>Final words</h2>
+<h3>Final words</h3>
 <p>It took me a couple of hours of trial/error to be able to ship the build and I
 hope to not have to repeat this madness again soon; if I'll need to create a new
 build in the future I hope that this little post will halp me not to waste my
@@ -388,7 +456,7 @@ time again.</p>
                 <div class="stats">
                     
         
-    <a href="posts/pyqt5-and-cx_freeze-windowstm-target-tips/#disqus_thread" data-disqus-identifier="cache/posts/pyqt5-and-cx_freeze-windowstm-target-tips.html">Comments</a>
+    <a href="posts/pyqt5-and-cx_freeze-windowstm-target-tips/#disqus_thread" data-disqus-identifier="cache/posts/pyqt5-and-cx_freeze-windowstm-target-tips.html">Commenti</a>
 
 
                 </div>
@@ -413,9 +481,9 @@ distribute it, how can you package the app for easy installation?</p>
 <p><a class="reference external" href="http://cx-freeze.sourceforge.net">cx_Freeze</a> is a tool that can create a standalone version of your application
 so you can easily distribute it and the end user don't have to:</p>
 <ul class="simple">
-<li>download your source code</li>
-<li>a python interpreter</li>
-<li>setup pip or easy_install, libraries and so on</li>
+<li><p>download your source code</p></li>
+<li><p>a python interpreter</p></li>
+<li><p>setup pip or easy_install, libraries and so on</p></li>
 </ul>
 <p>Another nice feature of <a class="reference external" href="http://cx-freeze.sourceforge.net">cx_Freeze</a> is that it can create an installer for many
 different operating systems giving your application a more "professional" look.</p>
@@ -453,7 +521,7 @@ your installer in a real case scenario and fix your build scripts accordingly.</
                 <div class="stats">
                     
         
-    <a href="posts/logging-model-changes-with-sqlalchemy-listeners/#disqus_thread" data-disqus-identifier="cache/posts/logging-model-changes-with-sqlalchemy-listeners.html">Comments</a>
+    <a href="posts/logging-model-changes-with-sqlalchemy-listeners/#disqus_thread" data-disqus-identifier="cache/posts/logging-model-changes-with-sqlalchemy-listeners.html">Commenti</a>
 
 
                 </div>
@@ -467,16 +535,17 @@ your installer in a real case scenario and fix your build scripts accordingly.</
 
             </div>
             <div class="body">
-                <div>
+                <div class="section" id="logging-modela-changes-with-sqlalchemy-listeners">
+<h2>Logging modela changes with SQLAlchemy listeners</h2>
 <div class="section" id="scenario">
-<h2>Scenario</h2>
+<h3>Scenario</h3>
 <p>Imagine you have a slew of models in your application, at some point you feel
 the need to log somewhere creation, modification or deletion of data belonging
 to these models.
 How to proceed without having to modify the classes one by one?</p>
 </div>
 <div class="section" id="what-s-on-sqlalchemy">
-<h2>What's on sqlalchemy</h2>
+<h3>What's on sqlalchemy</h3>
 <p>SQLAlchemy (<a class="reference external" href="http://sqlalchemy.org">http://sqlalchemy.org</a>) offers a couple of interesting mechanisms:
 the first concerns the possibility to hook to some event listeners such as
 before_insert, before_update, before_delete and the corresponding after_*.
@@ -485,16 +554,16 @@ after its definition by overriding the method __declare_last__.
 Using these facts, and assuming that you have defined a model named MyModel,
 if we wanted to intercept the event "after_insert" we could write the following
 code:</p>
-<pre class="code python"><a name="rest_code_62fb13b58f514080a136f507d09356fa-1"></a><span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<a name="rest_code_62fb13b58f514080a136f507d09356fa-2"></a><span class="c1">#lets pretend to have defined our model</span>
-<a name="rest_code_62fb13b58f514080a136f507d09356fa-3"></a>
-<a name="rest_code_62fb13b58f514080a136f507d09356fa-4"></a>  <span class="k">def</span> <span class="nf">after_insert</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
-<a name="rest_code_62fb13b58f514080a136f507d09356fa-5"></a>    <span class="c1">#do some stuff</span>
-<a name="rest_code_62fb13b58f514080a136f507d09356fa-6"></a>    <span class="k">pass</span>
-<a name="rest_code_62fb13b58f514080a136f507d09356fa-7"></a>
-<a name="rest_code_62fb13b58f514080a136f507d09356fa-8"></a>  <span class="nd">@classmethod</span>
-<a name="rest_code_62fb13b58f514080a136f507d09356fa-9"></a>  <span class="k">def</span> <span class="nf">__declare_last__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-<a name="rest_code_62fb13b58f514080a136f507d09356fa-10"></a>    <span class="n">event</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="s2">"after_insert"</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">after_insert</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_62874f6cefc8442c9920518bada0095e-1"></a><span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<a name="rest_code_62874f6cefc8442c9920518bada0095e-2"></a><span class="c1">#lets pretend to have defined our model</span>
+<a name="rest_code_62874f6cefc8442c9920518bada0095e-3"></a>
+<a name="rest_code_62874f6cefc8442c9920518bada0095e-4"></a>  <span class="k">def</span> <span class="nf">after_insert</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+<a name="rest_code_62874f6cefc8442c9920518bada0095e-5"></a>    <span class="c1">#do some stuff</span>
+<a name="rest_code_62874f6cefc8442c9920518bada0095e-6"></a>    <span class="k">pass</span>
+<a name="rest_code_62874f6cefc8442c9920518bada0095e-7"></a>
+<a name="rest_code_62874f6cefc8442c9920518bada0095e-8"></a>  <span class="nd">@classmethod</span>
+<a name="rest_code_62874f6cefc8442c9920518bada0095e-9"></a>  <span class="k">def</span> <span class="nf">__declare_last__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+<a name="rest_code_62874f6cefc8442c9920518bada0095e-10"></a>    <span class="n">event</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="s2">"after_insert"</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">after_insert</span><span class="p">)</span>
 </pre>
 <p>Whenever an object of class MyModel will be entered into the database
 after_insert method will be called , passing as parameters the mapping of the
@@ -509,46 +578,46 @@ of an object using the function sqlalchemy.orm.attributes.get_history (<a class=
 This function is called for each field, it returns an object of type History (<a class="reference external" href="http://docs.sqlalchemy.org/en/latest/orm/session.html#sqlalchemy.orm.attributes.History">http://docs.sqlalchemy.org/en/latest/orm/session.html#sqlalchemy.orm.attributes.History</a>)
 which we will use the method has_changes() to check for changes, and if there were,
 getting the new and old values of the field that we are analyzing, for example:</p>
-<pre class="code python"><a name="rest_code_be135b7072b14169ac3742efa9b79bc0-1"></a><span class="n">h</span> <span class="o">=</span> <span class="n">get_history</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="s2">"a_field"</span><span class="p">)</span>
-<a name="rest_code_be135b7072b14169ac3742efa9b79bc0-2"></a><span class="k">if</span> <span class="n">h</span><span class="o">.</span><span class="n">has_changes</span><span class="p">():</span>
-<a name="rest_code_be135b7072b14169ac3742efa9b79bc0-3"></a>  <span class="c1">#do something using h.deleted list to get the old values</span>
-<a name="rest_code_be135b7072b14169ac3742efa9b79bc0-4"></a>  <span class="c1">#do something using h.added list to get the new values</span>
+<pre class="code python"><a name="rest_code_18efc29c5f714ac3adc1a9fad1086f30-1"></a><span class="n">h</span> <span class="o">=</span> <span class="n">get_history</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="s2">"a_field"</span><span class="p">)</span>
+<a name="rest_code_18efc29c5f714ac3adc1a9fad1086f30-2"></a><span class="k">if</span> <span class="n">h</span><span class="o">.</span><span class="n">has_changes</span><span class="p">():</span>
+<a name="rest_code_18efc29c5f714ac3adc1a9fad1086f30-3"></a>  <span class="c1">#do something using h.deleted list to get the old values</span>
+<a name="rest_code_18efc29c5f714ac3adc1a9fad1086f30-4"></a>  <span class="c1">#do something using h.added list to get the new values</span>
 </pre>
 </div>
 <div class="section" id="loggablemixin">
-<h2>LoggableMixin</h2>
+<h3>LoggableMixin</h3>
 <p>Clearly to do this for all models of an application may be costly in terms of
 time and code maintenance (and extremely annoying) so you might think about
 creating a generic Mixin with which to extend the models of our application.
 Below is the skeleton for the implementation of the above mixin, omitting the
 details of where and how the logs are stored:</p>
-<pre class="code python"><a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-1"></a><span class="k">class</span> <span class="nc">LoggableMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-2"></a>
-<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-3"></a>  <span class="k">def</span> <span class="nf">after_insert</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
-<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-4"></a>    <span class="c1">#do some stuff for the insert</span>
-<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-5"></a>    <span class="k">pass</span>
-<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-6"></a>
-<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-7"></a>  <span class="k">def</span> <span class="nf">after_update</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
-<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-8"></a>    <span class="c1">#do some stuff for the update, maybe saving the changed fields values using get_history</span>
-<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-9"></a>    <span class="k">pass</span>
-<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-10"></a>
-<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-11"></a>  <span class="k">def</span> <span class="nf">after_delete</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
-<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-12"></a>    <span class="c1">#do some stuff</span>
-<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-13"></a>    <span class="k">pass</span>
-<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-14"></a>
-<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-15"></a>  <span class="nd">@classmethod</span>
-<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-16"></a>  <span class="k">def</span> <span class="nf">__declare_last__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-17"></a>    <span class="n">event</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="s2">"after_insert"</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">after_insert</span><span class="p">)</span>
-<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-18"></a>    <span class="n">event</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="s2">"after_update"</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">after_update</span><span class="p">)</span>
-<a name="rest_code_86e2ad396b3e43938b6b53115f8ecdb1-19"></a>    <span class="n">event</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="s2">"after_delete"</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">after_delete</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-1"></a><span class="k">class</span> <span class="nc">LoggableMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-2"></a>
+<a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-3"></a>  <span class="k">def</span> <span class="nf">after_insert</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+<a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-4"></a>    <span class="c1">#do some stuff for the insert</span>
+<a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-5"></a>    <span class="k">pass</span>
+<a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-6"></a>
+<a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-7"></a>  <span class="k">def</span> <span class="nf">after_update</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+<a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-8"></a>    <span class="c1">#do some stuff for the update, maybe saving the changed fields values using get_history</span>
+<a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-9"></a>    <span class="k">pass</span>
+<a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-10"></a>
+<a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-11"></a>  <span class="k">def</span> <span class="nf">after_delete</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+<a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-12"></a>    <span class="c1">#do some stuff</span>
+<a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-13"></a>    <span class="k">pass</span>
+<a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-14"></a>
+<a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-15"></a>  <span class="nd">@classmethod</span>
+<a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-16"></a>  <span class="k">def</span> <span class="nf">__declare_last__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+<a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-17"></a>    <span class="n">event</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="s2">"after_insert"</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">after_insert</span><span class="p">)</span>
+<a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-18"></a>    <span class="n">event</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="s2">"after_update"</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">after_update</span><span class="p">)</span>
+<a name="rest_code_35d319a097a64798835c8c3e86b7bd7a-19"></a>    <span class="n">event</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="s2">"after_delete"</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">after_delete</span><span class="p">)</span>
 </pre>
 <p>so, for each model we want to log changes it will be sufficient to inherit from LoggableMixin:</p>
-<pre class="code python"><a name="rest_code_317c70dfa3144751b0f9f166da9b8a01-1"></a><span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">SomeSuperClass</span><span class="p">,</span> <span class="n">LoggableMixin</span><span class="p">):</span>
-<a name="rest_code_317c70dfa3144751b0f9f166da9b8a01-2"></a>  <span class="k">pass</span>
+<pre class="code python"><a name="rest_code_2490dce6ab7646bfb0d392c4cfd38ce5-1"></a><span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">SomeSuperClass</span><span class="p">,</span> <span class="n">LoggableMixin</span><span class="p">):</span>
+<a name="rest_code_2490dce6ab7646bfb0d392c4cfd38ce5-2"></a>  <span class="k">pass</span>
 </pre>
 </div>
 <div class="section" id="improvements">
-<h2>Improvements</h2>
+<h3>Improvements</h3>
 <p>One of the first improvements you can make to the class LoggableMixin could be
 the separation of the class in three different classes eg . LogInsertMixin, LogUpdateMixin LogDeleteMixin,
 in my case I preferred to have it all together given the small size of the class.
@@ -558,7 +627,7 @@ and once more the specific needs of the application I'm working on does not
 require this level of abstraction and can live well with this approach.</p>
 </div>
 <div class="section" id="conclusions">
-<h2>Conclusions</h2>
+<h3>Conclusions</h3>
 <p>SQLAlchemy provides a number of services to work with the model, the system
 just described would not have been so easy to implement if it were not for the
 quality of the API of sqlalchemy.
@@ -580,7 +649,7 @@ at <a class="reference external" href="https://bitbucket.org/sysgrove/sysgrove">
                 <div class="stats">
                     
         
-    <a href="posts/our-qt-date-picker/#disqus_thread" data-disqus-identifier="cache/posts/our-qt-date-picker.html">Comments</a>
+    <a href="posts/our-qt-date-picker/#disqus_thread" data-disqus-identifier="cache/posts/our-qt-date-picker.html">Commenti</a>
 
 
                 </div>
@@ -594,7 +663,8 @@ at <a class="reference external" href="https://bitbucket.org/sysgrove/sysgrove">
 
             </div>
             <div class="body">
-                <div>
+                <div class="section" id="our-qt-date-picker">
+<h2>Our QT date picker</h2>
 <p>One of the first works carried out just entering at SysGrove (<a class="reference external" href="http://sysgrove.com">http://sysgrove.com</a> )
 consisted in rewriting the date picker component in our application and
 requests regarding this component was that it was similar, at least as a
@@ -602,14 +672,14 @@ feature, to the date picker available in windows 7 ™. The most interesting
 aspect of this component is the ability to be able to do some sort of zoom
 dates, I try to explain with an example:</p>
 <ul class="simple">
-<li>It would be a classic date picker where are the days of the current month and
-the ability to change the month with the classic arrows</li>
-<li>Clicking on the button in the middle of the arrows the days are replaced by
-months and the arrows will change the current year</li>
-<li>Again by clicking on the button in the middle of the arrows months will be
-replaced by the years and the arrows will change the decade</li>
-<li>Selecting a year will return a month view and by selecting a month will
-return a day view</li>
+<li><p>It would be a classic date picker where are the days of the current month and
+the ability to change the month with the classic arrows</p></li>
+<li><p>Clicking on the button in the middle of the arrows the days are replaced by
+months and the arrows will change the current year</p></li>
+<li><p>Again by clicking on the button in the middle of the arrows months will be
+replaced by the years and the arrows will change the decade</p></li>
+<li><p>Selecting a year will return a month view and by selecting a month will
+return a day view</p></li>
 </ul>
 <p>Some images could help to understand the behaviour:</p>
 <div class="figure">
@@ -645,7 +715,7 @@ ui / classes / widgets / calendar.py</p>
                 <div class="stats">
                     
         
-    <a href="posts/using-buildbot-at-sysgrove/#disqus_thread" data-disqus-identifier="cache/posts/using-buildbot-at-sysgrove.html">Comments</a>
+    <a href="posts/using-buildbot-at-sysgrove/#disqus_thread" data-disqus-identifier="cache/posts/using-buildbot-at-sysgrove.html">Commenti</a>
 
 
                 </div>
@@ -659,7 +729,10 @@ ui / classes / widgets / calendar.py</p>
 
             </div>
             <div class="body">
-                <div>
+                <div class="section" id="buildbot-at-sysgrove">
+<h2>Buildbot at SysGrove</h2>
+<div class="section" id="what-is-buildbot">
+<h3>What is buildbot</h3>
 <p>BuildBot (<a class="reference external" href="http://buildbot.net/">http://buildbot.net/</a>) is a framework created to simplify the
 development of automation solutions in the field of software development.
 Unlike other systems such as Jenkins (<a class="reference external" href="http://jenkins-ci.org/">http://jenkins-ci.org/</a>) or TravisCI
@@ -674,7 +747,7 @@ Buildbot is available for virtually any platform, even if the current version
 0.8.x platform support win32-64 is not exactly the best though still usable
 with some changes (see <a class="reference external" href="http://trac.buildbot.net/wiki/RunningBuildbotOnWindows">http://trac.buildbot.net/wiki/RunningBuildbotOnWindows</a> )</p>
 <div class="section" id="id1">
-<h2>Buildbot at sysgrove</h2>
+<h4>Buildbot at sysgrove</h4>
 <p>For our development needs in SysGrove( <a class="reference external" href="http://sysgrove.com">http://sysgrove.com</a>) buildbot is used to
 generate the release of our application for the win32 platform. Every 12 hours
 we verify that there are some changes in our repository
@@ -690,7 +763,7 @@ operations are performed:
 or oversights that would decrease the quality of our product.</p>
 </div>
 <div class="section" id="our-setup">
-<h2>Our setup</h2>
+<h4>Our setup</h4>
 <p>As mentioned at the beginning we (<a class="reference external" href="http://sysgrove.com/">http://sysgrove.com/</a>) need to create an
 executable for the platform win32 (and possibly in the future for linux and
 osx) for which we need to run our script inside a win32 OS; given the relative
@@ -699,7 +772,7 @@ in a linux host (debian jessie) and a slave in a virtual machine
 with windows 7 ™ since that the slaves give far fewer problems .</p>
 </div>
 <div class="section" id="configuration">
-<h2>Configuration</h2>
+<h4>Configuration</h4>
 <p>The configuration file, as with cfg extension, is a simple python script, you
 can use this file to configure these main areas:
 - Slaves: you can define how many slaves you want each with its own identity
@@ -709,7 +782,7 @@ can use this file to configure these main areas:
 - Various configurations such as the database to use to store the state of the system, the identity of the project (name, url) etc.</p>
 </div>
 <div class="section" id="pitfalls">
-<h2>Pitfalls</h2>
+<h4>Pitfalls</h4>
 <p>As I said earlier I had some problems with windows, probably due to my
 inexperience with the version of python for this operating system.
 One of the first difficulty concerns sqlalchemy, an ORM for python; buildbot
@@ -723,7 +796,7 @@ separate the environments (which is why the master is on a debian host and
 the slave is a on windows VM).</p>
 </div>
 <div class="section" id="conclusions">
-<h2>Conclusions</h2>
+<h4>Conclusions</h4>
 <p>Once you understand the general concepts of buildbot, extend and customize the
 functionality becomes simply a work of configuring and creating scripts that do
 the real work, besides the web interface by default enables us to keep track of
@@ -733,6 +806,7 @@ thing, in my humble opinion and responsibility for the maintenance of such
 a system requires knowledge of a typical IT department and not a manager who,
 if desired, can always send us an email to request a build rather than messing
 around with his hands no expert ;)</p>
+</div>
 </div>
 </div>
             </div>
@@ -746,7 +820,7 @@ around with his hands no expert ;)</p>
                 <div class="stats">
                     
         
-    <a href="posts/having-fun-with-rabbitmq/#disqus_thread" data-disqus-identifier="cache/posts/having-fun-with-rabbitmq.html">Comments</a>
+    <a href="posts/having-fun-with-rabbitmq/#disqus_thread" data-disqus-identifier="cache/posts/having-fun-with-rabbitmq.html">Commenti</a>
 
 
                 </div>
@@ -760,9 +834,10 @@ around with his hands no expert ;)</p>
 
             </div>
             <div class="body">
-                <div>
+                <div class="section" id="exploring-distributed-calculation-with-rabbitmq">
+<h2>Exploring Distributed Calculation With RabbitMQ</h2>
 <div class="section" id="preface">
-<h2>Preface</h2>
+<h3>Preface</h3>
 <p>Lately I’ve had to work on a complex web application which have started to have
 an increased (and increasing) number of users.
 Unfortunately this web application was not built to scale and so problems
@@ -779,11 +854,11 @@ and bigger servers until we reached the limits of the single machine again.</p>
 the application core from the web site and started to build the new architecture
 with these loosely defined requirements:</p>
 <ul class="simple">
-<li>better use of resources</li>
-<li>better code organization and quality</li>
-<li>horizontal scaling</li>
-<li>manageabilty</li>
-<li>ready for future development</li>
+<li><p>better use of resources</p></li>
+<li><p>better code organization and quality</p></li>
+<li><p>horizontal scaling</p></li>
+<li><p>manageabilty</p></li>
+<li><p>ready for future development</p></li>
 </ul>
 <p>I admit that those where my requirements, but the management undestood that they
 have lost the ability to understand the architecture beyhond a simple web site
@@ -791,13 +866,13 @@ with a bounch of scheduled routines that, honestly, worked with the help of an
 infinite dose of luck…and also my prototype run in a fraction of time.</p>
 </div>
 <div class="section" id="building-blocks">
-<h2>Building blocks</h2>
+<h3>Building blocks</h3>
 <p>Our old backend has been broken in to those pieces:</p>
 <ul class="simple">
-<li>libcore : the base code extracted from the old and stinky web site</li>
-<li>RabbitMQ message broker</li>
-<li>job scheduler : send messages to appropriate exchanges at appropriate time</li>
-<li>workers : consume messages sent by the scheduler</li>
+<li><p>libcore : the base code extracted from the old and stinky web site</p></li>
+<li><p>RabbitMQ message broker</p></li>
+<li><p>job scheduler : send messages to appropriate exchanges at appropriate time</p></li>
+<li><p>workers : consume messages sent by the scheduler</p></li>
 </ul>
 <p>Leaving libcore apart doing its stuff lets focus on the scheduler and the
 workers; for details about RabbitMQ please refer to its web site
@@ -815,13 +890,13 @@ BaseConsumer class and override the "consume" method to do its tasks when a
 message is received. Done. Cool :)</p>
 </div>
 <div class="section" id="conclusion">
-<h2>Conclusion</h2>
+<h3>Conclusion</h3>
 <p>Given this simple architecture what are the benefits? Lets see:</p>
 <ul class="simple">
-<li>scaling: I simply have to add more workers in the same or different machines and the calculating power will increase accordingly</li>
-<li>flexibility: if a new task is required I have to create a new scheduled job and its consumer (even in a different language or platform) and maybe a new message type (messages are simple JSON described objects); after all is tested I have to update the scheduler and add a new worker either by updating a running worker or adding a new one without affecting the whole system; yes it can be done while the system is crunching its task and yes, obviously without affecting the web site(s)</li>
-<li>cost effective: if we have a lot of task to complete at a certain hour in the day I could simply turn on a couple of more machines when I need it and turn those off when the whole work is completed; if you have ever used the Amazon AWS infrastructure you understand of much one can save using this approach</li>
-<li>testing: having everything well separated I can test each block individually instead of having a code blob that is barely manageable</li>
+<li><p>scaling: I simply have to add more workers in the same or different machines and the calculating power will increase accordingly</p></li>
+<li><p>flexibility: if a new task is required I have to create a new scheduled job and its consumer (even in a different language or platform) and maybe a new message type (messages are simple JSON described objects); after all is tested I have to update the scheduler and add a new worker either by updating a running worker or adding a new one without affecting the whole system; yes it can be done while the system is crunching its task and yes, obviously without affecting the web site(s)</p></li>
+<li><p>cost effective: if we have a lot of task to complete at a certain hour in the day I could simply turn on a couple of more machines when I need it and turn those off when the whole work is completed; if you have ever used the Amazon AWS infrastructure you understand of much one can save using this approach</p></li>
+<li><p>testing: having everything well separated I can test each block individually instead of having a code blob that is barely manageable</p></li>
 </ul>
 <p>With this short post I hope to increase interest in this simple way of doing
 distribuited computing using a message broker and a simple but well architected
@@ -834,11 +909,11 @@ system.</p>
 
     
         
-       <script>var disqus_shortname="fpsd";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script><footer id="footer"><p>Contents © 2018         <a href="mailto:francesco@pischedda.info">Francesco "fpsd" Pischedda</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+       <script>var disqus_shortname="fpsd";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script><footer id="footer"><p>Contents © 2020         <a href="mailto:francesco@pischedda.info">Francesco "fpsd" Pischedda</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
             
         </footer>
 </div>
-    </section><script src="../assets/js/jquery-1.10.2.min.js" type="text/javascript"></script><script src="../assets/js/jquery.timeago.js" type="text/javascript"></script><script type="text/javascript">
+    </section><script src="../assets/js/all-nocdn.js" type="text/javascript"></script><script type="text/javascript">
             $(function(){
                 $('.timeago').timeago();
             });

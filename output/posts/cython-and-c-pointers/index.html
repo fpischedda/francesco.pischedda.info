@@ -1,13 +1,10 @@
 <!DOCTYPE html>
-<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
 <title>Cython and C pointers | @FPSD</title>
-<link href="../../assets/css/bitter.css" rel="stylesheet" type="text/css">
-<link href="../../assets/css/main.css" rel="stylesheet" type="text/css">
-<link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
-<link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <link rel="alternate" type="application/rss+xml" title="RSS (en)" href="../../rss.xml">
 <link rel="alternate" type="application/rss+xml" title="RSS (it)" href="../../it/rss.xml">
 <link rel="canonical" href="https://francesco.pischedda.info/posts/cython-and-c-pointers/">
@@ -29,7 +26,7 @@ This post is not a cython tutorial but its about a">
             <li><a href="../../archive.html" title="Archives"><i class="icon-folder-open-alt"></i></a></li>
             <li><a href="../../categories/index.html" title="Tags"><i class="icon-tags"></i></a></li>
             <li><a href="../../rss.xml" title="RSS"><i class="icon-rss"></i></a></li>
-            <li><a href="../../cv/index.html" title="CV"><i class="icon-user"></i></a></li>
+            <li><a href="../../pages/services/" title="Hire me!"><i class="icon-user"></i></a></li>
             <li><a href="https://github.com/fpischedda" title="My Github"><i class="icon-github"></i></a></li>
             <li><a href="https://twitter.com/focaskater" title="Twitter"><i class="icon-twitter"></i></a></li>
             <li><a href="https://getnikola.com" title="Powered By Nikola"><i class=""></i></a></li>
@@ -70,9 +67,9 @@ want to learn more about <a class="reference external" href="http://www.cython.o
 my code, at some point some object referenced by a pointer kept at the C library
 side seemed to change its value! For example think about this situation:</p>
 <ul class="simple">
-<li>you pass an object to a certain c function</li>
-<li>the object's pointer is stored internally by the c library</li>
-<li>you retrieve the object from the c library but its content its not the same...it's not even an instance of the same class!</li>
+<li><p>you pass an object to a certain c function</p></li>
+<li><p>the object's pointer is stored internally by the c library</p></li>
+<li><p>you retrieve the object from the c library but its content its not the same...it's not even an instance of the same class!</p></li>
 </ul>
 <p>To reproduce this behaviour please have a look at overwrite.py in my test <a class="reference external" href="https://github.com/fpischedda/cython-post">project</a>.</p>
 <p>At first I've been thinking about memory corruption caused by the C library code;
@@ -83,13 +80,13 @@ insight.</p>
 everything until something pointed me to the right direction.</p>
 <p>What seems to happen here is something like this:</p>
 <ol class="arabic simple">
-<li>create an object and assign it to a variable A</li>
-<li>store its pointer in the C library</li>
-<li>get back the pointer of the object; it will be the same object as referenced by A</li>
-<li>assign a new object to A</li>
-<li>create an object assign it to a variable B</li>
-<li>get back the pointer of the object; it will NOT be the same object as
-referenced by A but it will be the one referenced by B</li>
+<li><p>create an object and assign it to a variable A</p></li>
+<li><p>store its pointer in the C library</p></li>
+<li><p>get back the pointer of the object; it will be the same object as referenced by A</p></li>
+<li><p>assign a new object to A</p></li>
+<li><p>create an object assign it to a variable B</p></li>
+<li><p>get back the pointer of the object; it will NOT be the same object as
+referenced by A but it will be the one referenced by B</p></li>
 </ol>
 <p>When the variable A is referencing the new object the old one is not referenced
 by anyone in the python world and its memory will became available to store the
@@ -112,7 +109,7 @@ really know and that can bite your ass as soon as you think "what can go wrong?"
                 <a href="../the-joy-of-contributing-to-open-sourcefree-software/" rel="prev" title="The joy of contributing to open source/free software">Previous post</a>
             </li>
             <li class="next">
-                <a href="../routing-celery-task-for-simple-prioritization/" rel="next" title="Routing Celery task for simple prioritization">Next post</a>
+                <a href="../evaluating-rust-for-game-development/" rel="next" title="Evaluating Rust for game development">Next post</a>
             </li>
         </ul>
 <div id="disqus_thread"></div>
@@ -141,11 +138,11 @@ really know and that can bite your ass as soon as you think "what can go wrong?"
     </div>
 
         
-       <script>var disqus_shortname="fpsd";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script><footer id="footer"><p>Contents © 2018         <a href="mailto:francesco@pischedda.info">Francesco "fpsd" Pischedda</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+       <script>var disqus_shortname="fpsd";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script><footer id="footer"><p>Contents © 2020         <a href="mailto:francesco@pischedda.info">Francesco "fpsd" Pischedda</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
             
         </footer>
 </div>
-    </section><script src="../../assets/js/jquery-1.10.2.min.js" type="text/javascript"></script><script src="../../assets/js/jquery.timeago.js" type="text/javascript"></script><script type="text/javascript">
+    </section><script src="../../assets/js/all-nocdn.js" type="text/javascript"></script><script type="text/javascript">
             $(function(){
                 $('.timeago').timeago();
             });

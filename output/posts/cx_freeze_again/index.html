@@ -1,13 +1,10 @@
 <!DOCTYPE html>
-<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
 <title>cx_Freeze, again | @FPSD</title>
-<link href="../../assets/css/bitter.css" rel="stylesheet" type="text/css">
-<link href="../../assets/css/main.css" rel="stylesheet" type="text/css">
-<link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
-<link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <link rel="alternate" type="application/rss+xml" title="RSS (en)" href="../../rss.xml">
 <link rel="alternate" type="application/rss+xml" title="RSS (it)" href="../../it/rss.xml">
 <link rel="canonical" href="https://francesco.pischedda.info/posts/cx_freeze_again/">
@@ -15,10 +12,10 @@
 <meta property="og:site_name" content="@FPSD">
 <meta property="og:title" content="cx_Freeze, again">
 <meta property="og:url" content="https://francesco.pischedda.info/posts/cx_freeze_again/">
-<meta property="og:description" content="It's been a long time since the last post and for sure I was not thiking about
+<meta property="og:description" content="We meet again, xz_Freeze
+It's been a long time since the last post and for sure I was not thiking about
 another post about cx_Freeze.
-I have spent this week end trying (and at the end  succeding) to build an
-update to an old ">
+I have spent this week end trying (and at the end  succeding) to b">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2016-11-13T21:45:17+01:00">
 <meta property="article:tag" content="cx_Freeze Python PyQT Windows">
@@ -30,7 +27,7 @@ update to an old ">
             <li><a href="../../archive.html" title="Archives"><i class="icon-folder-open-alt"></i></a></li>
             <li><a href="../../categories/index.html" title="Tags"><i class="icon-tags"></i></a></li>
             <li><a href="../../rss.xml" title="RSS"><i class="icon-rss"></i></a></li>
-            <li><a href="../../cv/index.html" title="CV"><i class="icon-user"></i></a></li>
+            <li><a href="../../pages/services/" title="Hire me!"><i class="icon-user"></i></a></li>
             <li><a href="https://github.com/fpischedda" title="My Github"><i class="icon-github"></i></a></li>
             <li><a href="https://twitter.com/focaskater" title="Twitter"><i class="icon-twitter"></i></a></li>
             <li><a href="https://getnikola.com" title="Powered By Nikola"><i class=""></i></a></li>
@@ -61,14 +58,15 @@ update to an old ">
 
         </div>
         <div class="body">
-            <div>
+            <div class="section" id="we-meet-again-xz-freeze">
+<h2>We meet again, xz_Freeze</h2>
 <p>It's been a long time since the last post and for sure I was not thiking about
 another post about cx_Freeze.
 I have spent this week end trying (and at the end  succeding) to build an
 update to an old software. For future memory I'll write briefly the steps needed
 to get a functional build without losing my mind.</p>
 <div class="section" id="brief-description-of-the-problem">
-<h2>Brief description of the problem</h2>
+<h3>Brief description of the problem</h3>
 <p>The software is a desktop application used to upload email attachments to a
 web based data store; the application talk to the web app using a "RESTy" api,
 and fetches the file from a email address; the GUI is written with the beatiful
@@ -76,7 +74,7 @@ PyQT5 (someone may prefere PySide) and usually this dependency is a pain to
 work with but I have to admit that the newer version installs gracefuly.</p>
 </div>
 <div class="section" id="os-version-and-things-to-download">
-<h2>OS version and things to download</h2>
+<h3>OS version and things to download</h3>
 <p>The person using this software needs to run it from a Windows OS and at this time
 Windows 7 is the oldes worsion of the OS I want to support (no Vista, please)
 since addressing Windows 10 will produce an executable with no retro compatibily
@@ -90,11 +88,11 @@ automatically installed, maybe I have forgotten to chek the corresponding
 option in the installer; anyway everything installed correctly using it, this is
 a brief list of dependencies:</p>
 <ul class="simple">
-<li>requests: OK</li>
-<li>paramiko: OK</li>
-<li>imapclient: OK</li>
-<li>PyQT: (surprisingly!) OK</li>
-<li>cx_Freeze: Not ok at all..</li>
+<li><p>requests: OK</p></li>
+<li><p>paramiko: OK</p></li>
+<li><p>imapclient: OK</p></li>
+<li><p>PyQT: (surprisingly!) OK</p></li>
+<li><p>cx_Freeze: Not ok at all..</p></li>
 </ul>
 <p>cx_Freeze requires Widonws build tools that can freely (as in beer) downloaded
 and installed but even after that I was not able to install it from pip;
@@ -103,7 +101,7 @@ to download the 5.0 version because the 4.x was not able to produce a proper
 executable.</p>
 </div>
 <div class="section" id="additional-dependencies-and-some-setup-py-notes">
-<h2>Additional dependencies and some setup.py notes</h2>
+<h3>Additional dependencies and some setup.py notes</h3>
 <p>Having not touched I tought that the setup script was soemwhat correct since
 the last build was succesful, nothing more far from the truth; the first thing
 has been a nice surprise, cx_Freeze recognized correctly all the dlls to use in
@@ -113,21 +111,21 @@ work cx_Freeze guys!</p>
 application could as expected, here is a list of additional dependencis that I
 had to install and reference in the setup.py file:</p>
 <ul class="simple">
-<li>appdir</li>
-<li>packaging</li>
-<li>atexit</li>
+<li><p>appdir</p></li>
+<li><p>packaging</p></li>
+<li><p>atexit</p></li>
 </ul>
 <p>appdir and atexit only need to be referenced as packages instead packaging
 requires some more fine tuining so I had to add this additional sub_packages
 to the includes settings of the build_exe_options dictionary:</p>
 <ul class="simple">
-<li>packaging.version</li>
-<li>packaging.specifiers</li>
-<li>packaging.requirements</li>
+<li><p>packaging.version</p></li>
+<li><p>packaging.specifiers</p></li>
+<li><p>packaging.requirements</p></li>
 </ul>
 </div>
 <div class="section" id="final-words">
-<h2>Final words</h2>
+<h3>Final words</h3>
 <p>It took me a couple of hours of trial/error to be able to ship the build and I
 hope to not have to repeat this madness again soon; if I'll need to create a new
 build in the future I hope that this little post will halp me not to waste my
@@ -170,11 +168,11 @@ time again.</p>
     </div>
 
         
-       <script>var disqus_shortname="fpsd";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script><footer id="footer"><p>Contents © 2018         <a href="mailto:francesco@pischedda.info">Francesco "fpsd" Pischedda</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+       <script>var disqus_shortname="fpsd";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script><footer id="footer"><p>Contents © 2020         <a href="mailto:francesco@pischedda.info">Francesco "fpsd" Pischedda</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
             
         </footer>
 </div>
-    </section><script src="../../assets/js/jquery-1.10.2.min.js" type="text/javascript"></script><script src="../../assets/js/jquery.timeago.js" type="text/javascript"></script><script type="text/javascript">
+    </section><script src="../../assets/js/all-nocdn.js" type="text/javascript"></script><script type="text/javascript">
             $(function(){
                 $('.timeago').timeago();
             });
