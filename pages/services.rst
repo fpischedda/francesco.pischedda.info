@@ -28,11 +28,11 @@ I will be ready to help you with your project.
 
 My skills can be applied in these areas:
 
-- web development
-- game development
-- servers and services
-- desktop and mobile applications
-- integration with third party soft wares
+- Web development
+- Game development
+- Servers and services
+- Desktop and mobile applications
+- Integration with third party software
 
 I have no strict preference for a specific business domain but I will NOT work on:
 
@@ -59,3 +59,16 @@ These arguments are only the tip of the iceberg, if you need to learn something
 not listed here don't' worry, there are chances that I can help you anyway.
 
 In case you are curious, `here is my CV </cv>`_ with the details of my past experience.
+
+Rates
+-----
+
+It is not easy to give one fixed price for all these services, for this reason I would
+like to get in touch with you to understand what you need.
+Anyway **I will be happy to offer a discounted rate** for:
+
+- Charities
+- Open source projects
+- Small startups
+
+Write me at francesco.pischedda at gmail.com and I will get back to you in 24 hours.
