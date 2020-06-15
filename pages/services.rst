@@ -2,7 +2,7 @@
 .. slug: services
 .. date: 2014/05/01 14:39:50
 .. tags: Hire me
-.. link: 
+.. link:
 .. description: Hire me!
 .. type: text
 
@@ -23,7 +23,7 @@ I spend a lot of time doing full stack web development with Python,
 Clojure, ClojureScript and soon Elixir and Golang.
 My experience is not restricted to the mentioned languages, in fact I have
 several pieces of my code running in the wild written with Javascript, Ruby,
-C, C++, C#, Golang, PHP, Java; I just need to restart those brain cells and
+C, C++, C#, PHP, Java; I just need to restart those brain cells and
 I will be ready to help you with your project.
 
 My skills can be applied in these areas:
@@ -32,7 +32,7 @@ My skills can be applied in these areas:
 - game development
 - servers and services
 - desktop and mobile applications
-- integration with third party softwares
+- integration with third party soft wares
 
 I have no strict preference for a specific business domain but I will NOT work on:
 
@@ -41,12 +41,12 @@ I have no strict preference for a specific business domain but I will NOT work o
 
 If you need to take care of your legacy system, break down a monolith to a set of
 micro services or start a green field project to validate your startup hypothesis,
-I will be happy help you! Please, feel free to contact me at francesco.pischedda at gmail.com
+**I will be happy help you!** Please, feel free to contact me at francesco.pischedda at gmail.com
 
 Training
 --------
 
-I can assist you or someone of your team in the process of learning a new
+**I can assist you** or someone of your team in the process of learning a new
 language, framework or library.
 I can cover the following topics:
 
@@ -56,4 +56,6 @@ I can cover the following topics:
   Javascript from beginner to intermediate level
 
 These arguments are only the tip of the iceberg, if you need to learn something
-not listed here dont' worry, there are chances that I can help you anyway.
+not listed here don't' worry, there are chances that I can help you anyway.
+
+In case you are curious, `here is my CV </cv>`_ with the details of my past experience.
