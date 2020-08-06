@@ -15,11 +15,15 @@
  </sitemap>
  <sitemap>
   <loc>https://francesco.pischedda.info/categories/cat_posts.xml</loc>
-  <lastmod>2020-06-14T15:58:00Z</lastmod>
+  <lastmod>2020-08-13T09:51:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://francesco.pischedda.info/categories/cat_python-celery-vimcar.xml</loc>
   <lastmod>2020-06-14T15:58:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://francesco.pischedda.info/categories/clojurescript-rum-react-datascript-frontend.xml</loc>
+  <lastmod>2020-08-11T11:01:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://francesco.pischedda.info/categories/cx_freeze-python-pyqt-windows.xml</loc>
@@ -28,6 +32,10 @@
  <sitemap>
   <loc>https://francesco.pischedda.info/categories/free-software-open-source-mozilla.xml</loc>
   <lastmod>2020-06-14T15:58:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://francesco.pischedda.info/categories/prototyping-clojurescript-rum-react-datascript-frontend.xml</loc>
+  <lastmod>2020-08-13T09:51:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://francesco.pischedda.info/categories/pyqt-python-datepicker.xml</loc>
@@ -71,11 +79,15 @@
  </sitemap>
  <sitemap>
   <loc>https://francesco.pischedda.info/it/categories/cat_posts.xml</loc>
-  <lastmod>2020-06-14T15:58:00Z</lastmod>
+  <lastmod>2020-08-13T09:51:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://francesco.pischedda.info/it/categories/cat_python-celery-vimcar.xml</loc>
   <lastmod>2020-06-14T15:58:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://francesco.pischedda.info/it/categories/clojurescript-rum-react-datascript-frontend.xml</loc>
+  <lastmod>2020-08-11T11:01:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://francesco.pischedda.info/it/categories/cx_freeze-python-pyqt-windows.xml</loc>
@@ -84,6 +96,10 @@
  <sitemap>
   <loc>https://francesco.pischedda.info/it/categories/free-software-open-source-mozilla.xml</loc>
   <lastmod>2020-06-14T15:58:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://francesco.pischedda.info/it/categories/prototyping-clojurescript-rum-react-datascript-frontend.xml</loc>
+  <lastmod>2020-08-13T09:51:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://francesco.pischedda.info/it/categories/pyqt-python-datepicker.xml</loc>
@@ -119,14 +135,14 @@
  </sitemap>
  <sitemap>
   <loc>https://francesco.pischedda.info/it/rss.xml</loc>
-  <lastmod>2020-06-14T15:58:00Z</lastmod>
+  <lastmod>2020-08-13T09:51:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://francesco.pischedda.info/rss.xml</loc>
-  <lastmod>2020-06-14T15:58:00Z</lastmod>
+  <lastmod>2020-08-13T09:51:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://francesco.pischedda.info/sitemap.xml</loc>
-  <lastmod>2020-06-14T17:53:00Z</lastmod>
+  <lastmod>2020-08-13T09:51:00Z</lastmod>
  </sitemap>
 </sitemapindex>

@@ -25,6 +25,201 @@
         </ul></section><section class="page-content"><div class="content" rel="main">
             
         <div class="post">
+            <h1 class="title"><a href="posts/my-new-approach-to-software-prototyping-and-the-stack-that-makes-it-possible/">My new approach to software prototyping and the stack that makes it possible</a></h1>
+            <div class="meta">
+                <div class="authordate">
+                    <time class="timeago" datetime="2020-08-01T10:08:14+02:00">2020-08-01 10:08</time>
+</div>
+                <div class="stats">
+                    
+        
+    <a href="posts/my-new-approach-to-software-prototyping-and-the-stack-that-makes-it-possible/#disqus_thread" data-disqus-identifier="cache/posts/clojurescript-rum-and-datascript-are-helping-me-to-not-hate-frontend-development.html">Commenti</a>
+
+
+                </div>
+            
+        <div itemprop="keywords" class="tags">
+        <ul>
+        Tag : 
+           <li><a class="tag p-category" href="categories/prototyping-clojurescript-rum-react-datascript-frontend/" rel="tag">prototyping clojurescript rum react datascript frontend</a></li>
+        </ul>
+</div>
+
+            </div>
+            <div class="body">
+                <div class="section" id="foreword">
+<h2>Foreword</h2>
+<p>In this blog post I am going to illustrate how, during the development of a
+pet project, I have changed the way I approach software development and
+prototyping, going from "backend first" to "frontend first, backend eventually".
+I will also mention the tools that make it possible and even enjoyable for a non
+frontend developer.</p>
+<div class="section" id="background">
+<h3>Background</h3>
+<p>At $work I have always spent most of my time in the backend and infrastructure
+side of things but sometimes, especially when working on side projects, I have
+to go "full stack" and take care of frontend tasks, even if I kind of suck at
+it.
+For this reason I am always inclined to start with some sort of backend code,
+starting with a data model, core business logic and a REST API to (eventually)
+build a frontend on top of it...which most of the times means I will lose
+interest/momentum and the project dies.</p>
+</div>
+<div class="section" id="at-some-point-something-clicked">
+<h3>At some point something clicked</h3>
+<p>One day (probably a lazy Sunday) I had an idea: I want an incredibly stupid
+way to collect random thoughts, links or any kind of text blob, I want to own
+it, it must live on my VPS and I have to finish it today!
+This time thoughts decided to follow a different path:</p>
+<ul class="simple">
+<li><p>how important what I am going to write here is? can I afford to lose data?</p></li>
+<li><p>what if I don't need to store anything in a durable storage?</p></li>
+<li><p>ok, aim for least amount of features and see later if I need more</p></li>
+</ul>
+<p>The outcome is a service that will keep all data in volatile memory, losing it
+at each restart and this is perfectly fine for what I needed at that time!
+I think this small tool planted the seed for what, I think, will be be my
+preferred method for future projects.</p>
+<p>What has been so different with development of this tool is that I have tried
+and (more or less succeeded) to address the problem at hand without much
+ceremony, and it served its purpose quite well.
+At some point I've started to add more features "just because" but, at the end
+of the day, the core remained the same and now I even want to remove these new
+features because they are not adding value but are, effectively, distracting.</p>
+</div>
+<div class="section" id="next-project">
+<h3>Next project</h3>
+<p>Fast forward few months, I am again thinking about a new project.
+My girlfriend needed/wanted a tool to make it easy to share a watermarked
+version of her drawings, even better if the shared link required a password to
+access the image.</p>
+<p>Compared to the previous project, this one is slightly more complex, especially
+the user facing part, but I am confident that if I address the most basic
+requirements first, I should be able to give her a rough beta in few hours.
+Here are the features I have decided to include in the "MVP":</p>
+<ul class="simple">
+<li><p>user can upload a file</p></li>
+<li><p>user can chose a watermark size</p></li>
+<li><p>user can eventually chose a password to protect the image</p></li>
+<li><p>once the user clicks "Upload", the system applies the watermark and</p></li>
+<li><p>render a page with the list of uploaded/watermarked files, each with a link to it</p></li>
+</ul>
+<p>So far so good, the tool is there, ugly but working. What if we open this
+tool to other people? WOW! We can make our own product! Lets do it!</p>
+<p>Armed with great energy I have started working on the new version but this time
+I have started building a full featured backend even if, at this point,
+is not 100% clear how a user is going to interact with it, how valuable it
+could be and all the usual unknowns.
+So why I am insisting with the old approach when it showed, multiple times, it
+is quite ineffective? I guess it is a matter of habits (because I don't want
+to call it stupidity).</p>
+</div>
+<div class="section" id="a-new-approach">
+<h3>A new approach</h3>
+<p>I often fail to make progress on my projects when it comes the turn of the
+frontend code, after having written most of the backend, maybe this time I
+can try the other way around!
+Common sense suggests to create mocks of the interface using tools like
+<a class="reference external" href="https://balsamiq.com/wireframes">Balsamiq</a>, <a class="reference external" href="https://moqups.com/">Moqups</a> and so on but, for some reasons I am totally unable to
+use those kind of tools plus I would like to have a taste of how to UI feels
+in the hands a user...what should I do now?</p>
+<p>Recently I have started experimenting with <a class="reference external" href="https://www.clojurescript.org">ClojureScript</a> and <a class="reference external" href="https://github.com/tonsky/rum">Rum</a> (a library
+that wraps React) and so far I feel quite productive with it, why should I not
+use these tools to write the mock? The plan now looks like this:</p>
+<ul class="simple">
+<li><p>quickly build an ugly but functional UI</p></li>
+<li><p>mock the app state/data to reflect what I need in the UI</p></li>
+<li><p>understand what feels wrong, get feedback from other people</p></li>
+<li><p>plan next iteration</p></li>
+<li><p>repeat until happy</p></li>
+</ul>
+<p>Essential to this approach is the quick feedback loop you can get by using
+ClojureScript + Rum (or any other React wrapper like <a class="reference external" href="https://reagent-project.github.io/">Reagent</a>), immutable
+persistent data structures and a REPL; I "suspect" that, if we exclude the
+REPL, a similar setup can be achieved with other stacks but I am quite happy
+with the tools I have chosen.</p>
+</div>
+<div class="section" id="how-has-it-been-so-far">
+<h3>How has it been so far?</h3>
+<p>I am not a frontend developer and every time I try to create some sort of UI
+I am pretty sure I will fail, lose interest and put the project on hold but,
+this time, it has been quite different.
+Being able to iterate quickly and having a fast feedback loop, helped me a lot
+to proceed at "great speed" and not losing focus.
+Each time I wanted to add a new feature or change how a component had to work,
+the process has been pretty straightforward:</p>
+<ul class="simple">
+<li><p>create a new branch</p></li>
+<li><p>try out the new idea by small, even tiny iterations with live feedback</p></li>
+<li><p>adjust the data model as needed</p></li>
+<li><p>repeat</p></li>
+<li><p>if happy merge to master otherwise scrap everything and forget</p></li>
+</ul>
+</div>
+<div class="section" id="managing-the-app-state">
+<h3>Managing the app state</h3>
+<p>One of the points that I would like to spend so time on is the app state.
+Even if keeping all the state in one big map is quite handy and flexible,
+at some point, it becomes harder and harder to maintain, especially in the
+case where there are many ( &gt; 4 or 5) entity types with cross references and
+the size of the data gets bigger and bigger; it can still be done but the
+state management code starts to get bigger and harder to maintain compared to
+the UI code; for my case, the UI code had to know too much about the data model
+itself impacting the separation of concerns and this was driving away the focus
+on the main goal which is to explore the space of possibilities for the UI I
+want to build.</p>
+</div>
+<div class="section" id="introducing-datascript-into-my-tool-set">
+<h3>Introducing Datascript into my tool-set</h3>
+<p>With the growing pain of state management I have decided to invest a little bit
+of time to find out which solutions are already available in this space and
+fortunately I have stepped into <a class="reference external" href="https://github.com/tonsky/datascript">Datascript</a>, an in memory database developed by
+the same person who gave us Rum :)
+This database has all the features I need plus some more; I am sure that I am
+still missing some handy features but so far I have been able to:</p>
+<ul class="simple">
+<li><p>build a consistent data store</p></li>
+<li><p>which supports cross references between entities</p></li>
+<li><p>which I can easily query (using Datalog)</p></li>
+<li><p>with support to joins</p></li>
+</ul>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Datalog">Datalog</a> itself is quite simple even if a bit "alien" until you know how to
+use it; instead of writing about it here I prefer to give a link to the best
+learning material I have found <a class="reference external" href="http://www.learndatalogtoday.org/">http://www.learndatalogtoday.org/</a>.</p>
+<p>Armed with Datascript (for the data store) and Datalog (for the queries) the
+UI code can now interact with the app state without knowing much about it!
+This is a great relief because now I can focus again on building a UI for my
+project and spend the right amount of time (&lt; 5%) on the data store.</p>
+<p>Another good point of this approach is that, when the backend will be ready,
+it will be a matter of translating what I will get out of its APIs to the
+UI's internal data store and everything will continue to work as expected.</p>
+</div>
+<div class="section" id="summary">
+<h3>Summary</h3>
+<p>The goal of this post was to write down my current approach to software
+development with the hope to start a discussion with other developers which
+may be interested to explore and talk about novel methodologies which have
+worked great for them.
+If by reading this blob of text you are now also curious about ClojureScript
+and its ecosystem, I am even more happy!</p>
+</div>
+<div class="section" id="links">
+<h3>Links</h3>
+<ul class="simple">
+<li><p>ClojureScript: <a class="reference external" href="https://clojurescript.org/">https://clojurescript.org/</a></p></li>
+<li><p>Rum: <a class="reference external" href="https://github.com/tonsky/rum">https://github.com/tonsky/rum</a></p></li>
+<li><p>DataScript: <a class="reference external" href="https://github.com/tonsky/datascript">https://github.com/tonsky/datascript</a></p></li>
+<li><p>Datalog: <a class="reference external" href="https://en.wikipedia.org/wiki/Datalog">https://en.wikipedia.org/wiki/Datalog</a></p></li>
+<li><p>Datalog course: <a class="reference external" href="http://www.learndatalogtoday.org/">http://www.learndatalogtoday.org/</a></p></li>
+<li><p>Reagent: <a class="reference external" href="https://reagent-project.github.io/">https://reagent-project.github.io/</a></p></li>
+<li><p>Balsamiq: <a class="reference external" href="https://balsamiq.com/wireframes">https://balsamiq.com/wireframes</a></p></li>
+<li><p>Moqups: <a class="reference external" href="https://moqups.com/">https://moqups.com/</a></p></li>
+</ul>
+</div>
+</div>
+            </div>
+        </div>
+        <div class="post">
             <h1 class="title"><a href="posts/routing-celery-task-for-simple-prioritization/">Routing Celery task for simple prioritization</a></h1>
             <div class="meta">
                 <div class="authordate">
@@ -811,105 +1006,12 @@ around with his hands no expert ;)</p>
 </div>
             </div>
         </div>
-        <div class="post">
-            <h1 class="title"><a href="posts/having-fun-with-rabbitmq/">Having fun with RabbitMQ</a></h1>
-            <div class="meta">
-                <div class="authordate">
-                    <time class="timeago" datetime="2013-02-28T21:13:45+01:00">2013-02-28 21:13</time>
-</div>
-                <div class="stats">
-                    
-        
-    <a href="posts/having-fun-with-rabbitmq/#disqus_thread" data-disqus-identifier="cache/posts/having-fun-with-rabbitmq.html">Commenti</a>
-
-
-                </div>
-            
-        <div itemprop="keywords" class="tags">
-        <ul>
-        Tag : 
-           <li><a class="tag p-category" href="categories/rabbitmq-scaling/" rel="tag">rabbitmq scaling</a></li>
-        </ul>
-</div>
-
-            </div>
-            <div class="body">
-                <div class="section" id="exploring-distributed-calculation-with-rabbitmq">
-<h2>Exploring Distributed Calculation With RabbitMQ</h2>
-<div class="section" id="preface">
-<h3>Preface</h3>
-<p>Lately I’ve had to work on a complex web application which have started to have
-an increased (and increasing) number of users.
-Unfortunately this web application was not built to scale and so problems
-started to get to the surface.
-When the user base was small to medium the load on the application server was
-fairly low and we could focus on adding new features and growing our user base
-until we landed on the Facebook platform.
-At some point users started to came and the scheduled task took 10-20-40-70-90
-minutues to complete leaving the users to stare at the “calculating tasks” page.</p>
-<p>The first approved (the correct word should be "imposed") solution was to
-migrate our servers to AWS so we could increase host perfomance using bigger
-and bigger servers until we reached the limits of the single machine again.</p>
-<p>After a lot of battling with the management we had the opportunity to detach
-the application core from the web site and started to build the new architecture
-with these loosely defined requirements:</p>
-<ul class="simple">
-<li><p>better use of resources</p></li>
-<li><p>better code organization and quality</p></li>
-<li><p>horizontal scaling</p></li>
-<li><p>manageabilty</p></li>
-<li><p>ready for future development</p></li>
-</ul>
-<p>I admit that those where my requirements, but the management undestood that they
-have lost the ability to understand the architecture beyhond a simple web site
-with a bounch of scheduled routines that, honestly, worked with the help of an
-infinite dose of luck…and also my prototype run in a fraction of time.</p>
-</div>
-<div class="section" id="building-blocks">
-<h3>Building blocks</h3>
-<p>Our old backend has been broken in to those pieces:</p>
-<ul class="simple">
-<li><p>libcore : the base code extracted from the old and stinky web site</p></li>
-<li><p>RabbitMQ message broker</p></li>
-<li><p>job scheduler : send messages to appropriate exchanges at appropriate time</p></li>
-<li><p>workers : consume messages sent by the scheduler</p></li>
-</ul>
-<p>Leaving libcore apart doing its stuff lets focus on the scheduler and the
-workers; for details about RabbitMQ please refer to its web site
-(<a class="reference external" href="http://www.rabbitmq.com/">http://www.rabbitmq.com/</a>).</p>
-<p>As a scheduling library I have choosen the open source Quartz.NET
-(<a class="reference external" href="http://quartznet.sourceforge.net/">http://quartznet.sourceforge.net/</a>) which provided a simple but powerful
-interface to schedule jobs, I especially liked the ability to specify job
-triggers with the well known and compact cron syntax.
-Long story short the scheduled jobs harvests the tasks and send messages to
-exchanges accordingly.
-I think that the whole core plus the jobs are not bigger than some hundreds of
-lines of code. Wonderful!</p>
-<p>In order to create a worker one should simply have to inherit from a
-BaseConsumer class and override the "consume" method to do its tasks when a
-message is received. Done. Cool :)</p>
-</div>
-<div class="section" id="conclusion">
-<h3>Conclusion</h3>
-<p>Given this simple architecture what are the benefits? Lets see:</p>
-<ul class="simple">
-<li><p>scaling: I simply have to add more workers in the same or different machines and the calculating power will increase accordingly</p></li>
-<li><p>flexibility: if a new task is required I have to create a new scheduled job and its consumer (even in a different language or platform) and maybe a new message type (messages are simple JSON described objects); after all is tested I have to update the scheduler and add a new worker either by updating a running worker or adding a new one without affecting the whole system; yes it can be done while the system is crunching its task and yes, obviously without affecting the web site(s)</p></li>
-<li><p>cost effective: if we have a lot of task to complete at a certain hour in the day I could simply turn on a couple of more machines when I need it and turn those off when the whole work is completed; if you have ever used the Amazon AWS infrastructure you understand of much one can save using this approach</p></li>
-<li><p>testing: having everything well separated I can test each block individually instead of having a code blob that is barely manageable</p></li>
-</ul>
-<p>With this short post I hope to increase interest in this simple way of doing
-distribuited computing using a message broker and a simple but well architected
-system.</p>
-</div>
-</div>
-            </div>
-        </div>
     
-
-    
-        
-       <script>var disqus_shortname="fpsd";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script><footer id="footer"><p>Contents © 2020         <a href="mailto:francesco@pischedda.info">Francesco "fpsd" Pischedda</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+        <nav class="postindexpager"><ul class="pager">
+<li class="next">
+                <a href="index-1.html" rel="next">Articoli precedenti</a>
+            </li>
+        </ul></nav><script>var disqus_shortname="fpsd";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script><footer id="footer"><p>Contents © 2020         <a href="mailto:francesco@pischedda.info">Francesco "fpsd" Pischedda</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
             
         </footer>
 </div>

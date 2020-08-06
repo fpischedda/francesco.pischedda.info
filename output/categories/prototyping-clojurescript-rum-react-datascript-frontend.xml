@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>@FPSD (Posts about prototyping clojurescript rum react datascript frontend)</title><link>https://francesco.pischedda.info/</link><description></description><atom:link href="https://francesco.pischedda.info/categories/prototyping-clojurescript-rum-react-datascript-frontend.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Thu, 13 Aug 2020 09:51:13 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>My new approach to software prototyping and the stack that makes it possible</title><link>https://francesco.pischedda.info/posts/my-new-approach-to-software-prototyping-and-the-stack-that-makes-it-possible/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div class="section" id="foreword"&gt;
+&lt;h2&gt;Foreword&lt;/h2&gt;
+&lt;p&gt;In this blog post I am going to illustrate how, during the development of a
+pet project, I have changed the way I approach software development and
+prototyping, going from "backend first" to "frontend first, backend eventually".
+I will also mention the tools that make it possible and even enjoyable for a non
+frontend developer.&lt;/p&gt;
+&lt;div class="section" id="background"&gt;
+&lt;h3&gt;Background&lt;/h3&gt;
+&lt;p&gt;At $work I have always spent most of my time in the backend and infrastructure
+side of things but sometimes, especially when working on side projects, I have
+to go "full stack" and take care of frontend tasks, even if I kind of suck at
+it.
+For this reason I am always inclined to start with some sort of backend code,
+starting with a data model, core business logic and a REST API to (eventually)
+build a frontend on top of it...which most of the times means I will lose
+interest/momentum and the project dies.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="at-some-point-something-clicked"&gt;
+&lt;h3&gt;At some point something clicked&lt;/h3&gt;
+&lt;p&gt;One day (probably a lazy Sunday) I had an idea: I want an incredibly stupid
+way to collect random thoughts, links or any kind of text blob, I want to own
+it, it must live on my VPS and I have to finish it today!
+This time thoughts decided to follow a different path:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;p&gt;how important what I am going to write here is? can I afford to lose data?&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;what if I don't need to store anything in a durable storage?&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;ok, aim for least amount of features and see later if I need more&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The outcome is a service that will keep all data in volatile memory, losing it
+at each restart and this is perfectly fine for what I needed at that time!
+I think this small tool planted the seed for what, I think, will be be my
+preferred method for future projects.&lt;/p&gt;
+&lt;p&gt;What has been so different with development of this tool is that I have tried
+and (more or less succeeded) to address the problem at hand without much
+ceremony, and it served its purpose quite well.
+At some point I've started to add more features "just because" but, at the end
+of the day, the core remained the same and now I even want to remove these new
+features because they are not adding value but are, effectively, distracting.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="next-project"&gt;
+&lt;h3&gt;Next project&lt;/h3&gt;
+&lt;p&gt;Fast forward few months, I am again thinking about a new project.
+My girlfriend needed/wanted a tool to make it easy to share a watermarked
+version of her drawings, even better if the shared link required a password to
+access the image.&lt;/p&gt;
+&lt;p&gt;Compared to the previous project, this one is slightly more complex, especially
+the user facing part, but I am confident that if I address the most basic
+requirements first, I should be able to give her a rough beta in few hours.
+Here are the features I have decided to include in the "MVP":&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;p&gt;user can upload a file&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;user can chose a watermark size&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;user can eventually chose a password to protect the image&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;once the user clicks "Upload", the system applies the watermark and&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;render a page with the list of uploaded/watermarked files, each with a link to it&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So far so good, the tool is there, ugly but working. What if we open this
+tool to other people? WOW! We can make our own product! Lets do it!&lt;/p&gt;
+&lt;p&gt;Armed with great energy I have started working on the new version but this time
+I have started building a full featured backend even if, at this point,
+is not 100% clear how a user is going to interact with it, how valuable it
+could be and all the usual unknowns.
+So why I am insisting with the old approach when it showed, multiple times, it
+is quite ineffective? I guess it is a matter of habits (because I don't want
+to call it stupidity).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="a-new-approach"&gt;
+&lt;h3&gt;A new approach&lt;/h3&gt;
+&lt;p&gt;I often fail to make progress on my projects when it comes the turn of the
+frontend code, after having written most of the backend, maybe this time I
+can try the other way around!
+Common sense suggests to create mocks of the interface using tools like
+&lt;a class="reference external" href="https://balsamiq.com/wireframes"&gt;Balsamiq&lt;/a&gt;, &lt;a class="reference external" href="https://moqups.com/"&gt;Moqups&lt;/a&gt; and so on but, for some reasons I am totally unable to
+use those kind of tools plus I would like to have a taste of how to UI feels
+in the hands a user...what should I do now?&lt;/p&gt;
+&lt;p&gt;Recently I have started experimenting with &lt;a class="reference external" href="https://www.clojurescript.org"&gt;ClojureScript&lt;/a&gt; and &lt;a class="reference external" href="https://github.com/tonsky/rum"&gt;Rum&lt;/a&gt; (a library
+that wraps React) and so far I feel quite productive with it, why should I not
+use these tools to write the mock? The plan now looks like this:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;p&gt;quickly build an ugly but functional UI&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;mock the app state/data to reflect what I need in the UI&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;understand what feels wrong, get feedback from other people&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;plan next iteration&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;repeat until happy&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Essential to this approach is the quick feedback loop you can get by using
+ClojureScript + Rum (or any other React wrapper like &lt;a class="reference external" href="https://reagent-project.github.io/"&gt;Reagent&lt;/a&gt;), immutable
+persistent data structures and a REPL; I "suspect" that, if we exclude the
+REPL, a similar setup can be achieved with other stacks but I am quite happy
+with the tools I have chosen.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="how-has-it-been-so-far"&gt;
+&lt;h3&gt;How has it been so far?&lt;/h3&gt;
+&lt;p&gt;I am not a frontend developer and every time I try to create some sort of UI
+I am pretty sure I will fail, lose interest and put the project on hold but,
+this time, it has been quite different.
+Being able to iterate quickly and having a fast feedback loop, helped me a lot
+to proceed at "great speed" and not losing focus.
+Each time I wanted to add a new feature or change how a component had to work,
+the process has been pretty straightforward:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;p&gt;create a new branch&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;try out the new idea by small, even tiny iterations with live feedback&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;adjust the data model as needed&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;repeat&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;if happy merge to master otherwise scrap everything and forget&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="managing-the-app-state"&gt;
+&lt;h3&gt;Managing the app state&lt;/h3&gt;
+&lt;p&gt;One of the points that I would like to spend so time on is the app state.
+Even if keeping all the state in one big map is quite handy and flexible,
+at some point, it becomes harder and harder to maintain, especially in the
+case where there are many ( &amp;gt; 4 or 5) entity types with cross references and
+the size of the data gets bigger and bigger; it can still be done but the
+state management code starts to get bigger and harder to maintain compared to
+the UI code; for my case, the UI code had to know too much about the data model
+itself impacting the separation of concerns and this was driving away the focus
+on the main goal which is to explore the space of possibilities for the UI I
+want to build.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="introducing-datascript-into-my-tool-set"&gt;
+&lt;h3&gt;Introducing Datascript into my tool-set&lt;/h3&gt;
+&lt;p&gt;With the growing pain of state management I have decided to invest a little bit
+of time to find out which solutions are already available in this space and
+fortunately I have stepped into &lt;a class="reference external" href="https://github.com/tonsky/datascript"&gt;Datascript&lt;/a&gt;, an in memory database developed by
+the same person who gave us Rum :)
+This database has all the features I need plus some more; I am sure that I am
+still missing some handy features but so far I have been able to:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;p&gt;build a consistent data store&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;which supports cross references between entities&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;which I can easily query (using Datalog)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;with support to joins&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://en.wikipedia.org/wiki/Datalog"&gt;Datalog&lt;/a&gt; itself is quite simple even if a bit "alien" until you know how to
+use it; instead of writing about it here I prefer to give a link to the best
+learning material I have found &lt;a class="reference external" href="http://www.learndatalogtoday.org/"&gt;http://www.learndatalogtoday.org/&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Armed with Datascript (for the data store) and Datalog (for the queries) the
+UI code can now interact with the app state without knowing much about it!
+This is a great relief because now I can focus again on building a UI for my
+project and spend the right amount of time (&amp;lt; 5%) on the data store.&lt;/p&gt;
+&lt;p&gt;Another good point of this approach is that, when the backend will be ready,
+it will be a matter of translating what I will get out of its APIs to the
+UI's internal data store and everything will continue to work as expected.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="summary"&gt;
+&lt;h3&gt;Summary&lt;/h3&gt;
+&lt;p&gt;The goal of this post was to write down my current approach to software
+development with the hope to start a discussion with other developers which
+may be interested to explore and talk about novel methodologies which have
+worked great for them.
+If by reading this blob of text you are now also curious about ClojureScript
+and its ecosystem, I am even more happy!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="links"&gt;
+&lt;h3&gt;Links&lt;/h3&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;p&gt;ClojureScript: &lt;a class="reference external" href="https://clojurescript.org/"&gt;https://clojurescript.org/&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Rum: &lt;a class="reference external" href="https://github.com/tonsky/rum"&gt;https://github.com/tonsky/rum&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;DataScript: &lt;a class="reference external" href="https://github.com/tonsky/datascript"&gt;https://github.com/tonsky/datascript&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Datalog: &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Datalog"&gt;https://en.wikipedia.org/wiki/Datalog&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Datalog course: &lt;a class="reference external" href="http://www.learndatalogtoday.org/"&gt;http://www.learndatalogtoday.org/&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Reagent: &lt;a class="reference external" href="https://reagent-project.github.io/"&gt;https://reagent-project.github.io/&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Balsamiq: &lt;a class="reference external" href="https://balsamiq.com/wireframes"&gt;https://balsamiq.com/wireframes&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Moqups: &lt;a class="reference external" href="https://moqups.com/"&gt;https://moqups.com/&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description><category>prototyping clojurescript rum react datascript frontend</category><guid>https://francesco.pischedda.info/posts/my-new-approach-to-software-prototyping-and-the-stack-that-makes-it-possible/</guid><pubDate>Sat, 01 Aug 2020 08:08:14 GMT</pubDate></item></channel></rss>
