@@ -15,11 +15,15 @@
  </sitemap>
  <sitemap>
   <loc>https://francesco.pischedda.info/categories/cat_posts.xml</loc>
-  <lastmod>2020-08-13T09:51:00Z</lastmod>
+  <lastmod>2020-09-09T18:51:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://francesco.pischedda.info/categories/cat_python-celery-vimcar.xml</loc>
   <lastmod>2020-06-14T15:58:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://francesco.pischedda.info/categories/clojure-clojurescript-rum-datascript-datalog.xml</loc>
+  <lastmod>2020-09-09T18:51:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://francesco.pischedda.info/categories/clojurescript-rum-react-datascript-frontend.xml</loc>
@@ -79,11 +83,15 @@
  </sitemap>
  <sitemap>
   <loc>https://francesco.pischedda.info/it/categories/cat_posts.xml</loc>
-  <lastmod>2020-08-13T09:51:00Z</lastmod>
+  <lastmod>2020-09-09T18:51:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://francesco.pischedda.info/it/categories/cat_python-celery-vimcar.xml</loc>
   <lastmod>2020-06-14T15:58:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://francesco.pischedda.info/it/categories/clojure-clojurescript-rum-datascript-datalog.xml</loc>
+  <lastmod>2020-09-09T18:51:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://francesco.pischedda.info/it/categories/clojurescript-rum-react-datascript-frontend.xml</loc>
@@ -135,14 +143,14 @@
  </sitemap>
  <sitemap>
   <loc>https://francesco.pischedda.info/it/rss.xml</loc>
-  <lastmod>2020-08-13T09:51:00Z</lastmod>
+  <lastmod>2020-09-09T18:51:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://francesco.pischedda.info/rss.xml</loc>
-  <lastmod>2020-08-13T09:51:00Z</lastmod>
+  <lastmod>2020-09-09T18:51:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://francesco.pischedda.info/sitemap.xml</loc>
-  <lastmod>2020-08-13T09:51:00Z</lastmod>
+  <lastmod>2020-09-09T18:51:00Z</lastmod>
  </sitemap>
 </sitemapindex>

@@ -1,5 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>@FPSD (Posts about posts)</title><link>https://francesco.pischedda.info/</link><description></description><atom:link href="https://francesco.pischedda.info/categories/cat_posts.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Thu, 13 Aug 2020 09:51:13 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>My new approach to software prototyping and the stack that makes it possible</title><link>https://francesco.pischedda.info/posts/my-new-approach-to-software-prototyping-and-the-stack-that-makes-it-possible/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div class="section" id="foreword"&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>@FPSD (Posts about posts)</title><link>https://francesco.pischedda.info/</link><description></description><atom:link href="https://francesco.pischedda.info/categories/cat_posts.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Wed, 09 Sep 2020 19:09:26 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Exploring Datascript with a small application</title><link>https://francesco.pischedda.info/posts/exploring-datascript-with-a-small-application/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div class="section" id="overview"&gt;
+&lt;h2&gt;Overview&lt;/h2&gt;
+&lt;p&gt;In a previous post I have briefly described how using ClojureScript, Rum and
+Datascript helped me to explore a new way to prototype software starting by
+investigating how the user is going to interact with it.&lt;/p&gt;
+&lt;p&gt;People, instead, showed more interest on Datascript (go figure :) ) so in this
+post I am going to write a small application to explore how to use Datascript
+and Datalog without digging too much into the nitty gritty details of both
+because, I think, there are better resources out there. (See &lt;a class="reference external" href="https://francesco.pischedda.info/posts/exploring-datascript-with-a-small-application/Links"&gt;Links section&lt;/a&gt;.)&lt;/p&gt;
+&lt;div class="section" id="the-application"&gt;
+&lt;h3&gt;The application&lt;/h3&gt;
+&lt;p&gt;Instead of writing the usual TODO app, I would like to provide a way for users
+to give feedback to my blog posts. Usually this is why you add a comment area
+to your website but it would be nice if readers could write their feedback
+for each section and not just the whole post.&lt;/p&gt;
+&lt;p&gt;For now I want to focus on the frontend part of it, to get a feel of how it
+could work in the hands of the users. If it proves to be usable I can think of
+a way to store the feedback to a durable storage, eventually add access control,
+eventually an admin interface etc etc.&lt;/p&gt;
+&lt;p&gt;To keep things super simple I will target the structure of my blog posts which
+is more or less like this:&lt;/p&gt;
+&lt;pre class="code html"&gt;&lt;a name="rest_code_63ff1bd41d7b410087dfc3890fa8e43e-1"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;'body'&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_63ff1bd41d7b410087dfc3890fa8e43e-2"&gt;&lt;/a&gt;  &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;'section'&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;'section-title'&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_63ff1bd41d7b410087dfc3890fa8e43e-3"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;h2&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Section title&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;h2&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_63ff1bd41d7b410087dfc3890fa8e43e-4"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;p&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Text&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;p&lt;/span&gt;&lt;span class="p"&gt;/&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_63ff1bd41d7b410087dfc3890fa8e43e-5"&gt;&lt;/a&gt;  &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_63ff1bd41d7b410087dfc3890fa8e43e-6"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;The div with class body is the main container; inside there are N section div
+elements, each with an id which is the slugified title of the section, an h2
+element with the title of the section and finally the content.&lt;/p&gt;
+&lt;p&gt;At start the application will fetch all post's sections, will store their id and
+title in the database, and will attach a react component to them which will:
+- provide a "Write your feedback" button which will toggle the feedback area composed by
+- a form to write new comments
+- a list of old comments with buttons to reply to or to delete them&lt;/p&gt;
+&lt;p&gt;The sources of the application are available &lt;a class="reference external" href="https://github.com/fpischedda/blog-feedback-app"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I suggest to try the full application to get a feel of how it looks and works;
+to run it please follow the instructions in the &lt;a class="reference external" href="https://github.com/fpischedda/blog-feedback-app/blob/master/README.md"&gt;README.md&lt;/a&gt; of the project.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="stack-for-the-prototype"&gt;
+&lt;h3&gt;Stack for the prototype&lt;/h3&gt;
+&lt;p&gt;To build this application I have chosen to use my (currently) preferred
+prototyping stack which is composed by:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;p&gt;ClojureScript: the language&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Figwheel.main: build system and live code update&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Rum: React wrapper library&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Datascript: in memory Datalog database&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For me, this work pretty well and I feel quite productive with it; the main
+benefit is the fast feedback loop provided by figwheel, the easy of use of Rum,
+a powerful, easy to use, database where to store the application state and last
+but not least a REPL where I can quickly fiddle with every bit of the
+application.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="data-model"&gt;
+&lt;h3&gt;Data model&lt;/h3&gt;
+&lt;p&gt;For this simple application there are only two entities that we are going to
+store in the database: section and comment; lets define a data model that will
+hold the application state:&lt;/p&gt;
+&lt;p&gt;section&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;p&gt;id: string, HTML id of the section&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;name: string, name/title of the section as extracted from the HTML&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;feedback/comment&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;p&gt;id: uuid&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;author: string, author of the comment&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;text: string, the content itself&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;created-at: string, ISO format of the time of the creation&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;parent: optional, ref to parent comment&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The data model can be described with the following schema:&lt;/p&gt;
+&lt;pre class="code clojure"&gt;&lt;a name="rest_code_53d9eb7156124b2085a135cb3b0a15af-1"&gt;&lt;/a&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;def &lt;/span&gt;&lt;span class="nv"&gt;schema&lt;/span&gt;
+&lt;a name="rest_code_53d9eb7156124b2085a135cb3b0a15af-2"&gt;&lt;/a&gt;  &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:section/id&lt;/span&gt;      &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:db/unique&lt;/span&gt; &lt;span class="ss"&gt;:db.unique/identity&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;a name="rest_code_53d9eb7156124b2085a135cb3b0a15af-3"&gt;&lt;/a&gt;   &lt;span class="ss"&gt;:comment/id&lt;/span&gt;      &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:db/unique&lt;/span&gt; &lt;span class="ss"&gt;:db.unique/identity&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;a name="rest_code_53d9eb7156124b2085a135cb3b0a15af-4"&gt;&lt;/a&gt;   &lt;span class="ss"&gt;:comment/section&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:db/valueType&lt;/span&gt; &lt;span class="ss"&gt;:db.type/ref&lt;/span&gt;
+&lt;a name="rest_code_53d9eb7156124b2085a135cb3b0a15af-5"&gt;&lt;/a&gt;                     &lt;span class="ss"&gt;:db/cardinality&lt;/span&gt; &lt;span class="ss"&gt;:db.cardinality/one&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;a name="rest_code_53d9eb7156124b2085a135cb3b0a15af-6"&gt;&lt;/a&gt;   &lt;span class="ss"&gt;:comment/parent&lt;/span&gt;  &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:db/valueType&lt;/span&gt; &lt;span class="ss"&gt;:db.type/ref&lt;/span&gt;
+&lt;a name="rest_code_53d9eb7156124b2085a135cb3b0a15af-7"&gt;&lt;/a&gt;                     &lt;span class="ss"&gt;:db/cardinality&lt;/span&gt; &lt;span class="ss"&gt;:db.cardinality/one&lt;/span&gt;&lt;span class="p"&gt;}})&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;As you may have noticed, not all attributes of the entities are in the schema,
+if fact it is sufficient to describe attributes with special meaning like ids
+or references.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="data-layer"&gt;
+&lt;h3&gt;Data layer&lt;/h3&gt;
+&lt;p&gt;Usually I like to have a separate namespace for the data and presentation
+layers, even for applications as simple as this one.
+Lets have a look at the &lt;a class="reference external" href="https://github.com/fpischedda/blog-feedback-app/blob/master/src/cljs/app/db.cljs"&gt;app.db namespace&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;After defining the schema, the db gets created with the following form:&lt;/p&gt;
+&lt;pre class="code clojure"&gt;&lt;a name="rest_code_c844a549a92141eb9c8c5187bc6f3fa7-1"&gt;&lt;/a&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;def &lt;/span&gt;&lt;span class="nv"&gt;db&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;d/create-conn&lt;/span&gt; &lt;span class="nv"&gt;schema&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;It is common to use &lt;cite&gt;defonce&lt;/cite&gt; when defining app state to not reset it after
+a code reload but, in this case, I prefer to &lt;cite&gt;def&lt;/cite&gt; because, when experimenting,
+it is quite useful to be able to change the schema and you may want to use the
+newest one in your database.&lt;/p&gt;
+&lt;p&gt;Another important tool for experimentation is to quickly populate the database
+with mock data; I find it very useful when it comes the time to work on the UI
+or when I need to test queries and transactions.&lt;/p&gt;
+&lt;p&gt;Here is an example query and the result when some data is in the database:&lt;/p&gt;
+&lt;pre class="code clojure"&gt;&lt;a name="rest_code_7e241c064d2a4a9f986036f87a7f35ee-1"&gt;&lt;/a&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;defn &lt;/span&gt;&lt;span class="nv"&gt;all-sections&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;db&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_7e241c064d2a4a9f986036f87a7f35ee-2"&gt;&lt;/a&gt;  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;d/q&lt;/span&gt; &lt;span class="o"&gt;'&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="ss"&gt;:find&lt;/span&gt; &lt;span class="nv"&gt;?id&lt;/span&gt; &lt;span class="nv"&gt;?name&lt;/span&gt;
+&lt;a name="rest_code_7e241c064d2a4a9f986036f87a7f35ee-3"&gt;&lt;/a&gt;         &lt;span class="ss"&gt;:where&lt;/span&gt;
+&lt;a name="rest_code_7e241c064d2a4a9f986036f87a7f35ee-4"&gt;&lt;/a&gt;         &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;?s&lt;/span&gt; &lt;span class="ss"&gt;:section/id&lt;/span&gt; &lt;span class="nv"&gt;?id&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_7e241c064d2a4a9f986036f87a7f35ee-5"&gt;&lt;/a&gt;         &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;?s&lt;/span&gt; &lt;span class="ss"&gt;:section/name&lt;/span&gt; &lt;span class="nv"&gt;?name&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_7e241c064d2a4a9f986036f87a7f35ee-6"&gt;&lt;/a&gt;         &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_7e241c064d2a4a9f986036f87a7f35ee-7"&gt;&lt;/a&gt;    &lt;span class="nv"&gt;db&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;a name="rest_code_7e241c064d2a4a9f986036f87a7f35ee-8"&gt;&lt;/a&gt;
+&lt;a name="rest_code_7e241c064d2a4a9f986036f87a7f35ee-9"&gt;&lt;/a&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;comment&lt;/span&gt;
+&lt;a name="rest_code_7e241c064d2a4a9f986036f87a7f35ee-10"&gt;&lt;/a&gt;  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;all-sections&lt;/span&gt; &lt;span class="o"&gt;@&lt;/span&gt;&lt;span class="nv"&gt;db&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;;; =&amp;gt; #{["overview" "Overview"] ["application-design" "Application design"]}&lt;/span&gt;
+&lt;a name="rest_code_7e241c064d2a4a9f986036f87a7f35ee-11"&gt;&lt;/a&gt;  &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Digging a bit more in to the db namespace, we can find an example of how using
+aggregates looks like in the section-comments-count function, here is the code:&lt;/p&gt;
+&lt;pre class="code clojure"&gt;&lt;a name="rest_code_7bfa717e85ff463b9376978eaeb3af51-1"&gt;&lt;/a&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;defn &lt;/span&gt;&lt;span class="nv"&gt;section-comments-count&lt;/span&gt;
+&lt;a name="rest_code_7bfa717e85ff463b9376978eaeb3af51-2"&gt;&lt;/a&gt;  &lt;span class="s"&gt;"If the query cannot find any entity that matches then it cannot reasonably&lt;/span&gt;
+&lt;a name="rest_code_7bfa717e85ff463b9376978eaeb3af51-3"&gt;&lt;/a&gt;&lt;span class="s"&gt;   count anything and it will return nil; with the use of `or` we can handle&lt;/span&gt;
+&lt;a name="rest_code_7bfa717e85ff463b9376978eaeb3af51-4"&gt;&lt;/a&gt;&lt;span class="s"&gt;   this case and return 0."&lt;/span&gt;
+&lt;a name="rest_code_7bfa717e85ff463b9376978eaeb3af51-5"&gt;&lt;/a&gt;  &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;db&lt;/span&gt; &lt;span class="nv"&gt;section-id&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_7bfa717e85ff463b9376978eaeb3af51-6"&gt;&lt;/a&gt;  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;or&lt;/span&gt;
+&lt;a name="rest_code_7bfa717e85ff463b9376978eaeb3af51-7"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;d/q&lt;/span&gt; &lt;span class="o"&gt;'&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="ss"&gt;:find&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;count &lt;/span&gt;&lt;span class="nv"&gt;?c&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nv"&gt;.&lt;/span&gt;
+&lt;a name="rest_code_7bfa717e85ff463b9376978eaeb3af51-8"&gt;&lt;/a&gt;             &lt;span class="ss"&gt;:in&lt;/span&gt; &lt;span class="nv"&gt;$&lt;/span&gt; &lt;span class="nv"&gt;?section-id&lt;/span&gt;
+&lt;a name="rest_code_7bfa717e85ff463b9376978eaeb3af51-9"&gt;&lt;/a&gt;             &lt;span class="ss"&gt;:where&lt;/span&gt;
+&lt;a name="rest_code_7bfa717e85ff463b9376978eaeb3af51-10"&gt;&lt;/a&gt;             &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;?s&lt;/span&gt; &lt;span class="ss"&gt;:section/id&lt;/span&gt; &lt;span class="nv"&gt;?section-id&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_7bfa717e85ff463b9376978eaeb3af51-11"&gt;&lt;/a&gt;             &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;?c&lt;/span&gt; &lt;span class="ss"&gt;:comment/section&lt;/span&gt; &lt;span class="nv"&gt;?s&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_7bfa717e85ff463b9376978eaeb3af51-12"&gt;&lt;/a&gt;             &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_7bfa717e85ff463b9376978eaeb3af51-13"&gt;&lt;/a&gt;        &lt;span class="nv"&gt;db&lt;/span&gt; &lt;span class="nv"&gt;section-id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_7bfa717e85ff463b9376978eaeb3af51-14"&gt;&lt;/a&gt;    &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;As stated in the docstring, when there are no matching entities, the query will
+return &lt;cite&gt;nil&lt;/cite&gt;, for this reason I use an &lt;cite&gt;or&lt;/cite&gt; to return the correct value (zero).&lt;/p&gt;
+&lt;p&gt;Also, please note the &lt;cite&gt;dot&lt;/cite&gt; after the call to &lt;cite&gt;count&lt;/cite&gt;, this signals that we
+want a scalar value back instead of a set with one element containing the count.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="building-the-ui"&gt;
+&lt;h3&gt;Building the UI&lt;/h3&gt;
+&lt;p&gt;After a quick tour of the data layer is now the turn of the UI part which
+can be found in the &lt;a class="reference external" href="https://github.com/fpischedda/blog-feedback-app/blob/master/src/cljs/app/core.cljs"&gt;app.core namespace&lt;/a&gt;.
+This namespace make more sense if read bottom to top while the db namespace is
+better read top to bottom.&lt;/p&gt;
+&lt;p&gt;At start, the application looks for all section elements, stores the section id
+and name of the section in the detabase and attaches a feedback component to it.
+This can be seen it the following code fragment:&lt;/p&gt;
+&lt;pre class="code clojure"&gt;&lt;a name="rest_code_aa279b20f3ea4f0b95c4f93f4f00bba3-1"&gt;&lt;/a&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;defn &lt;/span&gt;&lt;span class="nv"&gt;init-app&lt;/span&gt;
+&lt;a name="rest_code_aa279b20f3ea4f0b95c4f93f4f00bba3-2"&gt;&lt;/a&gt;  &lt;span class="s"&gt;"fetches all elements with a section class, parse all sections,&lt;/span&gt;
+&lt;a name="rest_code_aa279b20f3ea4f0b95c4f93f4f00bba3-3"&gt;&lt;/a&gt;&lt;span class="s"&gt;   remove prevoius feedback related elements (useful when reloading script)&lt;/span&gt;
+&lt;a name="rest_code_aa279b20f3ea4f0b95c4f93f4f00bba3-4"&gt;&lt;/a&gt;&lt;span class="s"&gt;   and add them to the db, finally attach a `feedback` button to all&lt;/span&gt;
+&lt;a name="rest_code_aa279b20f3ea4f0b95c4f93f4f00bba3-5"&gt;&lt;/a&gt;&lt;span class="s"&gt;   sections' container div"&lt;/span&gt;
+&lt;a name="rest_code_aa279b20f3ea4f0b95c4f93f4f00bba3-6"&gt;&lt;/a&gt;  &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;db&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_aa279b20f3ea4f0b95c4f93f4f00bba3-7"&gt;&lt;/a&gt;  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;sections&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;dom/getElementsByClass&lt;/span&gt; &lt;span class="s"&gt;"section"&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+&lt;a name="rest_code_aa279b20f3ea4f0b95c4f93f4f00bba3-8"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;doseq &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;section&lt;/span&gt; &lt;span class="nv"&gt;sections&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_aa279b20f3ea4f0b95c4f93f4f00bba3-9"&gt;&lt;/a&gt;      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;attach-feedback-component-to-section&lt;/span&gt; &lt;span class="nv"&gt;section&lt;/span&gt; &lt;span class="nv"&gt;db&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;a name="rest_code_aa279b20f3ea4f0b95c4f93f4f00bba3-10"&gt;&lt;/a&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;start-listener!&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt; &lt;span class="c1"&gt;;; start-listener will be addressed later&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Each component will receive the database instance and will react to changes;
+this is possible because a database is basically an atom so using rum/reactive
+mixin works out of the box, here is the main component's code:&lt;/p&gt;
+&lt;pre class="code clojure"&gt;&lt;a name="rest_code_9a200f3d813942f9b2b0317f956f412e-1"&gt;&lt;/a&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;rum/defc&lt;/span&gt; &lt;span class="nv"&gt;feedback-component&lt;/span&gt; &lt;span class="nb"&gt;&amp;lt; &lt;/span&gt;&lt;span class="nv"&gt;rum/reactive&lt;/span&gt;
+&lt;a name="rest_code_9a200f3d813942f9b2b0317f956f412e-2"&gt;&lt;/a&gt;  &lt;span class="s"&gt;"feedback area is composed by an input text for the author,&lt;/span&gt;
+&lt;a name="rest_code_9a200f3d813942f9b2b0317f956f412e-3"&gt;&lt;/a&gt;&lt;span class="s"&gt;   a textarea for the message and a div containing all previous messages&lt;/span&gt;
+&lt;a name="rest_code_9a200f3d813942f9b2b0317f956f412e-4"&gt;&lt;/a&gt;&lt;span class="s"&gt;   for the current section identified by `section-id`"&lt;/span&gt;
+&lt;a name="rest_code_9a200f3d813942f9b2b0317f956f412e-5"&gt;&lt;/a&gt;  &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;section-id&lt;/span&gt; &lt;span class="nv"&gt;db&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_9a200f3d813942f9b2b0317f956f412e-6"&gt;&lt;/a&gt;  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;db&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;rum/react&lt;/span&gt; &lt;span class="nv"&gt;db&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;;; &amp;lt;- the component will react to changes of the db&lt;/span&gt;
+&lt;a name="rest_code_9a200f3d813942f9b2b0317f956f412e-7"&gt;&lt;/a&gt;        &lt;span class="nv"&gt;area-id&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;str &lt;/span&gt;&lt;span class="s"&gt;"feedback-area-"&lt;/span&gt; &lt;span class="nv"&gt;section-id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_9a200f3d813942f9b2b0317f956f412e-8"&gt;&lt;/a&gt;        &lt;span class="nv"&gt;comments&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;sorted&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;db/section-comments&lt;/span&gt; &lt;span class="nv"&gt;db&lt;/span&gt; &lt;span class="nv"&gt;section-id&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;a name="rest_code_9a200f3d813942f9b2b0317f956f412e-9"&gt;&lt;/a&gt;        &lt;span class="nv"&gt;comment-count&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;db/section-comments-count&lt;/span&gt; &lt;span class="nv"&gt;db&lt;/span&gt; &lt;span class="nv"&gt;section-id&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+&lt;a name="rest_code_9a200f3d813942f9b2b0317f956f412e-10"&gt;&lt;/a&gt;    &lt;span class="c1"&gt;;; view code omitted for brevity&lt;/span&gt;
+&lt;a name="rest_code_9a200f3d813942f9b2b0317f956f412e-11"&gt;&lt;/a&gt;    &lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;The following binding does most of the magic:&lt;/p&gt;
+&lt;pre class="code clojure"&gt;&lt;a name="rest_code_1ac65d2b97624410a60c05c911adc742-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;db&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;rum/react&lt;/span&gt; &lt;span class="nv"&gt;db&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Simplifying, it subscribes to the db atom and derefs it, like we would do
+with @db or (deref db); a this point it will be possible to use the returned
+reference in queries like:&lt;/p&gt;
+&lt;pre class="code clojure"&gt;&lt;a name="rest_code_6175c9aa11694cd787d0d207c462bf40-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;comments&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;sorted&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;db/section-comments&lt;/span&gt; &lt;span class="nv"&gt;db&lt;/span&gt; &lt;span class="nv"&gt;section-id&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="section" id="closing-words"&gt;
+&lt;h3&gt;Closing words&lt;/h3&gt;
+&lt;p&gt;The rest of the application details are out of scope and it should be trivial
+to figure them out by reading the documentation of libraries used to build the
+application.&lt;/p&gt;
+&lt;p&gt;I hope that this quick tour of a simple application may have given you some
+pointers to start to work with Datascript and eventually Rum.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id1"&gt;
+&lt;h3&gt;Links section&lt;/h3&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;p&gt;&lt;a class="reference external" href="http://www.learndatalogtoday.org/"&gt;Learn Datalog today&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a class="reference external" href="https://tonsky.me/blog/datascript-internals/"&gt;A shallow dive into DataScript internals&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a class="reference external" href="https://www.youtube.com/watch?v=oo-7mN9WXTw&amp;amp;amp;feature=youtu.be"&gt;DOMAIN MODELING WITH DATALOG by Norbert Wojtowicz&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;style&gt;
+  .invisible {
+    display: none;
+  }
+&lt;/style&gt;
+&lt;script type="text/javascript" src="https://francesco.pischedda.info/js/app.js"&gt;&lt;/script&gt;&lt;/div&gt;
+&lt;/div&gt;</description><category>clojure clojurescript rum datascript datalog</category><guid>https://francesco.pischedda.info/posts/exploring-datascript-with-a-small-application/</guid><pubDate>Wed, 02 Sep 2020 09:43:16 GMT</pubDate></item><item><title>My new approach to software prototyping and the stack that makes it possible</title><link>https://francesco.pischedda.info/posts/my-new-approach-to-software-prototyping-and-the-stack-that-makes-it-possible/</link><dc:creator>Francesco "fpsd" Pischedda</dc:creator><description>&lt;div class="section" id="foreword"&gt;
 &lt;h2&gt;Foreword&lt;/h2&gt;
 &lt;p&gt;In this blog post I am going to illustrate how, during the development of a
 pet project, I have changed the way I approach software development and

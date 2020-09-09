@@ -7,7 +7,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://francesco.pischedda.info/</loc>
-  <lastmod>2020-08-11T10:57:00Z</lastmod>
+  <lastmod>2020-09-09T18:51:00Z</lastmod>
  </url>
  <url>
   <loc>https://francesco.pischedda.info/2013/</loc>
@@ -35,11 +35,11 @@
  </url>
  <url>
   <loc>https://francesco.pischedda.info/archive.html</loc>
-  <lastmod>2020-08-11T10:57:00Z</lastmod>
+  <lastmod>2020-08-15T11:22:00Z</lastmod>
  </url>
  <url>
   <loc>https://francesco.pischedda.info/categories/</loc>
-  <lastmod>2020-08-13T09:51:00Z</lastmod>
+  <lastmod>2020-09-02T12:25:00Z</lastmod>
  </url>
  <url>
   <loc>https://francesco.pischedda.info/categories/buildbot-ci-python/</loc>
@@ -56,6 +56,10 @@
  <url>
   <loc>https://francesco.pischedda.info/categories/cat_python-celery-vimcar/</loc>
   <lastmod>2020-08-03T18:52:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://francesco.pischedda.info/categories/clojure-clojurescript-rum-datascript-datalog/</loc>
+  <lastmod>2020-09-02T12:25:00Z</lastmod>
  </url>
  <url>
   <loc>https://francesco.pischedda.info/categories/clojurescript-rum-react-datascript-frontend/</loc>
@@ -111,7 +115,7 @@
  </url>
  <url>
   <loc>https://francesco.pischedda.info/index-1.html</loc>
-  <lastmod>2020-08-11T10:57:00Z</lastmod>
+  <lastmod>2020-08-15T11:22:00Z</lastmod>
  </url>
  <url>
   <loc>https://francesco.pischedda.info/it/</loc>
@@ -143,11 +147,11 @@
  </url>
  <url>
   <loc>https://francesco.pischedda.info/it/archive.html</loc>
-  <lastmod>2020-08-11T10:57:00Z</lastmod>
+  <lastmod>2020-08-15T11:22:00Z</lastmod>
  </url>
  <url>
   <loc>https://francesco.pischedda.info/it/categories/</loc>
-  <lastmod>2020-08-13T09:51:00Z</lastmod>
+  <lastmod>2020-09-02T12:25:00Z</lastmod>
  </url>
  <url>
   <loc>https://francesco.pischedda.info/it/categories/buildbot-ci-python/</loc>
@@ -164,6 +168,10 @@
  <url>
   <loc>https://francesco.pischedda.info/it/categories/cat_python-celery-vimcar/</loc>
   <lastmod>2020-08-03T18:52:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://francesco.pischedda.info/it/categories/clojure-clojurescript-rum-datascript-datalog/</loc>
+  <lastmod>2020-09-02T12:25:00Z</lastmod>
  </url>
  <url>
   <loc>https://francesco.pischedda.info/it/categories/clojurescript-rum-react-datascript-frontend/</loc>
@@ -215,7 +223,7 @@
  </url>
  <url>
   <loc>https://francesco.pischedda.info/it/index-1.html</loc>
-  <lastmod>2020-08-11T10:57:00Z</lastmod>
+  <lastmod>2020-08-15T11:22:00Z</lastmod>
  </url>
  <url>
   <loc>https://francesco.pischedda.info/it/pages/services/</loc>
@@ -244,6 +252,11 @@
   <loc>https://francesco.pischedda.info/it/posts/evaluating-rust-for-game-development/</loc>
   <lastmod>2020-08-03T18:52:00Z</lastmod>
   <xhtml:link rel="alternate" hreflang="en" href="https://francesco.pischedda.info/posts/evaluating-rust-for-game-development/" />
+ </url>
+ <url>
+  <loc>https://francesco.pischedda.info/it/posts/exploring-datascript-with-a-small-application/</loc>
+  <lastmod>2020-08-15T11:22:00Z</lastmod>
+  <xhtml:link rel="alternate" hreflang="en" href="https://francesco.pischedda.info/posts/exploring-datascript-with-a-small-application/" />
  </url>
  <url>
   <loc>https://francesco.pischedda.info/it/posts/having-fun-with-rabbitmq/</loc>
@@ -312,6 +325,10 @@
  <url>
   <loc>https://francesco.pischedda.info/posts/evaluating-rust-for-game-development/</loc>
   <lastmod>2020-08-03T18:52:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://francesco.pischedda.info/posts/exploring-datascript-with-a-small-application/</loc>
+  <lastmod>2020-08-15T11:22:00Z</lastmod>
  </url>
  <url>
   <loc>https://francesco.pischedda.info/posts/having-fun-with-rabbitmq/</loc>
