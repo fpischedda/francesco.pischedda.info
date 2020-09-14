@@ -249,6 +249,7 @@ Links section
 - `Learn Datalog today <http://www.learndatalogtoday.org/>`_
 - `A shallow dive into DataScript internals <https://tonsky.me/blog/datascript-internals/>`_
 - `DOMAIN MODELING WITH DATALOG by Norbert Wojtowicz <https://www.youtube.com/watch?v=oo-7mN9WXTw&amp;feature=youtu.be>`_
+- `Mook, a novel approach to frontend state management with ClojureScript and React <https://lambdam.com/blog/2020-09-mook/>`_ : This great article is not Datalog specific but provides a good motivation to use Datascript plus some more interesting bits of information
 
 .. raw:: html
 
