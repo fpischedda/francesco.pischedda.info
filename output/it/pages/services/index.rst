@@ -11,7 +11,7 @@ I am Francesco, nice to meet you!
 
 I am a software developer and **I am here to help you** to grow your IT
 infrastructure in order **to support your business**.
-Please contact me at francesco.pischedda at gmail.com and I will send you
+Please contact me at fp at fpsd.codes and I will send you
 an invite for a meeting to discuss how I can help you.
 
 Let's have a look at the services I can offer:
@@ -41,7 +41,7 @@ I have no strict preference for a specific business domain but I will NOT work o
 
 If you need to take care of your legacy system, break down a monolith to a set of
 micro services or start a green field project to validate your startup hypothesis,
-**I will be happy help you!** Please, feel free to contact me at francesco.pischedda at gmail.com
+**I will be happy to help you!** Please, feel free to contact me at fp at fpsd.codes
 
 Training
 --------
@@ -71,4 +71,4 @@ Anyway **I will be happy to offer a discounted rate** for:
 - Open source projects
 - Small startups
 
-Write me at francesco.pischedda at gmail.com and I will get back to you in 24 hours.
+Write me at fp at fpsd.codes and I will get back to you in 24 hours.
